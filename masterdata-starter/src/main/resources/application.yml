@@ -1,0 +1,37 @@
+server:
+  port: 10036
+  session-timeout: 3000  
+  tomcat.max-threads: 0  
+  tomcat.uri-encoding: UTF-8  
+
+spring:
+  application:
+    name: smsf-sample-1
+
+smsf:
+  application:
+    name: masterdata
+    url: http://localhost:4200
+    icon: icon.ico
+  cache:
+    redis-cache:
+      authority:
+        duration: 10
+  swagger:
+    security:
+      enabled: false
+      schemes:
+        Authorization:
+          key-name: Authorization
+        tenantId:
+          key-name: tenantId
+  data:
+    mybatis:
+      mapper-locations: classpath*:/mappers/*/*.xml
+    jdbc:
+      connections:
+        default:
+          # 正式环境下的配置
+          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&characterEncoding=utf-8
+          username: ${smsf.data.database1.username}
+          password: ${smsf.data.database1.password}

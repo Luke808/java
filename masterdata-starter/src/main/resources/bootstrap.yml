@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      label: master
+      profile: test
+      name: bootstrap
+      uri: https://dlhpvva0002.dir.svc.accenture.com/smsf-config/
