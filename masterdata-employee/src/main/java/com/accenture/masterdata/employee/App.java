@@ -1,4 +1,4 @@
-package org.masterdata.organization;
+package com.accenture.masterdata.employee;
 
 /**
  * Hello world!
