@@ -1,0 +1,17 @@
+2018-11-05 10:05:48.678 [INFO ] Thread[main] [org.masterdata.starter.MasterdataApplication] [659] No active profile set, falling back to default profiles: default
+2018-11-05 10:06:00.674 [INFO ] Thread[main] [org.xnio] [104] XNIO version 3.3.8.Final
+2018-11-05 10:06:00.785 [INFO ] Thread[main] [org.xnio.nio] [55] XNIO NIO Implementation Version 3.3.8.Final
+2018-11-05 10:06:01.124 [WARN ] Thread[main] [io.undertow.websockets.jsr] [67] UT026009: XNIO worker was not set on WebSocketDeploymentInfo, the default worker will be used
+2018-11-05 10:06:01.127 [WARN ] Thread[main] [io.undertow.websockets.jsr] [76] UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2018-11-05 10:06:01.243 [INFO ] Thread[main] [io.undertow.servlet] [360] Initializing Spring embedded WebApplicationContext
+2018-11-05 10:06:01.700 [INFO ] Thread[main] [com.accenture.smsf.framework.starter.cors.config.CorsConfig] [48] --------------------CORS loading--------------------
+2018-11-05 10:06:19.198 [INFO ] Thread[main] [springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping] [69] Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2018-11-05 10:06:19.328 [INFO ] Thread[main] [com.accenture.smsf.framework.starter.swagger.config.SwaggerConfig] [39] ---------------------Swagger2 init---------------------
+2018-11-05 10:06:26.265 [INFO ] Thread[main] [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] [160] Context refreshed
+2018-11-05 10:06:26.420 [INFO ] Thread[main] [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] [163] Found 1 custom documentation plugin(s)
+2018-11-05 10:06:26.667 [INFO ] Thread[main] [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] [41] Scanning for api listing references
+2018-11-05 10:06:28.200 [INFO ] Thread[main] [org.masterdata.starter.MasterdataApplication] [59] Started MasterdataApplication in 48.924 seconds (JVM running for 55.659)
+2018-11-05 10:06:28.231 [INFO ] Thread[main] [org.masterdata.starter.MasterdataApplication] [19]  ========== application-1 started ==========
+2018-11-05 10:06:35.516 [INFO ] Thread[XNIO-2 task-1] [io.undertow.servlet] [360] Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-11-05 10:06:39.261 [WARN ] Thread[XNIO-2 task-12] [com.accenture.smsf.framework.starter.web.principal.filter.PrincipalFilter] [42] Principal was trying to be set to [null]
+2018-11-05 10:06:39.636 [WARN ] Thread[XNIO-2 task-14] [com.accenture.smsf.framework.starter.web.principal.filter.PrincipalFilter] [42] Principal was trying to be set to [null]

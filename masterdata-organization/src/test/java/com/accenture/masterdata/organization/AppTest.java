@@ -1,4 +1,4 @@
-package org.masterdata.organization;
+package com.accenture.masterdata.organization;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

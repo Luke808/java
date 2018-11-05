@@ -1,4 +1,4 @@
-package org.masterdata.employee;
+package com.accenture.masterdata.starter;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

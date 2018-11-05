@@ -1,4 +1,4 @@
-package org.masterdata.starter.controller;
+package com.accenture.masterdata.starter.controller;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
