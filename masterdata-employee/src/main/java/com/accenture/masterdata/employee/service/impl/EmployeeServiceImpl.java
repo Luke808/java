@@ -6,7 +6,9 @@ import com.accenture.masterdata.core.inEntity.EmployeeIn;
 import com.accenture.masterdata.core.inEntity.MasterdataSelectInput;
 import com.accenture.masterdata.core.outEntity.EmployeeOut;
 import com.accenture.masterdata.employee.service.EmployeeService;
+import com.accenture.smsf.framework.boot.stereotype.Service;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override

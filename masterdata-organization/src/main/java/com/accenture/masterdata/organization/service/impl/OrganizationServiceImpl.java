@@ -8,7 +8,9 @@ import com.accenture.masterdata.core.outEntity.HierarchyPropertiesOut;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 import com.accenture.masterdata.organization.service.OrganizationService;
+import com.accenture.smsf.framework.boot.stereotype.Service;
 
+@Service
 public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
