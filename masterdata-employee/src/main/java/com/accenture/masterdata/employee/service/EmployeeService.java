@@ -3,6 +3,7 @@ package com.accenture.masterdata.employee.service;
 import java.util.List;
 
 import com.accenture.masterdata.core.inEntity.EmployeeIn;
+import com.accenture.masterdata.core.inEntity.MasterdataSelectInput;
 import com.accenture.masterdata.core.outEntity.EmployeeOut;
 
 /**
@@ -46,18 +47,18 @@ public interface EmployeeService {
 	 * 
 	 * @param params
 	 */
-	public List<EmployeeOut> selectEmployees(EmployeeIn params);
+	public List<EmployeeOut> selectEmployees(MasterdataSelectInput params);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public EmployeeOut selectEmployeeDetail(EmployeeIn params);
+	public EmployeeOut selectEmployeeDetail(int id);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectEmployeeCount(EmployeeIn params);
+	public int selectEmployeeCount(MasterdataSelectInput params);
 
 }
