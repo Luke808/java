@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accenture.masterdata.core.mapper.EmployeeMapper">
 
-	<insert id="inertEmployee" parameterType="com.accenture.masterdata.core.inEntity.EmployeeIn">
+	<!-- <insert id="inertEmployee" parameterType="com.accenture.masterdata.core.inEntity.EmployeeIn">
     	insert into t_employee (
 	    	name, 
 	    	eId, 
@@ -107,5 +107,20 @@
     	id = #{id}
   </update>
   
+  <update id="deleteEmployee" parameterType="int">
+   update t_employee
+   set isDeleted = 1
+   where id = #{id}
+   </update>
+  
+  <select id="selectEmployeeList" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
+		select
+			em
+		from
+			employee em
+		WHERE 
+		em.isDelete = 1 
+		${strParm}
+  </select> -->
   
 </mapper>

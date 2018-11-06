@@ -3,7 +3,7 @@ package com.accenture.masterdata.employee.service.impl;
 import java.util.List;
 
 import com.accenture.masterdata.core.inEntity.EmployeeIn;
-import com.accenture.masterdata.core.inEntity.MasterdataSelectInput;
+import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.EmployeeOut;
 import com.accenture.masterdata.employee.service.EmployeeService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
@@ -42,7 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<EmployeeOut> selectEmployees(MasterdataSelectInput params) {
+	public List<EmployeeOut> selectEmployees(QueryParam params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -54,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public int selectEmployeeCount(MasterdataSelectInput params) {
+	public int selectEmployeeCount(QueryParam params) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

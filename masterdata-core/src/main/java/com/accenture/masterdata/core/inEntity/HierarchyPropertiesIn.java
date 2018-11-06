@@ -12,6 +12,7 @@ import lombok.Data;
 public class HierarchyPropertiesIn {
 
 	private int id;
+	private String name;
 	private int hierarchyId;
 	private int type;
 	private int controlType;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accenture.masterdata.core.inEntity.EmployeeIn;
-import com.accenture.masterdata.core.inEntity.MasterdataSelectInput;
+import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.EmployeeOut;
 import com.accenture.masterdata.employee.service.EmployeeService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
@@ -33,7 +33,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/getList")
-	public Map<String, Object> getList(MasterdataSelectInput params) {
+	public Map<String, Object> getList(QueryParam params) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = employee.selectEmployeeCount(params);
 		List<EmployeeOut> employees = employee.selectEmployees(params);

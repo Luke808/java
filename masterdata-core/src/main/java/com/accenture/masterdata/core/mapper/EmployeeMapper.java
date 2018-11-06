@@ -3,7 +3,7 @@ package com.accenture.masterdata.core.mapper;
 import java.util.List;
 
 import com.accenture.masterdata.core.inEntity.EmployeeIn;
-import com.accenture.masterdata.core.inEntity.MasterdataSelectInput;
+import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.EmployeeOut;
 
 /**
@@ -35,7 +35,7 @@ public interface EmployeeMapper {
 	 * 
 	 * @param params
 	 */
-	public List<EmployeeOut> selectEmployeeList(MasterdataSelectInput params);
+	public List<EmployeeOut> selectEmployeeList(QueryParam params);
 
 	/**
 	 * 
@@ -47,6 +47,6 @@ public interface EmployeeMapper {
 	 * 
 	 * @param params
 	 */
-	public int selectEmployeeCount(MasterdataSelectInput params);
+	public int selectEmployeeCount(QueryParam params);
 
 }

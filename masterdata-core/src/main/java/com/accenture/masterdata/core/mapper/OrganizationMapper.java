@@ -2,7 +2,7 @@ package com.accenture.masterdata.core.mapper;
 
 import java.util.List;
 
-import com.accenture.masterdata.core.inEntity.MasterdataSelectInput;
+import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 
@@ -29,7 +29,7 @@ public interface OrganizationMapper {
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationOut> selectOrganizationList(MasterdataSelectInput params);
+	public List<OrganizationOut> selectOrganizationList(QueryParam params);
 
 	/**
 	 * 
@@ -41,7 +41,7 @@ public interface OrganizationMapper {
 	 * 
 	 * @param params
 	 */
-	public int selectOrganizationCount(MasterdataSelectInput params);
+	public int selectOrganizationCount(QueryParam params);
 
 	/**
 	 * 
