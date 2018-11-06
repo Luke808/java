@@ -28,12 +28,12 @@ public class EmployeeController {
 	EmployeeService employee;
 
 	@GetMapping("/get")
-	public EmployeeOut getEmployee(@RequestParam("id") int id) {
+	public EmployeeOut get(@RequestParam("id") int id) {
 		return employee.selectEmployeeDetail(id);
 	}
 	
 	@GetMapping("/getList")
-	public Map<String, Object> getEmployees(MasterdataSelectInput params) {
+	public Map<String, Object> getList(MasterdataSelectInput params) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = employee.selectEmployeeCount(params);
 		List<EmployeeOut> employees = employee.selectEmployees(params);
@@ -45,17 +45,17 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/add")
-	public int insertEmployee(@RequestParam("org_data") EmployeeIn params) {
+	public int insert(@RequestParam("org_data") EmployeeIn params) {
 		return employee.addEmployee(params);
 	}
 	
 	@PutMapping("/save")
-	public int updateEmployee(@RequestParam("org_data") EmployeeIn params) {
+	public int update(@RequestParam("org_data") EmployeeIn params) {
 		return employee.saveEmployee(params);
 	}
 	
 	@DeleteMapping("/delete")
-	public int deleteEmployee(@RequestParam("id")int id) {
+	public int delete(@RequestParam("id")int id) {
 		return employee.deleteEmployee(id);
 	}
 	

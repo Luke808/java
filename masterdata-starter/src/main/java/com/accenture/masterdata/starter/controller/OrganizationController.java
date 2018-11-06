@@ -27,12 +27,12 @@ public class OrganizationController {
 	OrganizationService organization;
 
 	@GetMapping("/get")
-	public OrganizationOut getOrganization(@RequestParam("id") int id) {
+	public OrganizationOut get(@RequestParam("id") int id) {
 		return organization.selectOrganization(id);
 	}
 	
 	@GetMapping("/getList")
-	public Map<String, Object> getOrganizations(OrganizationIn param) {
+	public Map<String, Object> getList(OrganizationIn param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationCount(param);
 		List<OrganizationOut> organizations = organization.selectOrganizations(param);
@@ -44,17 +44,17 @@ public class OrganizationController {
 	}
 	
 	@PostMapping("/add")
-	public int insertOrg(@RequestParam("org_data") OrganizationIn params) {
+	public int insert(@RequestParam("org_data") OrganizationIn params) {
 		return organization.addOrganization(params);
 	}
 	
 	@PutMapping("/save")
-	public int updateOrg(@RequestParam("org_data") OrganizationIn params) {
+	public int update(@RequestParam("org_data") OrganizationIn params) {
 		return organization.saveOrganization(params);
 	}
 	
 	@DeleteMapping("/delete")
-	public int deleteOrg(@RequestParam("id")int id) {
+	public int delete(@RequestParam("id")int id) {
 		return organization.deleteOrganization(id);
 	}
 }

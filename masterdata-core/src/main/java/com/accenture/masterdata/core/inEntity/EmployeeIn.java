@@ -11,15 +11,10 @@ import lombok.Data;
 @Data
 public class EmployeeIn {
 
-	/**
-	 * 父id
-	 */
-	private int parentId;
-	/**
-	 * 员工code
-	 */
-	private String code;
 	private String name;
+	private String cardNo;
+	private int eId;
+	private int organizationId;
 	/**
 	 * 性别
 	 */
@@ -27,10 +22,8 @@ public class EmployeeIn {
 	private String email;
 	private String tel;
 	private String address;
-	/**
-	 * 父id-本身id
-	 */
-	private String likeCode;
+	private String comment;
+
 	/**
 	 * 用户id
 	 */

@@ -26,12 +26,12 @@ public class OrganizationHierarchyController {
 	OrganizationService organization;
 
 	@GetMapping("/get")
-	public OrganizationHierarchyOut getOrgHierarchy(@RequestParam("id") int id) {
+	public OrganizationHierarchyOut get(@RequestParam("id") int id) {
 		return organization.selectOrganizationHierarchy(id);
 	}
 	
 	@GetMapping("/getList")
-	public Map<String, Object> getOrgHierarchies(OrganizationHierarchyIn param) {
+	public Map<String, Object> getList(OrganizationHierarchyIn param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationHierCount(param);
 		List<OrganizationHierarchyOut> hierarchies = organization.selectOrganizationHierarchys(param);
@@ -43,17 +43,17 @@ public class OrganizationHierarchyController {
 	}
 	
 	@PostMapping("/add")
-	public int insertOrgHierarchy(@RequestParam("org_data") OrganizationHierarchyIn params) {
+	public int insert(@RequestParam("org_data") OrganizationHierarchyIn params) {
 		return organization.addOrganizationHierarchy(params);
 	}
 	
 	@PutMapping("/save")
-	public int updateOrgHierarchy(@RequestParam("org_data") OrganizationHierarchyIn params) {
+	public int update(@RequestParam("org_data") OrganizationHierarchyIn params) {
 		return organization.saveOrganizationHierarchy(params);
 	}
 	
 	@DeleteMapping("/delete")
-	public int deleteOrgHierarchy(@RequestParam("id")int id) {
+	public int delete(@RequestParam("id")int id) {
 		return organization.deleteOrganizationHierarchy(id);
 	}
 }
