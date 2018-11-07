@@ -23,9 +23,6 @@ public class OrganizationHierarchyOut {
 	private int deleterUserId;
 	private Date deletionTime;
 	private int tenantId;
-	private String parentName;
-	private String organizationName;
-	private String legalEntityName;
 	private List<HierarchyPropertiesOut> properties;
 	private String creatorName;
 	private String deleterName;

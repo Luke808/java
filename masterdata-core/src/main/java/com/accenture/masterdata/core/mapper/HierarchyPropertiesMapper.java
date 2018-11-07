@@ -2,6 +2,8 @@ package com.accenture.masterdata.core.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.accenture.masterdata.core.inEntity.HierarchyPropertiesIn;
 import com.accenture.masterdata.core.outEntity.HierarchyPropertiesOut;
 
@@ -16,7 +18,7 @@ public interface HierarchyPropertiesMapper {
 	 * 
 	 * @param param
 	 */
-	public int insertProperty(HierarchyPropertiesIn param);
+	public int insertProperty(List<HierarchyPropertiesIn> properties);
 
 	/**
 	 * 
@@ -46,6 +48,6 @@ public interface HierarchyPropertiesMapper {
 	 * 
 	 * @param param
 	 */
-	public int deleteProperty(int param);
+	public int deleteProperty(@Param(value="id")int id);
 
 }

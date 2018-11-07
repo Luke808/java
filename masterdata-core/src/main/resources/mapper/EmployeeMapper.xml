@@ -108,9 +108,15 @@
   </update>
   
   <update id="deleteEmployee" parameterType="int">
-   update t_employee
-   set isDeleted = 1
-   where id = #{id}
+   update 
+       t_employee
+   set 
+   	   isDeleted = 1,
+	   deleterUserId = #{deleterUserId},
+	   deletionTime = now()
+   where 
+   	   id = #{id}
+   	   and isDeleted = 0
    </update>
   
   <select id="selectEmployeeList" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
@@ -146,7 +152,7 @@
   
   <select id="selectEmployeeCount" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="int">
 	SELECT
-		count(0)
+		count(0) total
 	FROM
 	  t_employee ep
 	WHERE

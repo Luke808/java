@@ -2,5 +2,113 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accenture.masterdata.core.mapper.OrganizationHierarchyMapper">
 
+	<insert id="insertOrganizationHierarchy" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn">
+    	insert into t_employee (
+	    	name, 
+	    	level,
+	    	<if test="icon != null and icon != ''"> 
+	    	icon,
+	    	</if>
+	      	allowConcurrently, 
+			<if test="creatorUserId != null and creatorUserId != ''">
+	      	creatorUserId,
+			</if>
+	      	creationTime,
+			tenantId
+    	) values (
+	    	#{name}, 
+	    	#{level},
+	    	<if test="icon != null and icon != ''"> 
+	    	#{icon},
+	    	</if>
+	    	#{allowConcurrently},
+			<if test="creatorUserId != null and creatorUserId != ''">
+	      	#{creatorUserId},
+			</if>
+	      	now(),
+			#{tenantId}    	
+      	)
+  </insert>
   
+  <update id="updateOrganizationHierarchy" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn">
+    update t_organization_hirerarchy
+    <set>
+      <if test="name != null and name != ''">
+        name = #{name},
+      </if>
+      <if test="level != null and level != ''">
+        level = #{level},
+      </if>
+      <if test="icon != null and icon != ''">
+        icon = #{icon},
+      </if>
+      <if test="allowConcurrently != null and allowConcurrently != ''">
+        allowConcurrently = #{allowConcurrently},
+      </if>
+      <if test="lastModifierUserId != null and lastModifierUserId != ''">
+        lastModifierUserId = #{lastModifierUserId},
+      </if>
+	  lastModificationTime = now()
+    </set>
+    where
+    	id = #{id}
+  </update>
+  
+  <update id="deleteOrganizationHierarchy" parameterType="int">
+   update 
+       t_organization_hirerarchy
+   set 
+   	   isDeleted = 1,
+	   deleterUserId = #{deleterUserId},
+	   deletionTime = now()
+   where 
+   	   id = #{id}
+   	   and isDeleted = 0
+   </update>
+   
+	<select id="selectOrganizatioHierarchyieList" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
+		SELECT
+			id,
+			`name`,
+			`level`,
+			creatorUserId,
+			creationTime,
+			lastModifierUserId,
+			lastModificationTime,
+			isDeleted,
+			deleterUserId,
+			deletionTime,
+			tenantId
+		FROM
+			t_organization_hirerarchy
+		WHERE
+			isDeleted = 0
+			<if test=" tenantId != null and tenantId != ''">
+		  	and tenantId = #{tenantId}
+		  	</if>
+		  	<if test=" level != null and level != ''">
+			and level = #{level}
+			</if>
+			<if test=" name != null and name != ''">
+			and `name` like '%${name}%'
+			</if>
+	</select>
+
+	<select id="selectOrganizationHierarchyCount" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn" resultType="int">
+		SELECT
+			count(0) total
+		FROM
+			t_organization_hirerarchy
+		WHERE
+			isDeleted = 0
+			<if test=" tenantId != null and tenantId != ''">
+		  	and tenantId = #{tenantId}
+		  	</if>
+		  	<if test=" level != null and level != ''">
+			and level = #{level}
+			</if>
+			<if test=" name != null and name != ''">
+			and `name` like '%${name}%'
+			</if>
+	</select>
 </mapper>
