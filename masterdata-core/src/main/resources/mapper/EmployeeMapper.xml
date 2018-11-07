@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accenture.masterdata.core.mapper.EmployeeMapper">
 
-	<!-- <insert id="inertEmployee" parameterType="com.accenture.masterdata.core.inEntity.EmployeeIn">
+	<insert id="inertEmployee" parameterType="com.accenture.masterdata.core.inEntity.EmployeeIn">
     	insert into t_employee (
 	    	name, 
 	    	eId, 
@@ -114,13 +114,76 @@
    </update>
   
   <select id="selectEmployeeList" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
-		select
-			em
-		from
-			employee em
-		WHERE 
-		em.isDelete = 1 
+	SELECT
+		ep.id,
+		ep.`name`,
+		ep.address,
+		ep.cardNo,
+		ep.`comment`,
+		ep.creationTime,
+		ep.creatorUserId,
+		ep.deleterUserId,
+		ep.deletionTime,
+		ep.eId,
+		ep.email,
+		ep.isDeleted,
+		ep.lastModificationTime,
+		ep.lastModifierUserId,
+		ep.organizationId,
+		ep.sex,
+		ep.tel,
+		ep.tenantId,
+		ep.userId,
+		(select GROUP_CONCAT(`name` separator '-') from t_organization where id in (ep.orgLikeCode))
+	FROM
+	  t_employee ep
+	WHERE
+		ep.isDeleted = 0
+		<if test=" strParm != null and strParm != ''">
 		${strParm}
-  </select> -->
+		</if>
+  </select>
   
+  <select id="selectEmployeeCount" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="int">
+	SELECT
+		count(0)
+	FROM
+	  t_employee ep
+	WHERE
+		ep.isDeleted = 0
+		<if test=" strParm != null and strParm != ''">
+		${strParm}
+		</if>
+  </select>
+  
+  <select id="selectEmployeeList" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
+	SELECT
+		ep.id,
+		ep.`name`,
+		ep.address,
+		ep.cardNo,
+		ep.`comment`,
+		ep.creationTime,
+		ep.creatorUserId,
+		ep.deleterUserId,
+		ep.deletionTime,
+		ep.eId,
+		ep.email,
+		ep.isDeleted,
+		ep.lastModificationTime,
+		ep.lastModifierUserId,
+		ep.organizationId,
+		ep.sex,
+		ep.tel,
+		ep.tenantId,
+		ep.userId,
+		(select GROUP_CONCAT(`name` separator '-') from t_organization where id in (ep.orgLikeCode))
+	FROM
+	  t_employee ep
+	WHERE
+		ep.isDeleted = 0
+		<if test=" id != null and id != ''">
+			id = #{id}
+		</if>
+  </select>
 </mapper>

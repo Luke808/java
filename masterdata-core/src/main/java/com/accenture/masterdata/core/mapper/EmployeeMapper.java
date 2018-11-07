@@ -2,6 +2,8 @@ package com.accenture.masterdata.core.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.accenture.masterdata.core.inEntity.EmployeeIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.EmployeeOut;
@@ -41,7 +43,7 @@ public interface EmployeeMapper {
 	 * 
 	 * @param id
 	 */
-	public EmployeeOut selectEmployee(int id);
+	public EmployeeOut selectEmployee(@Param(value="id")int id);
 
 	/**
 	 * 
