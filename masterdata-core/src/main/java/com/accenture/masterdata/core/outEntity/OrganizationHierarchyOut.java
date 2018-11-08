@@ -15,17 +15,20 @@ public class OrganizationHierarchyOut {
 	private int id;
 	private String name;
 	private int level;
-	private int creatorUserId;
+	private String icon;
+	private int allowConcurrently;
+	private String comments;
+	private Long creatorUserId;
+	private String creatorUserName;
 	private Date creationTime;
 	private int lastModifierUserId;
+	private String lastModifierUserName;
 	private Date lastModificationTime;
-	private boolean isDeleted;
+	private int isDeleted;
+	private String deleterUserName;
 	private int deleterUserId;
 	private Date deletionTime;
 	private int tenantId;
-	private List<HierarchyPropertiesOut> properties;
-	private String creatorName;
-	private String deleterName;
 	private String tenantName;
 
 }

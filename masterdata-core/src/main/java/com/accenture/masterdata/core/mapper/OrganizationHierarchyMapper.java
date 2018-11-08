@@ -28,19 +28,19 @@ public interface OrganizationHierarchyMapper {
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationHierarchyOut> selectOrganizatioHierarchyieList(OrganizationHierarchyIn params);
+	public List<OrganizationHierarchyOut> selectOrganizatioHierarchyieList(String queryQarm);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(int param);
+	public OrganizationHierarchyOut selectOrganizationHierarchy(String queryQarm);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectOrganizationHierarchyCount(OrganizationHierarchyIn params);
+	public int selectOrganizationHierarchyCount(String queryQarm);
 
 	/**
 	 * 

@@ -42,7 +42,7 @@ public class QueryParam {
 	public String getSorting() {
 		if(sorting == null || sorting.equals("")) 
 		{
-			return "id";
+			return "id asc";
 		}
 		return this.sorting;
 	}

@@ -7,8 +7,7 @@
     <artifactId>masterdata</artifactId>
     <version>0.0.1</version>
   </parent>
-  <artifactId>masterdata-organization</artifactId>
-
+  <artifactId>masterdata-common</artifactId>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -21,10 +20,6 @@
     <dependency>
 	    <groupId>com.accenture.masterdata</groupId>
 	    <artifactId>masterdata-core</artifactId>
-    </dependency>
-    <dependency>
-	    <groupId>com.accenture.masterdata</groupId>
-	    <artifactId>masterdata-common</artifactId>
     </dependency>
   </dependencies>
 </project>

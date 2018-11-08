@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
-import com.accenture.masterdata.core.outEntity.HierarchyPropertiesOut;
+import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 
@@ -43,13 +43,13 @@ public interface OrganizationService {
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(OrganizationHierarchyIn params);
+	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(QueryParam params);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectOrganizationHierCount(OrganizationHierarchyIn params);
+	public int selectOrganizationHierCount(QueryParam params);
 
 	/**
 	 * 
@@ -110,11 +110,5 @@ public interface OrganizationService {
 	 * @param params
 	 */
 	void hireDuplicationCheck(OrganizationHierarchyIn params);
-
-	/**
-	 * 
-	 * @param id
-	 */
-	public List<HierarchyPropertiesOut> selectHierarchyProperties(int id);
 
 }

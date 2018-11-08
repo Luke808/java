@@ -15,14 +15,16 @@ public class OrganizationHierarchyIn {
 	private int id;
 	private String name;
 	private int level;
-	private int creatorUserId;
+	private String icon;
+	private int allowConcurrently;
+	private String comments;
+	private Long creatorUserId;
 	private Date creationTime;
 	private int lastModifierUserId;
 	private Date lastModificationTime;
-	private boolean isDeleted;
+	private int isDeleted;
 	private int deleterUserId;
 	private Date deletionTime;
-	private List<HierarchyPropertiesIn> properties;
 	private int tenantId;
 	
 }

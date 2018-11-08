@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
+import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
@@ -31,7 +33,7 @@ public class OrganizationHierarchyController {
 	}
 	
 	@GetMapping("/getList")
-	public Map<String, Object> getList(OrganizationHierarchyIn param) {
+	public Map<String, Object> getList(@RequestBody QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationHierCount(param);
 		List<OrganizationHierarchyOut> hierarchies = organization.selectOrganizationHierarchys(param);
@@ -43,12 +45,12 @@ public class OrganizationHierarchyController {
 	}
 	
 	@PostMapping("/add")
-	public int insert(@RequestParam("org_data") OrganizationHierarchyIn params) {
+	public int insert(@RequestBody @RequestParam("org_data") OrganizationHierarchyIn params) {
 		return organization.addOrganizationHierarchy(params);
 	}
 	
 	@PutMapping("/save")
-	public int update(@RequestParam("org_data") OrganizationHierarchyIn params) {
+	public int update(@RequestBody @RequestParam("org_data") OrganizationHierarchyIn params) {
 		return organization.saveOrganizationHierarchy(params);
 	}
 	

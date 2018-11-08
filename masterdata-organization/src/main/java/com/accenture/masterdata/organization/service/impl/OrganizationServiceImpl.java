@@ -2,9 +2,13 @@ package com.accenture.masterdata.organization.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.accenture.masterdata.common.querybuilder.BuilderParam;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
-import com.accenture.masterdata.core.outEntity.HierarchyPropertiesOut;
+import com.accenture.masterdata.core.inEntity.QueryParam;
+import com.accenture.masterdata.core.mapper.OrganizationHierarchyMapper;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 import com.accenture.masterdata.organization.service.OrganizationService;
@@ -13,6 +17,12 @@ import com.accenture.smsf.framework.boot.stereotype.Service;
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
+	@Autowired
+	private BuilderParam builderParm;
+
+	@Autowired
+	private OrganizationHierarchyMapper hierarchyMapper;
+	
 	@Override
 	public int addOrganizationHierarchy(OrganizationHierarchyIn params) {
 		// TODO Auto-generated method stub
@@ -33,20 +43,20 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
 	public OrganizationHierarchyOut selectOrganizationHierarchy(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(OrganizationHierarchyIn params) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(QueryParam params) {
+		String strParmWithPageing = builderParm.buildParmWithPageing(params);
+		List<OrganizationHierarchyOut> list = hierarchyMapper.selectOrganizatioHierarchyieList(strParmWithPageing);
+		return list;
 	}
 
 	@Override
-	public int selectOrganizationHierCount(OrganizationHierarchyIn params) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selectOrganizationHierCount(QueryParam params) {
+		String strParmNoPageing = builderParm.buildParmNoPageing(params);
+		return hierarchyMapper.selectOrganizationHierarchyCount(strParmNoPageing);
 	}
 
 	@Override
@@ -109,10 +119,5 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	}
 
-	@Override
-	public List<HierarchyPropertiesOut> selectHierarchyProperties(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
