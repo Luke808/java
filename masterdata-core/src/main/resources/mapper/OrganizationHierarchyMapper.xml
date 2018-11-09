@@ -54,7 +54,7 @@
     		id = #{id}
   	</update>
   
-  	<update id="deleteOrganizationHierarchy" parameterType="java.lang.Long">
+  	<update id="deleteOrganizationHierarchy">
 	   update 
 	       t_organization_hirerarchy
 	   set 
@@ -84,7 +84,7 @@
 			tenantId
 		FROM
 			t_organization_hirerarchy
-		WHERE 1 = 1 
+		WHERE isDeleted = 0 
 			  ${strParm}
 	</select>
 

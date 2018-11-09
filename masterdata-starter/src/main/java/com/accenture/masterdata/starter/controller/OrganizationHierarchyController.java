@@ -17,6 +17,7 @@ import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
+import com.accenture.smsf.framework.starter.web.principal.PrincipalHolder;
 import com.google.common.collect.Maps;
 
 @RestController
@@ -47,7 +48,7 @@ public class OrganizationHierarchyController {
 	}
 	
 	@PostMapping("/add")
-	public int insert(@RequestBody @RequestParam("org_data") OrganizationHierarchyIn params) {
+	public int insert(@RequestBody OrganizationHierarchyIn params) {
 
 //		//EID
 //		PrincipalHolder.get();
@@ -57,12 +58,15 @@ public class OrganizationHierarchyController {
 	}
 	
 	@PutMapping("/save")
-	public int update(@RequestBody @RequestParam("org_data") OrganizationHierarchyIn params) {
+	public int update(@RequestBody OrganizationHierarchyIn params) {
 		return organization.saveOrganizationHierarchy(params);
 	}
 	
 	@DeleteMapping("/delete")
 	public int delete(@RequestParam("id") Long id) {
-		return organization.deleteOrganizationHierarchy(id);
+		String eid = "1";
+		//PrincipalHolder.get();
+		return organization.deleteOrganizationHierarchy(Long.parseLong(eid),id);
 	}
+	
 }

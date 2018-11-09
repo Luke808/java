@@ -2,6 +2,7 @@ package com.accenture.masterdata.organization.service.impl;
 
 import java.util.List;
 
+import org.omg.CORBA.PrincipalHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
@@ -30,9 +31,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public int deleteOrganizationHierarchy(Long id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteOrganizationHierarchy(Long eid, Long id) {
+		return hierarchyMapper.deleteOrganizationHierarchy(eid, id);
 	}
 
 	@Override

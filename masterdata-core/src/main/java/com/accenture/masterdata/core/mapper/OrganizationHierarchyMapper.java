@@ -48,6 +48,6 @@ public interface OrganizationHierarchyMapper {
 	 * 
 	 * @param param
 	 */
-	public int deleteOrganizationHierarchy(@Param(value="id") Long id);
+	public int deleteOrganizationHierarchy(@Param(value="deleterUserId") Long deleterUserId, @Param(value="id") Long id);
 
 }

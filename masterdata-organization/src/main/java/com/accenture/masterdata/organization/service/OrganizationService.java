@@ -25,7 +25,7 @@ public interface OrganizationService {
 	 * 
 	 * @param id
 	 */
-	public int deleteOrganizationHierarchy(Long id);
+	public int deleteOrganizationHierarchy(Long eid, Long id);
 
 	/**
 	 * 
