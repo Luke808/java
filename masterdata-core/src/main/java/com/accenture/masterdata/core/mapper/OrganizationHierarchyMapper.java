@@ -2,6 +2,8 @@ package com.accenture.masterdata.core.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 
@@ -28,19 +30,19 @@ public interface OrganizationHierarchyMapper {
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationHierarchyOut> selectOrganizatioHierarchyieList(String queryQarm);
+	public List<OrganizationHierarchyOut> selectOrganizatioHierarchyieList(@Param(value="strParm") String strParm);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(String queryQarm);
+	public OrganizationHierarchyOut selectOrganizationHierarchy(@Param(value="strParm") String strParm);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectOrganizationHierarchyCount(String queryQarm);
+	public Integer selectOrganizationHierarchyCount(String queryQarm);
 
 	/**
 	 * 

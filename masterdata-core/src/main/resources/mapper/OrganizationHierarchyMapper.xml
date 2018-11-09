@@ -30,41 +30,41 @@
       	)
   </insert>
   
-  <update id="updateOrganizationHierarchy" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn">
-    update t_organization_hirerarchy
-    <set>
-      <if test="name != null and name != ''">
-        name = #{name},
-      </if>
-      <if test="level != null and level != ''">
-        level = #{level},
-      </if>
-      <if test="icon != null and icon != ''">
-        icon = #{icon},
-      </if>
-      <if test="allowConcurrently != null and allowConcurrently != ''">
-        allowConcurrently = #{allowConcurrently},
-      </if>
-      <if test="lastModifierUserId != null and lastModifierUserId != ''">
-        lastModifierUserId = #{lastModifierUserId},
-      </if>
-	  lastModificationTime = now()
-    </set>
-    where
-    	id = #{id}
-  </update>
+  	<update id="updateOrganizationHierarchy" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn">
+	    update t_organization_hirerarchy
+	    <set>
+	      <if test="name != null and name != ''">
+	        name = #{name},
+	      </if>
+	      <if test="level != null and level != ''">
+	        level = #{level},
+	      </if>
+	      <if test="icon != null and icon != ''">
+	        icon = #{icon},
+	      </if>
+	      <if test="allowConcurrently != null and allowConcurrently != ''">
+	        allowConcurrently = #{allowConcurrently},
+	      </if>
+	      <if test="lastModifierUserId != null and lastModifierUserId != ''">
+	        lastModifierUserId = #{lastModifierUserId},
+	      </if>
+		  lastModificationTime = now()
+	    </set>
+	    where
+    		id = #{id}
+  	</update>
   
-  <update id="deleteOrganizationHierarchy" parameterType="int">
-   update 
-       t_organization_hirerarchy
-   set 
-   	   isDeleted = 1,
-	   deleterUserId = #{deleterUserId},
-	   deletionTime = now()
-   where 
-   	   id = #{id}
-   	   and isDeleted = 0
-   </update>
+  	<update id="deleteOrganizationHierarchy" parameterType="int">
+	   update 
+	       t_organization_hirerarchy
+	   set 
+	   	   isDeleted = 1,
+		   deleterUserId = #{deleterUserId},
+		   deletionTime = now()
+	   where 
+	   	   id = #{id}
+	   	   and isDeleted = 0
+   	</update>
    
 	<select id="selectOrganizatioHierarchyieList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
 		SELECT
@@ -88,7 +88,7 @@
 			  ${strParm}
 	</select>
 
-	<select id="selectOrganizationHierarchyCount" parameterType="String" resultType="int">
+	<select id="selectOrganizationHierarchyCount" parameterType="String" resultType="java.lang.Integer">
 		SELECT
 			count(0) total
 		FROM
@@ -96,4 +96,5 @@
 		WHERE 1 = 1
 			${strParm}
 	</select>
+	
 </mapper>

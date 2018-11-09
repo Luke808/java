@@ -32,7 +32,7 @@ public class OrganizationHierarchyController {
 		return organization.selectOrganizationHierarchy(id);
 	}
 	
-	@GetMapping("/getList")
+	@PostMapping("/getList")
 	public Map<String, Object> getList(@RequestBody QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationHierCount(param);

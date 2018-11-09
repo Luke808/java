@@ -162,7 +162,7 @@
 		</if>
   </select>
   
-  <select id="selectEmployeeList" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
+  <select id="selectEmployee" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
 	SELECT
 		ep.id,
 		ep.`name`,
