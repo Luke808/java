@@ -32,6 +32,6 @@ smsf:
       connections:
         default:
           # 正式环境下的配置
-          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&characterEncoding=utf-8
+          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
           username: ${smsf.data.database1.username}
           password: ${smsf.data.database1.password}

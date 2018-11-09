@@ -53,6 +53,6 @@ public interface OrganizationMapper {
 	 * 
 	 * @param id
 	 */
-	public List<OrganizationOut> selectOrganizationChild(int id);
+	public List<OrganizationOut> selectOrganizationChild(Long id);
 
 }

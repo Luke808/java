@@ -27,7 +27,7 @@ public class OrganizationController {
 	OrganizationService organization;
 
 	@GetMapping("/get")
-	public OrganizationOut get(@RequestParam("id") int id) {
+	public OrganizationOut get(@RequestParam("id") Long id) {
 		return organization.selectOrganization(id);
 	}
 	
@@ -54,7 +54,7 @@ public class OrganizationController {
 	}
 	
 	@DeleteMapping("/delete")
-	public int delete(@RequestParam("id")int id) {
+	public int delete(@RequestParam("id") Long id) {
 		return organization.deleteOrganization(id);
 	}
 }

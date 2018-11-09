@@ -54,7 +54,7 @@
     		id = #{id}
   	</update>
   
-  	<update id="deleteOrganizationHierarchy" parameterType="int">
+  	<update id="deleteOrganizationHierarchy" parameterType="java.lang.Long">
 	   update 
 	       t_organization_hirerarchy
 	   set 
@@ -62,7 +62,7 @@
 		   deleterUserId = #{deleterUserId},
 		   deletionTime = now()
 	   where 
-	   	   id = #{id}
+	   	   id = #{id,jdbcType=BIGINT}
 	   	   and isDeleted = 0
    	</update>
    
@@ -87,6 +87,32 @@
 		WHERE 1 = 1 
 			  ${strParm}
 	</select>
+
+	<select id="selectOrganizationHierarchy" parameterType="java.lang.Long" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
+		SELECT
+			id					as id,
+			level				as level,
+			name				as name,
+			icon				as icon,
+			allowConcurrently	as allowConcurrently,
+			comments			as comments,
+			creatorUserId		as creatorUserId,
+			'' 					as creatorUserName,
+			creationTime		as creationTime,
+			lastModifierUserId	as lastModifierUserId,
+			'' 						as lastModifierUserName,
+			lastModificationTime	as lastModificationTime,
+			isDeleted			as isDeleted,
+			deleterUserId		as deleterUserId,
+			''					as deleterUserName,
+			deletionTime		as deletionTime,
+			tenantId			as tenantId,
+			'' 					as tenantName
+		FROM
+			t_organization_hirerarchy
+		WHERE id = #{id,jdbcType=BIGINT}
+	</select>
+
 
 	<select id="selectOrganizationHierarchyCount" parameterType="String" resultType="java.lang.Integer">
 		SELECT

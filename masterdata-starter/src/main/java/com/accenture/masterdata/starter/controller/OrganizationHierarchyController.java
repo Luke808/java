@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,9 +26,12 @@ public class OrganizationHierarchyController {
 	@Autowired
 	OrganizationService organization;
 
-	@GetMapping("/get")
-	public OrganizationHierarchyOut get(@RequestParam("id") int id) {
-		return organization.selectOrganizationHierarchy(id);
+	@PostMapping("/get")
+	public Map<String, Object> get(@RequestParam("id") Long id) {
+		OrganizationHierarchyOut hierarchies = organization.selectOrganizationHierarchy(id);
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("data", hierarchies);
+		return result;
 	}
 	
 	@PostMapping("/getList")
@@ -46,6 +48,11 @@ public class OrganizationHierarchyController {
 	
 	@PostMapping("/add")
 	public int insert(@RequestBody @RequestParam("org_data") OrganizationHierarchyIn params) {
+
+//		//EID
+//		PrincipalHolder.get();
+//		// Tenant id
+//		TenantHolder.get();
 		return organization.addOrganizationHierarchy(params);
 	}
 	
@@ -55,7 +62,7 @@ public class OrganizationHierarchyController {
 	}
 	
 	@DeleteMapping("/delete")
-	public int delete(@RequestParam("id")int id) {
+	public int delete(@RequestParam("id") Long id) {
 		return organization.deleteOrganizationHierarchy(id);
 	}
 }

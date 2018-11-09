@@ -1,7 +1,6 @@
 package com.accenture.masterdata.core.outEntity;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
@@ -30,5 +29,5 @@ public class OrganizationHierarchyOut {
 	private Date deletionTime;
 	private int tenantId;
 	private String tenantName;
-
+	
 }

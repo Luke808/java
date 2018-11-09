@@ -17,6 +17,8 @@ import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.EmployeeOut;
 import com.accenture.masterdata.employee.service.EmployeeService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
+import com.accenture.smsf.framework.starter.web.principal.PrincipalHolder;
+import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.google.common.collect.Maps;
 
 @RestController

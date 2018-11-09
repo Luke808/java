@@ -30,7 +30,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public int deleteOrganizationHierarchy(int id) {
+	public int deleteOrganizationHierarchy(Long id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -42,8 +42,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public OrganizationHierarchyOut selectOrganizationHierarchy(int id) {
-		return null;
+	public OrganizationHierarchyOut selectOrganizationHierarchy(Long id) {
+		return hierarchyMapper.selectOrganizationHierarchy(id);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public int deleteOrganization(int id) {
+	public int deleteOrganization(Long id) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -84,7 +84,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public OrganizationOut selectOrganization(int id) {
+	public OrganizationOut selectOrganization(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

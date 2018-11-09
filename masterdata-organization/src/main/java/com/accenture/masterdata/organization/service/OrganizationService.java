@@ -25,7 +25,7 @@ public interface OrganizationService {
 	 * 
 	 * @param id
 	 */
-	public int deleteOrganizationHierarchy(int id);
+	public int deleteOrganizationHierarchy(Long id);
 
 	/**
 	 * 
@@ -37,7 +37,7 @@ public interface OrganizationService {
 	 * 
 	 * @param id
 	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(int id);
+	public OrganizationHierarchyOut selectOrganizationHierarchy(Long id);
 
 	/**
 	 * 
@@ -67,7 +67,7 @@ public interface OrganizationService {
 	 * 
 	 * @param id
 	 */
-	public int deleteOrganization(int id);
+	public int deleteOrganization(Long id);
 
 	/**
 	 * 
@@ -79,7 +79,7 @@ public interface OrganizationService {
 	 * 
 	 * @param id
 	 */
-	public OrganizationOut selectOrganization(int id);
+	public OrganizationOut selectOrganization(Long id);
 
 	/**
 	 * 

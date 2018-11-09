@@ -18,7 +18,7 @@ public class BuilderParam {
 		if(query.getSorting() != null && query.getSorting() != "") {
 			strCurrentRules += " ORDER BY " + query.getSorting();
 		}
-		strCurrentRules += " offset " + (query.getCurrentpage() - 1) * query.getRowsperpage() + " rows fetch next " + query.getRowsperpage() + " rows only";
+		strCurrentRules += " limit " + (query.getCurrentpage() - 1) * query.getRowsperpage() + " , " + query.getRowsperpage();
 		return strCurrentRules;
 	}
 	

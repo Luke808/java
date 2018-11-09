@@ -36,18 +36,18 @@ public interface OrganizationHierarchyMapper {
 	 * 
 	 * @param param
 	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(@Param(value="strParm") String strParm);
+	public OrganizationHierarchyOut selectOrganizationHierarchy(@Param(value="id") Long id);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public Integer selectOrganizationHierarchyCount(String queryQarm);
+	public Integer selectOrganizationHierarchyCount(@Param(value="strParm") String queryQarm);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public int deleteOrganizationHierarchy(int param);
+	public int deleteOrganizationHierarchy(@Param(value="id") Long id);
 
 }
