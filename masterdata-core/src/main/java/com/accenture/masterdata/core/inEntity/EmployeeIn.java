@@ -10,24 +10,25 @@ import lombok.Data;
  */
 @Data
 public class EmployeeIn {
-
+	private Long id;
 	private String name;
-	private String cardNo;
-	private int eId;
-	private int organizationId;
-	private String sex;
+	private String eId;
 	private String email;
-	private String tel;
+	private Long userId;
+	private Long organizationId;
+	private String cardNo;
+	private String sex;
 	private String address;
+	private String tel;
+	private String orgLikeCode;
 	private String comment;
-	private int userId;
-	private int creatorUserId;
+	private Long creatorUserId;
 	private Date creationTime;
-	private int lastModifierUserId;
-	private int lastModificationTime;
-	private boolean isDeleted;
-	private int deleterUserId;
+	private Long lastModifierUserId;
+	private Date lastModificationTime;
+	private int isDeleted;
+	private Long deleterUserId;
 	private Date deletionTime;
-	private int tenantId;
+	private Long tenantId;
 
 }

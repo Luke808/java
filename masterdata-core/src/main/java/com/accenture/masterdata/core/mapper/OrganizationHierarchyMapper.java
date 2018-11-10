@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
-import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 
 /**
@@ -57,7 +55,7 @@ public interface OrganizationHierarchyMapper {
 	 * @param param
 	 */
 	public void batchDeleteOrganizationHierarchy(@Param(value="deleterUserId") Long deleterUserId, @Param(value="idList") List<Long> idList);
-	
+
 	/**
 	 * 
 	 * @param param

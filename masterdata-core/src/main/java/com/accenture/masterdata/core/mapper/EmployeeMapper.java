@@ -25,8 +25,16 @@ public interface EmployeeMapper {
 	 * 
 	 * @param id
 	 */
-	public int deleteEmployee(int id);
+	public int deleteEmployee(@Param(value="id") Long id, @Param(value="deleterUserId") Long uid);
 
+
+	/**
+	 * 
+	 * @param idList: keylist
+	 * 		  deleterUserId: user'id to do delete
+	 */
+	public void batchDeleteEmployees(@Param(value="idList") List<Long> idList, @Param(value="deleterUserId") Long deleterUserId );
+	
 	/**
 	 * 
 	 * @param params
@@ -37,13 +45,13 @@ public interface EmployeeMapper {
 	 * 
 	 * @param params
 	 */
-	public List<EmployeeOut> selectEmployeeList(QueryParam params);
+	public List<EmployeeOut> selectEmployeeList(@Param(value="strParm") String strParm);
 
 	/**
 	 * 
 	 * @param id
 	 */
-	public EmployeeOut selectEmployee(@Param(value="id")int id);
+	public EmployeeOut selectEmployee(@Param(value="id") Long id);
 
 	/**
 	 * 
@@ -51,4 +59,15 @@ public interface EmployeeMapper {
 	 */
 	public int selectEmployeeCount(QueryParam params);
 
+	/**
+	 * 
+	 * @param param
+	 */
+	public int checkEmployeeEid(@Param(value="id") Long id, @Param(value="eid") String eid);
+
+	/**
+	 * 
+	 * @param param
+	 */
+	public int checkEmployeeName(@Param(value="id") Long id, @Param(value="name") String name);
 }

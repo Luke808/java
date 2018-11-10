@@ -22,5 +22,9 @@
 	    <groupId>com.accenture.masterdata</groupId>
 	    <artifactId>masterdata-core</artifactId>
     </dependency>
+    <dependency>
+	    <groupId>com.accenture.masterdata</groupId>
+	    <artifactId>masterdata-common</artifactId>
+    </dependency>
   </dependencies>
 </project>

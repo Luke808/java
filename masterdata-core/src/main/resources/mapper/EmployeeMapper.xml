@@ -107,7 +107,7 @@
     	id = #{id}
   </update>
   
-  <update id="deleteEmployee" parameterType="int">
+  <update id="deleteEmployee">
    update 
        t_employee
    set 
@@ -115,39 +115,52 @@
 	   deleterUserId = #{deleterUserId},
 	   deletionTime = now()
    where 
-   	   id = #{id}
+	   id = #{id,jdbcType=BIGINT}
    	   and isDeleted = 0
    </update>
   
-  <select id="selectEmployeeList" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
+  
+	<update id="batchDeleteEmployees">
+	   update 
+	       t_employee
+	   set 
+	   	   isDeleted = 1,
+		   deleterUserId = #{deleterUserId},
+		   deletionTime = now()
+	    where Id in (
+	    		<foreach collection ="idList" item="idItem" index= "index" separator =",">
+	                	#{idItem}
+	             </foreach >
+			)
+	</update>
+  
+  <select id="selectEmployeeList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
 	SELECT
 		ep.id,
-		ep.`name`,
-		ep.address,
-		ep.cardNo,
-		ep.`comment`,
-		ep.creationTime,
-		ep.creatorUserId,
-		ep.deleterUserId,
-		ep.deletionTime,
+		ep.name,
 		ep.eId,
 		ep.email,
-		ep.isDeleted,
-		ep.lastModificationTime,
-		ep.lastModifierUserId,
-		ep.organizationId,
-		ep.sex,
-		ep.tel,
-		ep.tenantId,
 		ep.userId,
+		ep.organizationId,
+		ep.cardNo,
+		ep.sex,
+		ep.address,
+		ep.tel,
+		ep.comment,
+		ep.creatorUserId,
+		ep.creationTime,
+		ep.lastModifierUserId,
+		ep.lastModificationTime,
+		ep.isDeleted,
+		ep.deleterUserId,
+		ep.deletionTime,
+		ep.tenantId,
 		(select GROUP_CONCAT(`name` separator '-') from t_organization where id in (ep.orgLikeCode))
 	FROM
 	  t_employee ep
 	WHERE
 		ep.isDeleted = 0
-		<if test=" strParm != null and strParm != ''">
 		${strParm}
-		</if>
   </select>
   
   <select id="selectEmployeeCount" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="int">
@@ -162,34 +175,53 @@
 		</if>
   </select>
   
-  <select id="selectEmployee" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
+  <select id="selectEmployee" parameterType="java.lang.Long" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
 	SELECT
 		ep.id,
-		ep.`name`,
-		ep.address,
-		ep.cardNo,
-		ep.`comment`,
-		ep.creationTime,
-		ep.creatorUserId,
-		ep.deleterUserId,
-		ep.deletionTime,
+		ep.name,
 		ep.eId,
 		ep.email,
-		ep.isDeleted,
-		ep.lastModificationTime,
-		ep.lastModifierUserId,
-		ep.organizationId,
-		ep.sex,
-		ep.tel,
-		ep.tenantId,
 		ep.userId,
+		ep.organizationId,
+		ep.cardNo,
+		ep.sex,
+		ep.address,
+		ep.tel,
+		ep.comment,
+		ep.creatorUserId,
+		ep.creationTime,
+		ep.lastModifierUserId,
+		ep.lastModificationTime,
+		ep.isDeleted,
+		ep.deleterUserId,
+		ep.deletionTime,
+		ep.tenantId,
 		(select GROUP_CONCAT(`name` separator '-') from t_organization where id in (ep.orgLikeCode))
 	FROM
 	  t_employee ep
-	WHERE
-		ep.isDeleted = 0
-		<if test=" id != null and id != ''">
-			id = #{id}
-		</if>
+	WHERE ep.id = #{id,jdbcType=BIGINT}
   </select>
+  
+  
+	<select id="checkEmployeeEid" resultType="java.lang.Integer">
+		SELECT
+			count(0) total
+		FROM
+			t_employee
+		WHERE isDeleted = 0
+		  and id != #{id,jdbcType=BIGINT}
+		  and eid = #{level,jdbcType=NVARCHAR}
+	</select>
+	
+	<select id="checkEmployeeName" resultType="java.lang.Integer">
+		SELECT
+			count(0) total
+		FROM
+			t_organization_hirerarchy
+		WHERE t_employee = 0
+		  and id != #{id,jdbcType=BIGINT}
+		  and name = #{name,jdbcType=NVARCHAR}
+	</select>
+	
+	
 </mapper>

@@ -10,26 +10,26 @@ import lombok.Data;
  */
 @Data
 public class EmployeeOut {
-
-	private int id;
+	private Long id;
 	private String name;
-	private int userId;
-	private int organizationId;
-	private String comment;
-	private String cardNo;
-	private int eId;
-	private String sex;
+	private String eId;
 	private String email;
-	private String tel;
+	private Long userId;
+	private Long organizationId;
+	private String cardNo;
+	private String sex;
 	private String address;
-	private int creatorUserId;
+	private String tel;
+	private String orgLikeCode;
+	private String comment;
+	private Long creatorUserId;
 	private Date creationTime;
-	private int lastModifierUserId;
-	private int lastModificationTime;
-	private boolean isDeleted;
-	private int deleterUserId;
+	private Long lastModifierUserId;
+	private Date lastModificationTime;
+	private int isDeleted;
+	private Long deleterUserId;
 	private Date deletionTime;
-	private int tenantId;
+	private Long tenantId;
 	private String userName;
 	private String creatorName;
 	private String deleterName;

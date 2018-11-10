@@ -3,6 +3,7 @@ package com.accenture.masterdata.organization.service;
 import java.util.List;
 
 import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
+import com.accenture.masterdata.core.inEntity.EmployeeIn;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
@@ -21,6 +22,12 @@ public interface OrganizationService {
 	 * @param params
 	 */
 	public void createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params) throws Exception ;
+
+	/**
+	 * 
+	 * @param inputInfo
+	 */
+	void duplicationCheck(OrganizationHierarchyIn params) throws Exception;
 
 	/**
 	 * 

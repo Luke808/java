@@ -46,6 +46,7 @@ public class OrganizationHierarchyController {
 		
 		return result;
 	}
+	
 	@PutMapping("/createOrUpdate")
 	public void createOrUpdateOrganizationHierarchy(@RequestBody OrganizationHierarchyIn params) throws Exception {
 		try
@@ -63,6 +64,7 @@ public class OrganizationHierarchyController {
 		String eid = "1";
 		return organization.deleteOrganizationHierarchy(Long.parseLong(eid),id);
 	}
+	
 	@PostMapping("/batchDelete")
 	public void batchDeleteOrganizationHierarchy(@RequestBody BatchDeleteInput idList) {
 		//PrincipalHolder.get();

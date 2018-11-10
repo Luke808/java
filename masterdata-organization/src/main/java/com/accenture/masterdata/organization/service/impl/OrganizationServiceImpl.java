@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
 import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
+import com.accenture.masterdata.core.inEntity.EmployeeIn;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
@@ -34,16 +35,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 			//new
 			params.setId(0L);
 			params.setIsDeleted(0);
-			//level check
-			if (hierarchyMapper.checkOrganizationHierLevel(params.getId(), params.getLevel())>0)
-			{
-				throw new ApplicationException(90001);
-			}
-			//name check
-			if (hierarchyMapper.checkOrganizationHierName(params.getId(), params.getName())>0)
-			{
-				throw new ApplicationException(90002);
-			}
+			params.setCreationTime(new Date());
+			params.setCreatorUserId(1L);
+			duplicationCheck(params);
 			hierarchyMapper.insertOrganizationHierarchy(params);
 		}
 		else
@@ -52,21 +46,28 @@ public class OrganizationServiceImpl implements OrganizationService {
 			Date date = new Date();  
 			params.setLastModificationTime(date);
 			params.setLastModifierUserId(1L);
-			//level check
-			if (hierarchyMapper.checkOrganizationHierLevel(params.getId(), params.getLevel())>0)
-			{
-				throw new ApplicationException(90001);
-			}
-			//name check
-			if (hierarchyMapper.checkOrganizationHierName(params.getId(), params.getName())>0)
-			{
-				throw new ApplicationException(90002);
-			}
+			duplicationCheck(params);
 			hierarchyMapper.updateOrganizationHierarchy(params);
 		}
 		
 	}
 	
+
+	@Override
+	public void duplicationCheck(OrganizationHierarchyIn params) throws Exception {
+
+		//level check
+		if (hierarchyMapper.checkOrganizationHierLevel(params.getId(), params.getLevel())>0)
+		{
+			throw new ApplicationException(90001);
+		}
+		//name check
+		if (hierarchyMapper.checkOrganizationHierName(params.getId(), params.getName())>0)
+		{
+			throw new ApplicationException(90002);
+		}	
+	}
+
 	@Override
 	public int deleteOrganizationHierarchy(Long eid, Long id) {
 		return hierarchyMapper.deleteOrganizationHierarchy(eid, id);
