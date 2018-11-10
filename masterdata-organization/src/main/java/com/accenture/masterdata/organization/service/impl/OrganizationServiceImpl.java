@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
+import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
@@ -14,6 +15,7 @@ import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
+import com.accenture.smsf.model.exception.ApplicationException;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -25,14 +27,24 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private OrganizationHierarchyMapper hierarchyMapper;
 	
 	@Override
-	public OrganizationHierarchyOut createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params) {
+	public void createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params)  throws Exception {
 
 		long id = 0;
-		if(params.getId() == 0) {
+		if(params.getId() == null || params.getId() == 0) {
 			//new
 			params.setId(0L);
 			params.setIsDeleted(0);
-			id = hierarchyMapper.insertOrganizationHierarchy(params);
+			//level check
+			if (hierarchyMapper.checkOrganizationHierLevel(params.getId(), params.getLevel())>0)
+			{
+				throw new ApplicationException(90001);
+			}
+			//name check
+			if (hierarchyMapper.checkOrganizationHierName(params.getId(), params.getName())>0)
+			{
+				throw new ApplicationException(90002);
+			}
+			hierarchyMapper.insertOrganizationHierarchy(params);
 		}
 		else
 		{
@@ -40,16 +52,29 @@ public class OrganizationServiceImpl implements OrganizationService {
 			Date date = new Date();  
 			params.setLastModificationTime(date);
 			params.setLastModifierUserId(1L);
+			//level check
+			if (hierarchyMapper.checkOrganizationHierLevel(params.getId(), params.getLevel())>0)
+			{
+				throw new ApplicationException(90001);
+			}
+			//name check
+			if (hierarchyMapper.checkOrganizationHierName(params.getId(), params.getName())>0)
+			{
+				throw new ApplicationException(90002);
+			}
 			hierarchyMapper.updateOrganizationHierarchy(params);
-			id = params.getId();
 		}
 		
-		return hierarchyMapper.selectOrganizationHierarchy(id);
 	}
 	
 	@Override
 	public int deleteOrganizationHierarchy(Long eid, Long id) {
 		return hierarchyMapper.deleteOrganizationHierarchy(eid, id);
+	}
+	
+	@Override
+	public void batchDeleteOrganizationHierarchy(Long eid,BatchDeleteInput idList) {
+		hierarchyMapper.batchDeleteOrganizationHierarchy(eid, idList.getIds());
 	}
 	
 	@Override

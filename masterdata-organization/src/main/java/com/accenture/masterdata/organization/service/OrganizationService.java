@@ -2,6 +2,7 @@ package com.accenture.masterdata.organization.service;
 
 import java.util.List;
 
+import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
@@ -19,7 +20,7 @@ public interface OrganizationService {
 	 * 
 	 * @param params
 	 */
-	public OrganizationHierarchyOut createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params);
+	public void createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params) throws Exception ;
 
 	/**
 	 * 
@@ -27,6 +28,13 @@ public interface OrganizationService {
 	 */
 	public int deleteOrganizationHierarchy(Long eid, Long id);
 
+	/**
+	 * 
+	 * @param id
+	 */
+    //批量删除
+	public void batchDeleteOrganizationHierarchy(Long eid, BatchDeleteInput idList);
+    
 	/**
 	 * 
 	 * @param id

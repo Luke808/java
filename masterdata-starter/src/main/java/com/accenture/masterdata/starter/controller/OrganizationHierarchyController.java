@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
-import com.accenture.smsf.framework.starter.web.principal.PrincipalHolder;
 import com.google.common.collect.Maps;
 
 @RestController
@@ -47,11 +47,14 @@ public class OrganizationHierarchyController {
 		return result;
 	}
 	@PutMapping("/createOrUpdate")
-	public Map<String, Object> createOrUpdateOrganizationHierarchy(@RequestBody OrganizationHierarchyIn params) {
-		OrganizationHierarchyOut hierarchies = organization.createOrUpdateOrganizationHierarchy(params);
-		Map<String, Object> result = Maps.newHashMap();
-		result.put("data", hierarchies);
-		return result;
+	public void createOrUpdateOrganizationHierarchy(@RequestBody OrganizationHierarchyIn params) throws Exception {
+		try
+		{
+			organization.createOrUpdateOrganizationHierarchy(params);
+		}
+		catch (Exception ex) {
+			throw ex;
+		}
 	}
 	
 	@DeleteMapping("/delete")
@@ -59,6 +62,12 @@ public class OrganizationHierarchyController {
 		//PrincipalHolder.get();
 		String eid = "1";
 		return organization.deleteOrganizationHierarchy(Long.parseLong(eid),id);
+	}
+	@PostMapping("/batchDelete")
+	public void batchDeleteOrganizationHierarchy(@RequestBody BatchDeleteInput idList) {
+		//PrincipalHolder.get();
+		String eid = "1";
+		organization.batchDeleteOrganizationHierarchy(Long.parseLong(eid),idList);
 	}
 	
 }

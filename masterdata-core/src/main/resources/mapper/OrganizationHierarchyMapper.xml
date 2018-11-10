@@ -42,7 +42,7 @@
 	      <if test="name != null and name != ''">
 	        name = #{name},
 	      </if>
-	      <if test="level != null and level != ''">
+	      <if test="level != null">
 	        level = #{level},
 	      </if>
 	      <if test="icon != null and icon != ''">
@@ -51,10 +51,10 @@
 	      <if test="comments != null and comments != ''">
 	        comments = #{comments},
 	      </if>
-	      <if test="allowConcurrently != null and allowConcurrently != ''">
+	      <if test="allowConcurrently != null">
 	        allowConcurrently = #{allowConcurrently},
 	      </if>
-	      <if test="lastModifierUserId != null and lastModifierUserId != ''">
+	      <if test="lastModifierUserId != null">
 	        lastModifierUserId = #{lastModifierUserId},
 	      </if>
 		  lastModificationTime = now()
@@ -74,6 +74,20 @@
 	   	   id = #{id,jdbcType=BIGINT}
 	   	   and isDeleted = 0
    	</update>
+   
+	<update id="batchDeleteOrganizationHierarchy">
+	   update 
+	       t_organization_hirerarchy
+	   set 
+	   	   isDeleted = 1,
+		   deleterUserId = #{deleterUserId},
+		   deletionTime = now()
+	    where Id in (
+	    		<foreach collection ="idList" item="idItem" index= "index" separator =",">
+	                	#{idItem}
+	             </foreach >
+			)
+	</update>
    
 	<select id="selectOrganizatioHierarchyieList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
 		SELECT
@@ -129,6 +143,26 @@
 			t_organization_hirerarchy
 		WHERE 1 = 1
 			${strParm}
+	</select>
+	
+	<select id="checkOrganizationHierLevel" resultType="java.lang.Integer">
+		SELECT
+			count(0) total
+		FROM
+			t_organization_hirerarchy
+		WHERE isDeleted = 0
+		  and id != #{id,jdbcType=BIGINT}
+		  and level = #{level,jdbcType=BIGINT}
+	</select>
+	
+	<select id="checkOrganizationHierName" resultType="java.lang.Integer">
+		SELECT
+			count(0) total
+		FROM
+			t_organization_hirerarchy
+		WHERE isDeleted = 0
+		  and id != #{id,jdbcType=BIGINT}
+		  and name = #{name,jdbcType=NVARCHAR}
 	</select>
 	
 </mapper>

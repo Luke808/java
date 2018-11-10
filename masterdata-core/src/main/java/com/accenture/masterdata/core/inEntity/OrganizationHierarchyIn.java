@@ -14,7 +14,7 @@ public class OrganizationHierarchyIn {
 
 	private Long id;
 	private String name;
-	private int level;
+	private Long level;
 	private String icon;
 	private int allowConcurrently;
 	private String comments;
