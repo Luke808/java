@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class OrganizationHierarchyIn {
 
-	private int id;
+	private Long id;
 	private String name;
 	private int level;
 	private String icon;
@@ -20,11 +20,11 @@ public class OrganizationHierarchyIn {
 	private String comments;
 	private Long creatorUserId;
 	private Date creationTime;
-	private int lastModifierUserId;
+	private Long lastModifierUserId;
 	private Date lastModificationTime;
 	private int isDeleted;
-	private int deleterUserId;
+	private Long deleterUserId;
 	private Date deletionTime;
-	private int tenantId;
+	private Long tenantId;
 	
 }

@@ -1,8 +1,8 @@
 package com.accenture.masterdata.organization.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
-import org.omg.CORBA.PrincipalHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
@@ -25,25 +25,51 @@ public class OrganizationServiceImpl implements OrganizationService {
 	private OrganizationHierarchyMapper hierarchyMapper;
 	
 	@Override
-	public int addOrganizationHierarchy(OrganizationHierarchyIn params) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public OrganizationHierarchyOut createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params) {
 
+		long id = 0;
+		if(params.getId() == 0) {
+			//new
+			params.setId(0L);
+			params.setIsDeleted(0);
+			id = hierarchyMapper.insertOrganizationHierarchy(params);
+		}
+		else
+		{
+			//update
+			Date date = new Date();  
+			params.setLastModificationTime(date);
+			params.setLastModifierUserId(1L);
+			hierarchyMapper.updateOrganizationHierarchy(params);
+			id = params.getId();
+		}
+		
+		return hierarchyMapper.selectOrganizationHierarchy(id);
+	}
+	
 	@Override
 	public int deleteOrganizationHierarchy(Long eid, Long id) {
 		return hierarchyMapper.deleteOrganizationHierarchy(eid, id);
 	}
-
-	@Override
-	public int saveOrganizationHierarchy(OrganizationHierarchyIn params) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	
 	@Override
 	public OrganizationHierarchyOut selectOrganizationHierarchy(Long id) {
-		return hierarchyMapper.selectOrganizationHierarchy(id);
+
+		OrganizationHierarchyOut hierarchy = new OrganizationHierarchyOut();
+		if(id == 0) {
+			hierarchy.setId(0L);
+			hierarchy.setAllowConcurrently(0);
+			hierarchy.setIcon("");
+			hierarchy.setComments("");
+			hierarchy.setTenantId(1L);
+			hierarchy.setCreationTime(new Date());
+			hierarchy.setCreatorUserId(1L);
+		}
+		else {
+			hierarchy = hierarchyMapper.selectOrganizationHierarchy(id);
+		}
+		
+		return hierarchy;
 	}
 
 	@Override

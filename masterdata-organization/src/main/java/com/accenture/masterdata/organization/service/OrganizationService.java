@@ -19,19 +19,13 @@ public interface OrganizationService {
 	 * 
 	 * @param params
 	 */
-	public int addOrganizationHierarchy(OrganizationHierarchyIn params);
+	public OrganizationHierarchyOut createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params);
 
 	/**
 	 * 
 	 * @param id
 	 */
 	public int deleteOrganizationHierarchy(Long eid, Long id);
-
-	/**
-	 * 
-	 * @param params
-	 */
-	public int saveOrganizationHierarchy(OrganizationHierarchyIn params);
 
 	/**
 	 * 

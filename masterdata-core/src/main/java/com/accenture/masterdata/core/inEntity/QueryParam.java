@@ -10,9 +10,15 @@ public class QueryParam {
 	
 	//排序
 	public String sorting;
+
+	//第几页
+	public int currentpage;
 	
+	//每页几条数据
+	public int rowsperpage;
+
 	public void setSorting(String sorting) {
-		
+		this.sorting = sorting;
 	}
 
 	public FilterRule getFilterrule() {
@@ -46,11 +52,5 @@ public class QueryParam {
 		}
 		return this.sorting;
 	}
-
-	//第几页
-	public int currentpage;
-	
-	//每页几条数据
-	public int rowsperpage;
 
 }

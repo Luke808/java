@@ -9,6 +9,9 @@
 	    	<if test="icon != null and icon != ''"> 
 	    	icon,
 	    	</if>
+	    	<if test="comments != null and comments != ''"> 
+	    	comments,
+	    	</if>
 	      	allowConcurrently, 
 			<if test="creatorUserId != null and creatorUserId != ''">
 	      	creatorUserId,
@@ -20,6 +23,9 @@
 	    	#{level},
 	    	<if test="icon != null and icon != ''"> 
 	    	#{icon},
+	    	</if>
+	    	<if test="comments != null and comments != ''"> 
+	    	#{comments},
 	    	</if>
 	    	#{allowConcurrently},
 			<if test="creatorUserId != null and creatorUserId != ''">
@@ -41,6 +47,9 @@
 	      </if>
 	      <if test="icon != null and icon != ''">
 	        icon = #{icon},
+	      </if>
+	      <if test="comments != null and comments != ''">
+	        comments = #{comments},
 	      </if>
 	      <if test="allowConcurrently != null and allowConcurrently != ''">
 	        allowConcurrently = #{allowConcurrently},
@@ -112,7 +121,6 @@
 			t_organization_hirerarchy
 		WHERE id = #{id,jdbcType=BIGINT}
 	</select>
-
 
 	<select id="selectOrganizationHierarchyCount" parameterType="String" resultType="java.lang.Integer">
 		SELECT

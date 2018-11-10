@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class OrganizationHierarchyOut {
 
-	private int id;
+	private Long id;
 	private String name;
 	private int level;
 	private String icon;
@@ -20,14 +20,14 @@ public class OrganizationHierarchyOut {
 	private Long creatorUserId;
 	private String creatorUserName;
 	private Date creationTime;
-	private int lastModifierUserId;
+	private Long lastModifierUserId;
 	private String lastModifierUserName;
 	private Date lastModificationTime;
 	private int isDeleted;
 	private String deleterUserName;
-	private int deleterUserId;
+	private Long deleterUserId;
 	private Date deletionTime;
-	private int tenantId;
+	private Long tenantId;
 	private String tenantName;
 	
 }

@@ -46,26 +46,18 @@ public class OrganizationHierarchyController {
 		
 		return result;
 	}
-	
-	@PostMapping("/add")
-	public int insert(@RequestBody OrganizationHierarchyIn params) {
-
-//		//EID
-//		PrincipalHolder.get();
-//		// Tenant id
-//		TenantHolder.get();
-		return organization.addOrganizationHierarchy(params);
-	}
-	
-	@PutMapping("/save")
-	public int update(@RequestBody OrganizationHierarchyIn params) {
-		return organization.saveOrganizationHierarchy(params);
+	@PutMapping("/createOrUpdate")
+	public Map<String, Object> createOrUpdateOrganizationHierarchy(@RequestBody OrganizationHierarchyIn params) {
+		OrganizationHierarchyOut hierarchies = organization.createOrUpdateOrganizationHierarchy(params);
+		Map<String, Object> result = Maps.newHashMap();
+		result.put("data", hierarchies);
+		return result;
 	}
 	
 	@DeleteMapping("/delete")
 	public int delete(@RequestParam("id") Long id) {
-		String eid = "1";
 		//PrincipalHolder.get();
+		String eid = "1";
 		return organization.deleteOrganizationHierarchy(Long.parseLong(eid),id);
 	}
 	
