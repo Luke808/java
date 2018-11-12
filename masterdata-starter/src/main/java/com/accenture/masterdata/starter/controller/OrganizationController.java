@@ -21,7 +21,7 @@ import com.google.common.collect.Maps;
 @RestController
 @Validated
 @RequestMapping("/masterdata/org")
-public class OrganizationController {
+public class OrganizationController extends baseController {
 	
 	@Autowired
 	OrganizationService organization;

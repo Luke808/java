@@ -33,32 +33,32 @@ public interface OrganizationService {
 	 * 
 	 * @param id
 	 */
-	public int deleteOrganizationHierarchy(Long eid, Long id);
+	public int deleteOrganizationHierarchy(Long tenantid, Long eid, Long id);
 
 	/**
 	 * 
 	 * @param id
 	 */
     //批量删除
-	public void batchDeleteOrganizationHierarchy(Long eid, BatchDeleteInput idList);
+	public void batchDeleteOrganizationHierarchy(Long tenantid, Long eid, BatchDeleteInput idList);
     
 	/**
 	 * 
 	 * @param id
 	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(Long id);
+	public OrganizationHierarchyOut selectOrganizationHierarchy(Long tenantid, Long id);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(QueryParam params);
+	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(Long tenantid, QueryParam params);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectOrganizationHierCount(QueryParam params);
+	public int selectOrganizationHierCount(Long tenantid, QueryParam params);
 
 	/**
 	 * 

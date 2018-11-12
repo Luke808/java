@@ -57,29 +57,29 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public void duplicationCheck(OrganizationHierarchyIn params) throws Exception {
 
 		//level check
-		if (hierarchyMapper.checkOrganizationHierLevel(params.getId(), params.getLevel())>0)
+		if (hierarchyMapper.checkOrganizationHierLevel(params.getTenantId(),params.getId(), params.getLevel())>0)
 		{
 			throw new ApplicationException(90001);
 		}
 		//name check
-		if (hierarchyMapper.checkOrganizationHierName(params.getId(), params.getName())>0)
+		if (hierarchyMapper.checkOrganizationHierName(params.getTenantId(),params.getId(), params.getName())>0)
 		{
 			throw new ApplicationException(90002);
 		}	
 	}
 
 	@Override
-	public int deleteOrganizationHierarchy(Long eid, Long id) {
-		return hierarchyMapper.deleteOrganizationHierarchy(eid, id);
+	public int deleteOrganizationHierarchy(Long tenantid, Long eid, Long id) {
+		return hierarchyMapper.deleteOrganizationHierarchy(tenantid, eid, id);
 	}
 	
 	@Override
-	public void batchDeleteOrganizationHierarchy(Long eid,BatchDeleteInput idList) {
-		hierarchyMapper.batchDeleteOrganizationHierarchy(eid, idList.getIds());
+	public void batchDeleteOrganizationHierarchy(Long tenantid, Long eid,BatchDeleteInput idList) {
+		hierarchyMapper.batchDeleteOrganizationHierarchy(tenantid, eid, idList.getIds());
 	}
 	
 	@Override
-	public OrganizationHierarchyOut selectOrganizationHierarchy(Long id) {
+	public OrganizationHierarchyOut selectOrganizationHierarchy(Long tenantid, Long id) {
 
 		OrganizationHierarchyOut hierarchy = new OrganizationHierarchyOut();
 		if(id == 0) {
@@ -87,28 +87,28 @@ public class OrganizationServiceImpl implements OrganizationService {
 			hierarchy.setAllowConcurrently(0);
 			hierarchy.setIcon("");
 			hierarchy.setComments("");
-			hierarchy.setTenantId(1L);
+			hierarchy.setTenantId(tenantid);
 			hierarchy.setCreationTime(new Date());
 			hierarchy.setCreatorUserId(1L);
 		}
 		else {
-			hierarchy = hierarchyMapper.selectOrganizationHierarchy(id);
+			hierarchy = hierarchyMapper.selectOrganizationHierarchy(tenantid, id);
 		}
 		
 		return hierarchy;
 	}
 
 	@Override
-	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(QueryParam params) {
+	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(Long tenantid, QueryParam params) {
 		String strParmWithPageing = builderParm.buildParmWithPageing(params);
-		List<OrganizationHierarchyOut> list = hierarchyMapper.selectOrganizatioHierarchyieList(strParmWithPageing);
+		List<OrganizationHierarchyOut> list = hierarchyMapper.selectOrganizatioHierarchyieList(tenantid, strParmWithPageing);
 		return list;
 	}
 
 	@Override
-	public int selectOrganizationHierCount(QueryParam params) {
+	public int selectOrganizationHierCount(Long tenantid, QueryParam params) {
 		String strParmNoPageing = builderParm.buildParmNoPageing(params);
-		return hierarchyMapper.selectOrganizationHierarchyCount(strParmNoPageing);
+		return hierarchyMapper.selectOrganizationHierarchyCount(tenantid, strParmNoPageing);
 	}
 
 	@Override

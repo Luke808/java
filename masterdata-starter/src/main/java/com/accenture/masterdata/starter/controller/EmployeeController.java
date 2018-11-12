@@ -25,7 +25,7 @@ import com.google.common.collect.Maps;
 @RestController
 @Validated
 @RequestMapping("/masterdata/emp")
-public class EmployeeController {
+public class EmployeeController extends baseController {
 
 	@Autowired
 	EmployeeService employee;

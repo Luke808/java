@@ -71,8 +71,9 @@
 		   deleterUserId = #{deleterUserId},
 		   deletionTime = now()
 	   where 
-	   	   id = #{id,jdbcType=BIGINT}
-	   	   and isDeleted = 0
+	   	     tenantId = #{tenantid,jdbcType=BIGINT}
+	   	 and id = #{id,jdbcType=BIGINT}
+	   	 and isDeleted = 0
    	</update>
    
 	<update id="batchDeleteOrganizationHierarchy">
@@ -82,14 +83,16 @@
 	   	   isDeleted = 1,
 		   deleterUserId = #{deleterUserId},
 		   deletionTime = now()
-	    where Id in (
+	    where 
+	   	     tenantId = #{tenantid,jdbcType=BIGINT}
+	   	 and Id in (
 	    		<foreach collection ="idList" item="idItem" index= "index" separator =",">
 	                	#{idItem}
 	             </foreach >
 			)
 	</update>
    
-	<select id="selectOrganizatioHierarchyieList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
+	<select id="selectOrganizatioHierarchyieList" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
 		SELECT
 			id,
 			level,
@@ -107,11 +110,12 @@
 			tenantId
 		FROM
 			t_organization_hirerarchy
-		WHERE isDeleted = 0 
+		WHERE isDeleted = 0 and
+	   	      tenantId = #{tenantid,jdbcType=BIGINT}
 			  ${strParm}
 	</select>
 
-	<select id="selectOrganizationHierarchy" parameterType="java.lang.Long" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
+	<select id="selectOrganizationHierarchy" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
 		SELECT
 			id					as id,
 			level				as level,
@@ -133,15 +137,17 @@
 			'' 					as tenantName
 		FROM
 			t_organization_hirerarchy
-		WHERE id = #{id,jdbcType=BIGINT}
+		WHERE id = #{id,jdbcType=BIGINT} 
+	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
 	</select>
 
-	<select id="selectOrganizationHierarchyCount" parameterType="String" resultType="java.lang.Integer">
+	<select id="selectOrganizationHierarchyCount" resultType="java.lang.Integer">
 		SELECT
 			count(0) total
 		FROM
 			t_organization_hirerarchy
 		WHERE 1 = 1
+	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
 			${strParm}
 	</select>
 	
@@ -151,6 +157,7 @@
 		FROM
 			t_organization_hirerarchy
 		WHERE isDeleted = 0
+	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
 		  and id != #{id,jdbcType=BIGINT}
 		  and level = #{level,jdbcType=BIGINT}
 	</select>
@@ -161,6 +168,7 @@
 		FROM
 			t_organization_hirerarchy
 		WHERE isDeleted = 0
+	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
 		  and id != #{id,jdbcType=BIGINT}
 		  and name = #{name,jdbcType=NVARCHAR}
 	</select>
