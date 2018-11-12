@@ -115,7 +115,8 @@
 	   deleterUserId = #{deleterUserId},
 	   deletionTime = now()
    where 
-	   id = #{id,jdbcType=BIGINT}
+	       id = #{id,jdbcType=BIGINT}
+	   and tenantId = #{tenantid,jdbcType=BIGINT}
    	   and isDeleted = 0
    </update>
   
@@ -127,14 +128,16 @@
 	   	   isDeleted = 1,
 		   deleterUserId = #{deleterUserId},
 		   deletionTime = now()
-	    where Id in (
+	    where 
+	         tenantId = #{tenantid,jdbcType=BIGINT}
+	     and Id in (
 	    		<foreach collection ="idList" item="idItem" index= "index" separator =",">
 	                	#{idItem}
 	             </foreach >
 			)
 	</update>
   
-  <select id="selectEmployeeList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
+  <select id="selectEmployeeList" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
 	SELECT
 		ep.id,
 		ep.name,
@@ -159,23 +162,25 @@
 	FROM
 	  t_employee ep
 	WHERE
-		ep.isDeleted = 0
-		${strParm}
+		  ep.isDeleted = 0
+	  and tenantId = #{tenantid,jdbcType=BIGINT}
+		  ${strParm}
   </select>
   
-  <select id="selectEmployeeCount" parameterType="com.accenture.masterdata.core.inEntity.QueryParam" resultType="int">
+  <select id="selectEmployeeCount" resultType="int">
 	SELECT
 		count(0) total
 	FROM
 	  t_employee ep
 	WHERE
 		ep.isDeleted = 0
+	and tenantId = #{tenantid,jdbcType=BIGINT}
 		<if test=" strParm != null and strParm != ''">
-		${strParm}
+			${strParm}
 		</if>
   </select>
   
-  <select id="selectEmployee" parameterType="java.lang.Long" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
+  <select id="selectEmployee" resultType="com.accenture.masterdata.core.outEntity.EmployeeOut">
 	SELECT
 		ep.id,
 		ep.name,
@@ -198,8 +203,10 @@
 		ep.tenantId,
 		(select GROUP_CONCAT(`name` separator '-') from t_organization where id in (ep.orgLikeCode))
 	FROM
-	  t_employee ep
-	WHERE ep.id = #{id,jdbcType=BIGINT}
+	  	t_employee ep
+	WHERE 
+	 		tenantId = #{tenantid,jdbcType=BIGINT}
+		and	ep.id = #{id,jdbcType=BIGINT}
   </select>
   
   
@@ -210,6 +217,7 @@
 			t_employee
 		WHERE isDeleted = 0
 		  and id != #{id,jdbcType=BIGINT}
+		  and tenantId = #{tenantid,jdbcType=BIGINT}
 		  and eid = #{level,jdbcType=NVARCHAR}
 	</select>
 	
@@ -220,6 +228,7 @@
 			t_organization_hirerarchy
 		WHERE t_employee = 0
 		  and id != #{id,jdbcType=BIGINT}
+		  and tenantId = #{tenantid,jdbcType=BIGINT}
 		  and name = #{name,jdbcType=NVARCHAR}
 	</select>
 	

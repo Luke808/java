@@ -32,7 +32,7 @@ public class EmployeeController extends baseController {
 
 	@PostMapping("/get")
 	public Map<String, Object> get(@RequestParam("id") Long id) {
-		EmployeeOut employees =  employee.selectEmployee(id);
+		EmployeeOut employees =  employee.selectEmployee(tenantid, id);
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("data", employees);
 		return result;
@@ -41,8 +41,8 @@ public class EmployeeController extends baseController {
 	@PostMapping("/getList")
 	public Map<String, Object> getList(@RequestBody QueryParam params) {
 		Map<String, Object> result = Maps.newHashMap();
-		int count = employee.selectEmployeeCount(params);
-		List<EmployeeOut> employees = employee.selectEmployees(params);
+		int count = employee.selectEmployeeCount(tenantid, params);
+		List<EmployeeOut> employees = employee.selectEmployees(tenantid, params);
 		
 		result.put("count", count);
 		result.put("list", employees);
@@ -65,13 +65,13 @@ public class EmployeeController extends baseController {
 	public int delete(@RequestParam("id") Long id) {
 		//PrincipalHolder.get();
 		String uid = "1";
-		return employee.deleteEmployee(id, Long.parseLong(uid));
+		return employee.deleteEmployee(tenantid, eid, id);
 	}
 
 	@PostMapping("/batchDelete")
 	public void batchDeleteEmployees(@RequestBody BatchDeleteInput idList) {
 		//PrincipalHolder.get();
 		String uid = "1";
-		employee.batchDeleteEmployees(idList, Long.parseLong(uid));
+		employee.batchDeleteEmployees(tenantid, eid, idList);
 	}
 }

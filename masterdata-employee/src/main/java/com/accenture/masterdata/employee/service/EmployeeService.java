@@ -37,26 +37,26 @@ public interface EmployeeService {
 	 * 
 	 * @param id
 	 */
-	public int deleteEmployee(Long id, Long uid);
+	public int deleteEmployee(Long tenantid, Long uid, Long id);
 
-	public void batchDeleteEmployees(BatchDeleteInput idList, Long uid);
+	public void batchDeleteEmployees(Long tenantid, Long uid, BatchDeleteInput idList);
 	
 	/**
 	 * 
 	 * @param params
 	 */
-	public List<EmployeeOut> selectEmployees(QueryParam params);
+	public List<EmployeeOut> selectEmployees(Long tenantid, QueryParam params);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public EmployeeOut selectEmployee(Long id);
+	public EmployeeOut selectEmployee(Long tenantid, Long id);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectEmployeeCount(QueryParam params);
+	public int selectEmployeeCount(Long tenantid, QueryParam params);
 
 }

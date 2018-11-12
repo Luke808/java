@@ -25,7 +25,7 @@ public interface EmployeeMapper {
 	 * 
 	 * @param id
 	 */
-	public int deleteEmployee(@Param(value="id") Long id, @Param(value="deleterUserId") Long uid);
+	public int deleteEmployee(@Param(value="tenantid") Long tenantid, @Param(value="id") Long id, @Param(value="deleterUserId") Long uid);
 
 
 	/**
@@ -33,7 +33,7 @@ public interface EmployeeMapper {
 	 * @param idList: keylist
 	 * 		  deleterUserId: user'id to do delete
 	 */
-	public void batchDeleteEmployees(@Param(value="idList") List<Long> idList, @Param(value="deleterUserId") Long deleterUserId );
+	public void batchDeleteEmployees(@Param(value="tenantid") Long tenantid, @Param(value="deleterUserId") Long deleterUserId, @Param(value="idList") List<Long> idList);
 	
 	/**
 	 * 
@@ -45,29 +45,29 @@ public interface EmployeeMapper {
 	 * 
 	 * @param params
 	 */
-	public List<EmployeeOut> selectEmployeeList(@Param(value="strParm") String strParm);
+	public List<EmployeeOut> selectEmployeeList(@Param(value="tenantid") Long tenantid, @Param(value="strParm") String strParm);
 
 	/**
 	 * 
 	 * @param id
 	 */
-	public EmployeeOut selectEmployee(@Param(value="id") Long id);
+	public EmployeeOut selectEmployee(@Param(value="tenantid") Long tenantid, @Param(value="id") Long id);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectEmployeeCount(QueryParam params);
+	public int selectEmployeeCount(@Param(value="tenantid") Long tenantid, @Param(value="strParm") String strParm);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public int checkEmployeeEid(@Param(value="id") Long id, @Param(value="eid") String eid);
+	public int checkEmployeeEid(@Param(value="tenantid") Long tenantid, @Param(value="id") Long id, @Param(value="eid") String eid);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public int checkEmployeeName(@Param(value="id") Long id, @Param(value="name") String name);
+	public int checkEmployeeName(@Param(value="tenantid") Long tenantid, @Param(value="id") Long id, @Param(value="name") String name);
 }

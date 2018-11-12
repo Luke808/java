@@ -35,12 +35,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void duplicationCheck(EmployeeIn params) throws Exception  {
 
 		//eid check
-		if (employeeMapper.checkEmployeeEid(params.getId(), params.getEId())>0)
+		if (employeeMapper.checkEmployeeEid(params.getTenantId(), params.getId(), params.getEId())>0)
 		{
 			throw new ApplicationException(90001);
 		}
 		//name check
-		if (employeeMapper.checkEmployeeName(params.getId(), params.getName())>0)
+		if (employeeMapper.checkEmployeeName(params.getTenantId(), params.getId(), params.getName())>0)
 		{
 			throw new ApplicationException(90002);
 		}
@@ -73,43 +73,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 
 	@Override
-	public int deleteEmployee(Long id, Long uid) {
-		return employeeMapper.deleteEmployee(id, uid);
+	public int deleteEmployee(Long tenantid, Long uid, Long id) {
+		return employeeMapper.deleteEmployee(tenantid, uid, id);
 	}
 	
 	@Override
-	public void batchDeleteEmployees(BatchDeleteInput idList, Long uid) {
-		employeeMapper.batchDeleteEmployees(idList.ids, uid);
+	public void batchDeleteEmployees(Long tenantid, Long uid,BatchDeleteInput idList) {
+		employeeMapper.batchDeleteEmployees(tenantid, uid, idList.ids);
 	}
 
 	@Override
-	public List<EmployeeOut> selectEmployees(QueryParam params) {
+	public List<EmployeeOut> selectEmployees(Long tenantid,QueryParam params) {
 		String strParmWithPageing = builderParm.buildParmWithPageing(params);
-		List<EmployeeOut> list = employeeMapper.selectEmployeeList(strParmWithPageing);
+		List<EmployeeOut> list = employeeMapper.selectEmployeeList(tenantid, strParmWithPageing);
 		return list;
 	}
 
 	@Override
-	public EmployeeOut selectEmployee(Long id) {
+	public EmployeeOut selectEmployee(Long tenantid, Long id) {
 
 		EmployeeOut employee = new EmployeeOut();
 		if(id == 0) {
 			employee.setId(0L);
-			employee.setTenantId(1L);
+			employee.setTenantId(tenantid);
 			employee.setCreationTime(new Date());
 			employee.setCreatorUserId(1L);
 		}
 		else {
-			employee = employeeMapper.selectEmployee(id);
+			employee = employeeMapper.selectEmployee(tenantid, id);
 		}
 		
 		return employee;
 	}
 
 	@Override
-	public int selectEmployeeCount(QueryParam params) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int selectEmployeeCount(Long tenantid, QueryParam params) {
+
+		String strParmNoPageing = builderParm.buildParmNoPageing(params);
+		return employeeMapper.selectEmployeeCount(tenantid, strParmNoPageing);
+		
 	}
 
 }
