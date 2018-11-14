@@ -23,10 +23,13 @@ import com.google.common.collect.Maps;
 @RestController
 @Validated
 @RequestMapping("/masterdata/orgHierarchy")
-public class OrganizationHierarchyController extends baseController {
+public class OrganizationHierarchyController{
 	@Autowired
 	OrganizationService organization;
 
+	Long eid = Long.parseLong("1");
+	Long tenantid = Long.parseLong("1");
+	
 	@PostMapping("/get")
 	public Map<String, Object> get(@RequestParam("id") Long id) {
 		OrganizationHierarchyOut hierarchies = organization.selectOrganizationHierarchy(tenantid, id);

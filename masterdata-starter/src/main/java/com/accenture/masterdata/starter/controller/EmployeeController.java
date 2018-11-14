@@ -25,11 +25,14 @@ import com.google.common.collect.Maps;
 @RestController
 @Validated
 @RequestMapping("/masterdata/emp")
-public class EmployeeController extends baseController {
+public class EmployeeController{
 
 	@Autowired
 	EmployeeService employee;
 
+	Long eid = Long.parseLong("1");
+	Long tenantid = Long.parseLong("1");
+	
 	@PostMapping("/get")
 	public Map<String, Object> get(@RequestParam("id") Long id) {
 		EmployeeOut employees =  employee.selectEmployee(tenantid, id);

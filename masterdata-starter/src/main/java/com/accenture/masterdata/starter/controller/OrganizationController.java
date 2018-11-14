@@ -21,11 +21,14 @@ import com.google.common.collect.Maps;
 @RestController
 @Validated
 @RequestMapping("/masterdata/org")
-public class OrganizationController extends baseController {
+public class OrganizationController{
 	
 	@Autowired
 	OrganizationService organization;
 
+	Long eid = Long.parseLong("1");
+	Long tenantid = Long.parseLong("1");
+	
 	@GetMapping("/get")
 	public OrganizationOut get(@RequestParam("id") Long id) {
 		return organization.selectOrganization(id);
