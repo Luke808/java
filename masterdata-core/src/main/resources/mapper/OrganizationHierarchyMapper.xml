@@ -108,7 +108,8 @@
 			tenantId
 		FROM
 			t_organization_hirerarchy
-		WHERE isDeleted = 0 and
+		WHERE 
+			  isDeleted = 0
 	   	      ${strParm}
 	</select>
 

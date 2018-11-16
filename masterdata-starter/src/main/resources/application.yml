@@ -19,7 +19,7 @@ smsf:
         duration: 10
   swagger:
     security:
-      enabled: false
+      enabled: true
       schemes:
         Authorization:
           key-name: Authorization

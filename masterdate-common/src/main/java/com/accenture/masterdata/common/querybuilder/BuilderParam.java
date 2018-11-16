@@ -13,7 +13,7 @@ public class BuilderParam {
 
 	private String strCurrentRules = "";
 	
-	//不带分布的SQL参数
+	//带分页的SQL参数
 	public String buildParmWithPageing(QueryParam query) {
 		strCurrentRules = buildParmNoPageing(query);
 		if(query.getSorting() != null && query.getSorting() != "") {
@@ -23,17 +23,18 @@ public class BuilderParam {
 		return strCurrentRules;
 	}
 	
-	//带分页的SQL参数
+	//不带分页的SQL参数
 	public String buildParmNoPageing(QueryParam query) {
-		if(query.filterrule == null || query.filterrule.rules.size() == 0) {
-			return "";
+		
+		// 追加租户ID的条件
+		strCurrentRules = "AND tenantId = " + TenantHolder.get();
+		
+		if(query.filterrule != null && query.filterrule.rules.size() > 0) {
+			strCurrentRules = "";
+			strCurrentRules = buildFilterRules(query.filterrule.getCondition(), query.filterrule.getRules());
+			strCurrentRules = strCurrentRules.replace(" () ", "");	//这种情况属于无条件的
 		}
-		strCurrentRules = "";
-		strCurrentRules = buildFilterRules(query.filterrule.getCondition(), query.filterrule.getRules());
-		strCurrentRules = strCurrentRules.replace(" () ", "");	//这种情况属于无条件的
-		if(strCurrentRules.length() != 0) {
-			strCurrentRules = " AND " + strCurrentRules;
-		}
+
 		return strCurrentRules;
 	}
 	
@@ -58,9 +59,6 @@ public class BuilderParam {
 			};
 			strCurrentRules += ") ";
 		}
-		
-		// 追加租户ID的条件
-		strCurrentRules += "and tenantId = " + TenantHolder.get();
 	
 		return strCurrentRules;
 	}
