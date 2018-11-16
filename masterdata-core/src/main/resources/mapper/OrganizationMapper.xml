@@ -20,8 +20,8 @@
         <result column="isDeleted" property="isDeleted"/>
         <result column="deleterUserId" property="deleterUserId"/>
         <result column="deleterName" property="deleterName"/>
-        <result column=deletionTime property="deletionTime"/>
-        <result column=tenantId property="tenantId"/>
+        <result column="deletionTime" property="deletionTime"/>
+        <result column="tenantId" property="tenantId"/>
         <collection property="child" ofType="com.accenture.masterdata.core.outEntity.OrganizationOut" column="id" select="selectOrganizationChild"/>
     </resultMap>
 
