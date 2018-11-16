@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
-import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
+import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
+import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.google.common.collect.Maps;
 
 @RestController
@@ -29,7 +29,7 @@ public class OrganizationHierarchyController{
 
 	@PostMapping("/get")
 	public Map<String, Object> get(@RequestParam("id") Long id) {
-		OrganizationHierarchyOut hierarchies = organization.selectOrganizationHierarchy(id);
+		OrganizationHierarchy hierarchies = organization.selectOrganizationHierarchy(id);
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("data", hierarchies);
 		return result;
@@ -39,7 +39,7 @@ public class OrganizationHierarchyController{
 	public Map<String, Object> getList(@RequestBody QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationHierCount(param);
-		List<OrganizationHierarchyOut> hierarchies = organization.selectOrganizationHierarchys(param);
+		List<OrganizationHierarchy> hierarchies = organization.selectOrganizationHierarchys(param);
 		
 		result.put("count", count);
 		result.put("list", hierarchies);
@@ -48,7 +48,7 @@ public class OrganizationHierarchyController{
 	}
 	
 	@PutMapping("/createOrUpdate")
-	public void createOrUpdateOrganizationHierarchy(@RequestBody OrganizationHierarchyIn params) throws Exception {
+	public void createOrUpdateOrganizationHierarchy(@RequestBody OrganizationHierarchy params) throws Exception {
 		try
 		{
 			organization.createOrUpdateOrganizationHierarchy(params);

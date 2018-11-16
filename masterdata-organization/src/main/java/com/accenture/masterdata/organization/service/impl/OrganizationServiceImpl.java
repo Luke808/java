@@ -80,9 +80,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public void duplicationCheck(OrganizationIn params) throws Exception {
 		
 		// 姓名重复check
-		String where = "and name = " + params.getName() + "and tenantId = " + TenantHolder.get();
+		String where = " and name = '" + params.getName() + "' and tenantId = " + TenantHolder.get();
 		if ( params.getId() != null && params.getId() > 0 ) {
-			where += "and id <>" + params.getId().toString();
+			where += " and id <>" + params.getId().toString();
 		}
 		int count = organization.selectOrganizationCount(where);
 
@@ -91,9 +91,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		// code重复check
-		where = "and code = " + params.getCode() + "and tenantId = " + TenantHolder.get();
+		where = " and code = '" + params.getCode() + "' and tenantId = " + TenantHolder.get();
 		if ( params.getId() != null && params.getId() > 0 ) {
-			where += "and id <>" + params.getId().toString();
+			where += " and id <>" + params.getId().toString();
 		}
 		count = organization.selectOrganizationCount(where);
 		
