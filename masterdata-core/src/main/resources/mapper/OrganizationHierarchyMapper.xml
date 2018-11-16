@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accenture.masterdata.core.mapper.OrganizationHierarchyMapper">
 
-	<insert id="insertOrganizationHierarchy" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn">
+	<insert id="insertOrganizationHierarchy" parameterType="com.accenture.masterdata.core.outEntity.OrganizationHierarchy">
     	insert into t_organization_hirerarchy (
 	    	name, 
 	    	level,
@@ -36,7 +36,7 @@
       	)
   </insert>
   
-  	<update id="updateOrganizationHierarchy" parameterType="com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn">
+  	<update id="updateOrganizationHierarchy" parameterType="com.accenture.masterdata.core.outEntity.OrganizationHierarchy">
 	    update t_organization_hirerarchy
 	    <set>
 	      <if test="name != null and name != ''">
@@ -90,7 +90,7 @@
 			)
 	</update>
    
-	<select id="selectOrganizatioHierarchyieList" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
+	<select id="selectOrganizatioHierarchyieList" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchy">
 		SELECT
 			id,
 			level,
@@ -113,7 +113,7 @@
 	   	      ${strParm}
 	</select>
 
-	<select id="selectOrganizationHierarchy" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
+	<select id="selectOrganizationHierarchy" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchy">
 		SELECT
 			id					as id,
 			level				as level,

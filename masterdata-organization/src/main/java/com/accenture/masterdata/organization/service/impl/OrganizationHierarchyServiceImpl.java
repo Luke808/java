@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
 import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
-import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationHierarchyMapper;
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
+import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.accenture.smsf.model.exception.ApplicationException;
@@ -24,7 +23,7 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 	private OrganizationHierarchyMapper hierarchyMapper;
 	
 	@Override
-	public void createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params)  throws Exception {
+	public void createOrUpdateOrganizationHierarchy(OrganizationHierarchy params)  throws Exception {
 
 		duplicationCheck(params);
 		
@@ -53,9 +52,9 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 	}
 	
 	@Override
-	public OrganizationHierarchyOut selectOrganizationHierarchy(Long id) {
+	public OrganizationHierarchy selectOrganizationHierarchy(Long id) {
 
-		OrganizationHierarchyOut hierarchy = new OrganizationHierarchyOut();
+		OrganizationHierarchy hierarchy = new OrganizationHierarchy();
 		if(id == 0) {
 			hierarchy.setId(0L);
 			hierarchy.setAllowConcurrently(0);
@@ -73,9 +72,9 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 	}
 
 	@Override
-	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(QueryParam params) {
+	public List<OrganizationHierarchy> selectOrganizationHierarchys(QueryParam params) {
 		String strParmWithPageing = builderParm.buildParmWithPageing(params);
-		List<OrganizationHierarchyOut> list = hierarchyMapper.selectOrganizatioHierarchyieList(strParmWithPageing);
+		List<OrganizationHierarchy> list = hierarchyMapper.selectOrganizatioHierarchyieList(strParmWithPageing);
 		return list;
 	}
 
@@ -87,18 +86,18 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 
 
 	@Override
-	public void inputCheck(OrganizationHierarchyIn params) {
+	public void inputCheck(OrganizationHierarchy params) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
-	public void duplicationCheck(OrganizationHierarchyIn params) throws Exception {
+	public void duplicationCheck(OrganizationHierarchy params) throws Exception {
 
 		// 名称重复check
-		String where = "and name = " + params.getName() + "and tenantId = " + TenantHolder.get();
+		String where = " and name = '" + params.getName() + "' and tenantId = " + TenantHolder.get();
 		if ( params.getId() != null && params.getId() > 0 ) {
-			where += "and id <>" + params.getId().toString();
+			where += " and id <>" + params.getId().toString();
 		}
 		int count = hierarchyMapper.selectOrganizationHierarchyCount(where);
 
@@ -107,9 +106,9 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 		}
 		
 		// level重复check
-		where = "and level = " + params.getLevel().toString() + "and tenantId = " + TenantHolder.get();
+		where = " and level = " + params.getLevel().toString() + " and tenantId = " + TenantHolder.get();
 		if ( params.getId() != null && params.getId() > 0 ) {
-			where += "and id <>" + params.getId().toString();
+			where += " and id <> " + params.getId().toString();
 		}
 		count = hierarchyMapper.selectOrganizationHierarchyCount(where);
 		

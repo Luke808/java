@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
+import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 
 /**
  * @author haibo.liu
@@ -18,25 +17,25 @@ public interface OrganizationHierarchyMapper {
 	 * 
 	 * @param param
 	 */
-	public int insertOrganizationHierarchy(OrganizationHierarchyIn param);
+	public int insertOrganizationHierarchy(OrganizationHierarchy param);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public int updateOrganizationHierarchy(OrganizationHierarchyIn param);
+	public int updateOrganizationHierarchy(OrganizationHierarchy param);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationHierarchyOut> selectOrganizatioHierarchyieList(@Param(value="strParm") String strParm);
+	public List<OrganizationHierarchy> selectOrganizatioHierarchyieList(@Param(value="strParm") String strParm);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(@Param(value="id") Long id);
+	public OrganizationHierarchy selectOrganizationHierarchy(@Param(value="id") Long id);
 
 	/**
 	 * 

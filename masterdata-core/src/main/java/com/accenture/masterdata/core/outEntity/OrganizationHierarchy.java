@@ -1,7 +1,6 @@
-package com.accenture.masterdata.core.inEntity;
+package com.accenture.masterdata.core.outEntity;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
@@ -10,7 +9,7 @@ import lombok.Data;
  * @created 05-Nov-2018 2:44:29 PM
  */
 @Data
-public class OrganizationHierarchyIn {
+public class OrganizationHierarchy {
 
 	private Long id;
 	private String name;
@@ -19,12 +18,16 @@ public class OrganizationHierarchyIn {
 	private int allowConcurrently;
 	private String comments;
 	private Long creatorUserId;
+	private String creatorUserName;
 	private Date creationTime;
 	private Long lastModifierUserId;
+	private String lastModifierUserName;
 	private Date lastModificationTime;
 	private int isDeleted;
+	private String deleterUserName;
 	private Long deleterUserId;
 	private Date deletionTime;
 	private Long tenantId;
+	private String tenantName;
 	
 }
