@@ -39,9 +39,5 @@
 	    <groupId>com.accenture.masterdata</groupId>
 	    <artifactId>masterdata-organization</artifactId>
     </dependency>
-    <dependency>
-	    <groupId>com.accenture.masterdata</groupId>
-	    <artifactId>masterdata-employee</artifactId>
-    </dependency>
   </dependencies>
 </project>
