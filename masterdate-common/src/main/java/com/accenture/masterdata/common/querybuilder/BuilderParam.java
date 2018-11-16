@@ -6,6 +6,7 @@ import java.util.List;
 import com.accenture.masterdata.core.inEntity.FilterRule;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.smsf.framework.boot.stereotype.Component;
+import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 
 @Component
 public class BuilderParam {
@@ -37,7 +38,7 @@ public class BuilderParam {
 	}
 	
 	//Build QueryParm
-	public String buildFilterRules(String condition, List<FilterRule> rules) {
+	private String buildFilterRules(String condition, List<FilterRule> rules) {
 		if(condition != null) {
 			strCurrentRules += " (";
 			int i = 0;
@@ -57,11 +58,15 @@ public class BuilderParam {
 			};
 			strCurrentRules += ") ";
 		}
+		
+		// 追加租户ID的条件
+		strCurrentRules += "and tenantId = " + TenantHolder.get();
+	
 		return strCurrentRules;
 	}
 	
 	//Change operator
-	public String changeOperator(String operator) {
+	private String changeOperator(String operator) {
 		String newOperator = "";
 		switch(operator.toLowerCase()){
 		case "equal":
@@ -92,7 +97,7 @@ public class BuilderParam {
 	}
 	
 	//Change Value
-	public String changeValue(String strOperator, String value, String valueType) {
+	private String changeValue(String strOperator, String value, String valueType) {
 		String factValue = value;
 		switch(valueType.toLowerCase()){
 		case "string":

@@ -14,6 +14,8 @@ public class OrganizationOut {
 
 	private int id;
 	private String name;
+	private String code;
+	private String comment;
 	private int parentId;
 	private String parentName;
 	private String hierarchyName;
@@ -32,17 +34,5 @@ public class OrganizationOut {
 	private int tenantId;
 	private String tenantName;
 	private List<OrganizationOut> child;
-	private int numProperty1;
-	private int numProperty2;
-	private int numProperty3;
-	private String property1;
-	private String property2;
-	private String property3;
-	private String property4;
-	private String property5;
-	private String property6;
-	private String property7;
-	private String property8;
-	private String property9;
 
 }

@@ -2,7 +2,8 @@ package com.accenture.masterdata.core.mapper;
 
 import java.util.List;
 
-import com.accenture.masterdata.core.inEntity.QueryParam;
+import org.apache.ibatis.annotations.Param;
+
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 
@@ -29,25 +30,31 @@ public interface OrganizationMapper {
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationOut> selectOrganizationList(QueryParam params);
+	public List<OrganizationOut> selectOrganizationList(@Param(value="strParam") String strparam);
+	
+	/**
+	 * 
+	 * @param params
+	 */
+	public List<OrganizationOut> selectOrganizationTree(@Param(value="strParam") String strparam);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public OrganizationOut selectOrganization(int param);
+	public OrganizationOut selectOrganization(Long param);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public int selectOrganizationCount(QueryParam params);
+	public int selectOrganizationCount(@Param(value="strParam") String strparam);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public int deleteOrganization(int param);
+	public int deleteOrganization(Long param);
 
 	/**
 	 * 

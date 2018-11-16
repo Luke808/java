@@ -71,8 +71,7 @@
 		   deleterUserId = #{deleterUserId},
 		   deletionTime = now()
 	   where 
-	   	     tenantId = #{tenantid,jdbcType=BIGINT}
-	   	 and id = #{id,jdbcType=BIGINT}
+	   	 id = #{id,jdbcType=BIGINT}
 	   	 and isDeleted = 0
    	</update>
    
@@ -84,8 +83,7 @@
 		   deleterUserId = #{deleterUserId},
 		   deletionTime = now()
 	    where 
-	   	     tenantId = #{tenantid,jdbcType=BIGINT}
-	   	 and Id in (
+	   	     Id in (
 	    		<foreach collection ="idList" item="idItem" index= "index" separator =",">
 	                	#{idItem}
 	             </foreach >
@@ -111,8 +109,7 @@
 		FROM
 			t_organization_hirerarchy
 		WHERE isDeleted = 0 and
-	   	      tenantId = #{tenantid,jdbcType=BIGINT}
-			  ${strParm}
+	   	      ${strParm}
 	</select>
 
 	<select id="selectOrganizationHierarchy" resultType="com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut">
@@ -137,8 +134,8 @@
 			'' 					as tenantName
 		FROM
 			t_organization_hirerarchy
-		WHERE id = #{id,jdbcType=BIGINT} 
-	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
+		WHERE 
+			id = #{id,jdbcType=BIGINT}
 	</select>
 
 	<select id="selectOrganizationHierarchyCount" resultType="java.lang.Integer">
@@ -146,31 +143,9 @@
 			count(0) total
 		FROM
 			t_organization_hirerarchy
-		WHERE 1 = 1
-	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
+		WHERE 
+			1 = 1
 			${strParm}
-	</select>
-	
-	<select id="checkOrganizationHierLevel" resultType="java.lang.Integer">
-		SELECT
-			count(0) total
-		FROM
-			t_organization_hirerarchy
-		WHERE isDeleted = 0
-	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
-		  and id != #{id,jdbcType=BIGINT}
-		  and level = #{level,jdbcType=BIGINT}
-	</select>
-	
-	<select id="checkOrganizationHierName" resultType="java.lang.Integer">
-		SELECT
-			count(0) total
-		FROM
-			t_organization_hirerarchy
-		WHERE isDeleted = 0
-	   	  and tenantId = #{tenantid,jdbcType=BIGINT}
-		  and id != #{id,jdbcType=BIGINT}
-		  and name = #{name,jdbcType=NVARCHAR}
 	</select>
 	
 </mapper>

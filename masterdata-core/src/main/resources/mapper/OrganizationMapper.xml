@@ -2,5 +2,254 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.accenture.masterdata.core.mapper.OrganizationMapper">
 
+    <resultMap type="com.accenture.masterdata.core.outEntity.OrganizationOut" id="organizationTree">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parentId" property="parentId"/>
+        <result column="parentName" property="parentName"/>
+        <result column="code" property="code"/>
+        <result column="hierarchyId" property="hierarchyId"/>
+        <result column="hierarchyName" property="hierarchyName"/>
+        <result column="hierarchyLevel" property="hierarchyLevel"/>
+        <result column="comment" property="comment"/>
+        <result column="likeCode" property="likeCode"/>
+        <result column="creatorUserId" property="creatorUserId"/>
+        <result column="creationTime" property="creationTime"/>
+        <result column="lastModifierUserId" property="lastModifierUserId"/>
+        <result column="lastModificationTime" property="lastModificationTime"/>
+        <result column="isDeleted" property="isDeleted"/>
+        <result column="deleterUserId" property="deleterUserId"/>
+        <result column="deleterName" property="deleterName"/>
+        <result column=deletionTime property="deletionTime"/>
+        <result column=tenantId property="tenantId"/>
+        <collection property="child" ofType="com.accenture.masterdata.core.outEntity.OrganizationOut" column="id" select="selectOrganizationChild"/>
+    </resultMap>
+
+	<insert id="inertEmployee" parameterType="com.accenture.masterdata.core.inEntity.OrganizationIn">
+    	insert into t_organization (
+	    	name, 
+	    	parentId, 
+	    	code,
+	      	hierarchyId,
+	      	likeCode,
+			<if test="comment != null and comment != ''">
+	      	comment,
+			</if>
+			<if test="creatorUserId != null and creatorUserId != ''">
+	      	creatorUserId,
+			</if>
+	      	creationTime,
+			tenantId
+    	) values (
+	    	#{name}, 
+	    	#{parentId}, 
+	    	#{code},
+	      	#{hierarchyId}, 
+	      	#{likeCode}, 
+			<if test="comment != null and comment != ''">
+	      	#{comment},
+			</if>
+			<if test="creatorUserId != null and creatorUserId != ''">
+	      	#{creatorUserId},
+			</if>
+	      	now(),
+			#{tenantId}    	
+      	)
+  </insert>
+  
+  <update id="updateOrganization" parameterType="com.accenture.masterdata.core.inEntity.OrganizationIn">
+    update t_employee
+    <set>
+      <if test="name != null and name != ''">
+        name = #{name},
+      </if>
+      <if test="parentId != null and parentId != ''">
+        parentId = #{parentId},
+      </if>
+      <if test="code != null and code != ''">
+        code = #{code},
+      </if>
+      <if test="hierarchyId != null and hierarchyId != ''">
+        hierarchyId = #{hierarchyId},
+      </if>
+      <if test="likeCode != null and likeCode != ''">
+        likeCode = #{likeCode},
+      </if>
+      <if test="comment != null and comment != ''">
+        comment = #{comment},
+      </if>
+      <if test="tenantId != null and tenantId != ''">
+        tenantId = #{tenantId},
+      </if>
+      <if test="lastModifierUserId != null and lastModifierUserId != ''">
+        lastModifierUserId = #{lastModifierUserId},
+      </if>
+	  lastModificationTime = now()
+    </set>
+    where
+    	id = #{id}
+  </update>
+  
+  <update id="deleteOrganization">
+   update 
+       t_organization
+   set 
+   	   isDeleted = 1,
+	   deleterUserId = #{deleterUserId},
+	   deletionTime = now()
+   where 
+	   id = #{id,jdbcType=BIGINT}
+   </update>
+  
+   <update id="batchDeleteOrganizations">
+	   update 
+	       t_organization
+	   set 
+	   	   isDeleted = 1,
+		   deleterUserId = #{deleterUserId},
+		   deletionTime = now()
+	    where 
+	         id in (
+	    		<foreach collection ="idList" item="idItem" index= "index" separator =",">
+	                	#{idItem}
+	             </foreach >
+			)
+	</update>
+	
+	<select id="selectOrganizationList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
+		SELECT
+			org.`code`,
+		  	org.`name`,
+		  	org.`comment`,
+		  	org.hierarchyId,
+			orh.`name` hierarchyName,
+			orh.`level` hierarchyLevel,
+		  	org.parentId,
+		  	orp.`name` parentName,
+			org.creationTime,
+			org.creatorUserId,
+			org.deleterUserId,
+			org.deletionTime,
+			org.isDeleted,
+			org.lastModificationTime,
+			org.lastModifierUserId,
+			org.likeCode,
+			org.tenantId
+		FROM
+			t_organization org 
+			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
+			LEFT JOIN t_organization orp ON orp.id = org.parentId 
+		WHERE
+			org.isDeleted = 0
+		  	and tenantId = #{tenantid,jdbcType=BIGINT}
+			${strParam}
+  </select>
+  
+  <select id="selectOrganizationCount" parameterType="String" resultType="int">
+		SELECT
+			count(0)
+		FROM
+			t_organization org 
+			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
+			LEFT JOIN t_organization orp ON orp.id = org.parentId 
+		WHERE
+			org.isDeleted = 0
+		  	and tenantId = #{tenantid,jdbcType=BIGINT}
+			${strParam}
+    </select>
+  
+	<select id="selectOrganization" parameterType="Map" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
+		SELECT
+			org.`code`,
+		  	org.`name`,
+		  	org.`comment`,
+		  	org.hierarchyId,
+			orh.`name` hierarchyName,
+		  	org.parentId,
+		  	orp.`name` parentName,
+			org.creationTime,
+			org.creatorUserId,
+			org.deleterUserId,
+			org.deletionTime,
+			org.isDeleted,
+			org.lastModificationTime,
+			org.lastModifierUserId,
+			org.likeCode,
+			org.tenantId
+		FROM
+			t_organization org 
+			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
+			LEFT JOIN t_organization orp ON orp.id = org.parentId 
+		WHERE
+			org.isDelete = 0
+			<if test="id != null and id != ''">
+        		and org.id = #{id}
+     		</if>
+			<if test="code != null and code != ''">
+        		and org.code = #{code}
+     		</if>
+			<if test="name != null and name != ''">
+        		and org.name = #{name}
+     		</if>
+			<if test="tenantId != null and tenantId != ''">
+        		and org.tenantId = #{tenantId}
+     		</if>
+  </select>
+  
+  <select id="selectOrganizationChild" parameterType="int" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
+		SELECT
+			org.`code`,
+		  	org.`name`,
+		  	org.`comment`,
+		  	org.hierarchyId,
+			orh.`name` hierarchyName,
+		  	org.parentId,
+		  	orp.`name` parentName,
+			org.creationTime,
+			org.creatorUserId,
+			org.deleterUserId,
+			org.deletionTime,
+			org.isDeleted,
+			org.lastModificationTime,
+			org.lastModifierUserId,
+			org.likeCode,
+			org.tenantId
+		FROM
+			t_organization org 
+			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
+			LEFT JOIN t_organization orp ON orp.id = org.parentId 
+		WHERE
+			org.isDeleted = 0
+			and org.parentId = #{id}
+  </select>
+  
+	<select id="selectOrganizationTree" parameterType="String" resultMap="organizationTree">
+		SELECT
+			org.`code`,
+		  	org.`name`,
+		  	org.`comment`,
+		  	org.hierarchyId,
+			orh.`name` hierarchyName,
+			orh.`level` hierarchyLevel,
+		  	org.parentId,
+		  	orp.`name` parentName,
+			org.creationTime,
+			org.creatorUserId,
+			org.deleterUserId,
+			org.deletionTime,
+			org.isDeleted,
+			org.lastModificationTime,
+			org.lastModifierUserId,
+			org.likeCode,
+			org.tenantId
+		FROM
+			t_organization org 
+			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
+			LEFT JOIN t_organization orp ON orp.id = org.parentId 
+		WHERE
+			org.isDeleted = 0
+		  	and tenantId = #{tenantid,jdbcType=BIGINT}
+			${strParam}
+  </select>
   
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
+import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
@@ -35,7 +36,7 @@ public class OrganizationController{
 	}
 	
 	@GetMapping("/getList")
-	public Map<String, Object> getList(OrganizationIn param) {
+	public Map<String, Object> getList(QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationCount(param);
 		List<OrganizationOut> organizations = organization.selectOrganizations(param);
@@ -47,12 +48,12 @@ public class OrganizationController{
 	}
 	
 	@PostMapping("/add")
-	public int insert(@RequestParam("org_data") OrganizationIn params) {
-		return organization.addOrganization(params);
+	public int insert(@RequestParam("org_data") OrganizationIn params) throws Exception {
+		return organization.saveOrganization(params);
 	}
 	
 	@PutMapping("/save")
-	public int update(@RequestParam("org_data") OrganizationIn params) {
+	public int update(@RequestParam("org_data") OrganizationIn params) throws Exception {
 		return organization.saveOrganization(params);
 	}
 	

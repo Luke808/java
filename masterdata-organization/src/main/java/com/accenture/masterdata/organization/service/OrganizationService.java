@@ -2,12 +2,8 @@ package com.accenture.masterdata.organization.service;
 
 import java.util.List;
 
-import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
-import com.accenture.masterdata.core.inEntity.EmployeeIn;
-import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 
 /**
@@ -20,57 +16,9 @@ public interface OrganizationService {
 	/**
 	 * 
 	 * @param params
+	 * @throws Exception 
 	 */
-	public void createOrUpdateOrganizationHierarchy(OrganizationHierarchyIn params) throws Exception ;
-
-	/**
-	 * 
-	 * @param inputInfo
-	 */
-	void duplicationCheck(OrganizationHierarchyIn params) throws Exception;
-
-	/**
-	 * 
-	 * @param id
-	 */
-	public int deleteOrganizationHierarchy(Long tenantid, Long eid, Long id);
-
-	/**
-	 * 
-	 * @param id
-	 */
-    //批量删除
-	public void batchDeleteOrganizationHierarchy(Long tenantid, Long eid, BatchDeleteInput idList);
-    
-	/**
-	 * 
-	 * @param id
-	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(Long tenantid, Long id);
-
-	/**
-	 * 
-	 * @param params
-	 */
-	public List<OrganizationHierarchyOut> selectOrganizationHierarchys(Long tenantid, QueryParam params);
-
-	/**
-	 * 
-	 * @param params
-	 */
-	public int selectOrganizationHierCount(Long tenantid, QueryParam params);
-
-	/**
-	 * 
-	 * @param params
-	 */
-	public int addOrganization(OrganizationIn params);
-
-	/**
-	 * 
-	 * @param params
-	 */
-	public int saveOrganization(OrganizationIn params);
+	public int saveOrganization(OrganizationIn params) throws Exception;
 
 	/**
 	 * 
@@ -82,7 +30,7 @@ public interface OrganizationService {
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationOut> selectOrganizations(OrganizationIn params);
+	public List<OrganizationOut> selectOrganizations(QueryParam params);
 
 	/**
 	 * 
@@ -94,7 +42,7 @@ public interface OrganizationService {
 	 * 
 	 * @param params
 	 */
-	public int selectOrganizationCount(OrganizationIn params);
+	public int selectOrganizationCount(QueryParam params);
 
 	/**
 	 * 
@@ -105,19 +53,8 @@ public interface OrganizationService {
 	/**
 	 * 
 	 * @param params
+	 * @throws Exception 
 	 */
-	void duplicationCheck(OrganizationIn params);
-
-	/**
-	 * 
-	 * @param params
-	 */
-	void hierInputCheck(OrganizationHierarchyIn params);
-
-	/**
-	 * 
-	 * @param params
-	 */
-	void hireDuplicationCheck(OrganizationHierarchyIn params);
+	void duplicationCheck(OrganizationIn params) throws Exception;
 
 }

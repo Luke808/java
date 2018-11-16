@@ -16,7 +16,7 @@ import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.OrganizationHierarchyIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchyOut;
-import com.accenture.masterdata.organization.service.OrganizationService;
+import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
 import com.google.common.collect.Maps;
 
@@ -25,14 +25,11 @@ import com.google.common.collect.Maps;
 @RequestMapping("/masterdata/orgHierarchy")
 public class OrganizationHierarchyController{
 	@Autowired
-	OrganizationService organization;
+	OrganizationHierarchyService organization;
 
-	Long eid = Long.parseLong("1");
-	Long tenantid = Long.parseLong("1");
-	
 	@PostMapping("/get")
 	public Map<String, Object> get(@RequestParam("id") Long id) {
-		OrganizationHierarchyOut hierarchies = organization.selectOrganizationHierarchy(tenantid, id);
+		OrganizationHierarchyOut hierarchies = organization.selectOrganizationHierarchy(id);
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("data", hierarchies);
 		return result;
@@ -41,8 +38,8 @@ public class OrganizationHierarchyController{
 	@PostMapping("/getList")
 	public Map<String, Object> getList(@RequestBody QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
-		int count = organization.selectOrganizationHierCount(tenantid, param);
-		List<OrganizationHierarchyOut> hierarchies = organization.selectOrganizationHierarchys(tenantid, param);
+		int count = organization.selectOrganizationHierCount(param);
+		List<OrganizationHierarchyOut> hierarchies = organization.selectOrganizationHierarchys(param);
 		
 		result.put("count", count);
 		result.put("list", hierarchies);
@@ -63,12 +60,12 @@ public class OrganizationHierarchyController{
 	
 	@DeleteMapping("/delete")
 	public int delete(@RequestParam("id") Long id) {
-		return organization.deleteOrganizationHierarchy(tenantid, eid,id);
+		return organization.deleteOrganizationHierarchy(id);
 	}
 	
 	@PostMapping("/batchDelete")
 	public void batchDeleteOrganizationHierarchy(@RequestBody BatchDeleteInput idList) {
-		organization.batchDeleteOrganizationHierarchy(tenantid, eid,idList);
+		organization.batchDeleteOrganizationHierarchy(idList);
 	}
 	
 }

@@ -30,42 +30,31 @@ public interface OrganizationHierarchyMapper {
 	 * 
 	 * @param params
 	 */
-	public List<OrganizationHierarchyOut> selectOrganizatioHierarchyieList(@Param(value="tenantid")Long tenantid, @Param(value="strParm") String strParm);
+	public List<OrganizationHierarchyOut> selectOrganizatioHierarchyieList(@Param(value="strParm") String strParm);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public OrganizationHierarchyOut selectOrganizationHierarchy(@Param(value="tenantid")Long tenantid, @Param(value="id") Long id);
+	public OrganizationHierarchyOut selectOrganizationHierarchy(@Param(value="id") Long id);
 
 	/**
 	 * 
 	 * @param params
 	 */
-	public Integer selectOrganizationHierarchyCount(@Param(value="tenantid")Long tenantid, @Param(value="strParm") String queryQarm);
+	public Integer selectOrganizationHierarchyCount(@Param(value="strParm") String queryQarm);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public int deleteOrganizationHierarchy(@Param(value="tenantid")Long tenantid, @Param(value="deleterUserId") Long deleterUserId, @Param(value="id") Long id);
+	public int deleteOrganizationHierarchy(@Param(value="id") Long id);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public void batchDeleteOrganizationHierarchy(@Param(value="tenantid")Long tenantid, @Param(value="deleterUserId") Long deleterUserId, @Param(value="idList") List<Long> idList);
+	public void batchDeleteOrganizationHierarchy(@Param(value="idList") List<Long> idList);
 
-	/**
-	 * 
-	 * @param param
-	 */
-	public int checkOrganizationHierLevel(@Param(value="tenantid")Long tenantid, @Param(value="id") Long id, @Param(value="level") Long level);
-
-	/**
-	 * 
-	 * @param param
-	 */
-	public int checkOrganizationHierName(@Param(value="tenantid")Long tenantid, @Param(value="id") Long id, @Param(value="name") String name);
 	
 }

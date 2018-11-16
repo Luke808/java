@@ -26,5 +26,9 @@
 	    <groupId>com.accenture.masterdata</groupId>
 	    <artifactId>masterdata-common</artifactId>
     </dependency>
+    <dependency>
+    	<groupId>com.accenture.smsf</groupId>
+    	<artifactId>starter-web-principal</artifactId>
+    </dependency>
   </dependencies>
 </project>
