@@ -1,5 +1,6 @@
 package com.accenture.masterdata.organization.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationMapper;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
@@ -103,5 +105,35 @@ public class OrganizationServiceImpl implements OrganizationService {
 		
 	}
 
-
+	public List<OrganizationTreeTable> getOrganizationTreeTable(Long id){
+		List<OrganizationTreeTable> treeTable = new ArrayList();		
+		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
+		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
+		if(subOrgList != null && subOrgList.size() > 0) {
+			for(OrganizationOut node : subOrgList) {
+				OrganizationTreeTable treeTableRow = new OrganizationTreeTable();
+				treeTableRow.setData(node);
+				treeTableRow.setChildren(getOrganizationTreeTableSub(node));
+				treeTable.add(treeTableRow);
+			}
+		}
+		return treeTable;
+	}
+	
+	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode){
+		List<OrganizationTreeTable> treeTable = new ArrayList();		
+		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();
+		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
+		if(subOrgList != null && subOrgList.size() > 0) {
+			for(OrganizationOut node : subOrgList) {
+				OrganizationTreeTable treeTableRow = new OrganizationTreeTable();
+				treeTableRow.setData(node);
+				treeTableRow.setChildren(getOrganizationTreeTableSub(node));
+				treeTable.add(treeTableRow);
+			}
+		}
+		return treeTable;
+		
+	}
+	
 }

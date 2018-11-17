@@ -118,6 +118,7 @@
 	
 	<select id="selectOrganizationList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,
@@ -137,11 +138,10 @@
 			org.tenantId
 		FROM
 			t_organization org 
-			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
+			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id and org.tenantId = orh.tenantId
 			LEFT JOIN t_organization orp ON orp.id = org.parentId 
-		WHERE
+		WHERE 
 			org.isDeleted = 0
-		  	and tenantId = #{tenantid,jdbcType=BIGINT}
 			${strParam}
   </select>
   

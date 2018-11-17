@@ -5,6 +5,7 @@ import java.util.List;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 
 /**
  * @author haibo.liu
@@ -57,4 +58,12 @@ public interface OrganizationService {
 	 */
 	void duplicationCheck(OrganizationIn params) throws Exception;
 
+	/**
+	 * 获得树结构表
+	 * @param params
+	 * Long id: 任意树结点ID
+	 */
+	List<OrganizationTreeTable> getOrganizationTreeTable(Long id);
+
+	
 }
