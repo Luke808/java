@@ -35,7 +35,7 @@ public class OrganizationController{
 		return organization.selectOrganization(id);
 	}
 	
-	@GetMapping("/getList")
+	@PostMapping("/getList")
 	public Map<String, Object> getList(QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationCount(param);
