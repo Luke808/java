@@ -110,25 +110,31 @@ public class OrganizationServiceImpl implements OrganizationService {
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
+			OrganizationOut lineno = new OrganizationOut();
+			lineno.setLineno(0L);
 			for(OrganizationOut node : subOrgList) {
 				OrganizationTreeTable treeTableRow = new OrganizationTreeTable();
+				lineno.setLineno(lineno.getLineno() + 1);
+				node.setLineno(lineno.getLineno());
 				treeTableRow.setData(node);
-				treeTableRow.setChildren(getOrganizationTreeTableSub(node));
+				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
 				treeTable.add(treeTableRow);
 			}
 		}
 		return treeTable;
 	}
 	
-	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode){
+	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode, OrganizationOut lineno){
 		List<OrganizationTreeTable> treeTable = new ArrayList();		
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
 			for(OrganizationOut node : subOrgList) {
 				OrganizationTreeTable treeTableRow = new OrganizationTreeTable();
+				lineno.setLineno(lineno.getLineno() + 1);
+				node.setLineno(lineno.getLineno());
 				treeTableRow.setData(node);
-				treeTableRow.setChildren(getOrganizationTreeTableSub(node));
+				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
 				treeTable.add(treeTableRow);
 			}
 		}

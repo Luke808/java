@@ -34,5 +34,6 @@ public class OrganizationOut {
 	private int tenantId;
 	private String tenantName;
 	private List<OrganizationOut> child;
+	private Long lineno;
 
 }
