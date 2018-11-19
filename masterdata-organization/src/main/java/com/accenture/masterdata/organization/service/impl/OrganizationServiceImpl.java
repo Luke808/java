@@ -15,6 +15,7 @@ import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.accenture.smsf.model.exception.ApplicationException;
+import com.google.common.collect.Lists;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -106,7 +107,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	public List<OrganizationTreeTable> getOrganizationTreeTable(Long id){
-		List<OrganizationTreeTable> treeTable = new ArrayList();		
+		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
@@ -125,7 +126,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	
 	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode, OrganizationOut lineno){
-		List<OrganizationTreeTable> treeTable = new ArrayList();		
+		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {

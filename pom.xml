@@ -60,7 +60,6 @@
   </dependencyManagement>
   <modules>
     <module>masterdata-organization</module>
-  	<module>masterdata-employee</module>
     <module>masterdata-starter</module>
     <module>masterdata-core</module>
     <module>masterdate-common</module>

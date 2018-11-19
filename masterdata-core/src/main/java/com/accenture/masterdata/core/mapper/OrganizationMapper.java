@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
-import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 
 /**
  * @author haibo.liu

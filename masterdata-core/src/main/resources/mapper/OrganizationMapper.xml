@@ -25,6 +25,15 @@
         <collection property="child" ofType="com.accenture.masterdata.core.outEntity.OrganizationOut" column="id" select="selectOrganizationChild"/>
     </resultMap>
 
+<!-- 	<resultMap type="com.accenture.masterdata.core.outEntity.OrganizationTree" id="organizationLeftTree">
+        <id column="id" property="id"/>
+        <result column="name" property="label"/>
+        <result column="parentId" property="expandedIcon"/>
+        <result column="parentName" property="expandedIcon"/>
+        <association property="data" ofType="com.accenture.masterdata.core.outEntity.OrganizationOut" column="id" select="selectOrganization" /> 
+        <collection property="children" ofType="com.accenture.masterdata.core.outEntity.OrganizationTree" column="id" select="selectOrganizationLeftChild"/>
+    </resultMap> -->
+
 	<insert id="insertOrganization" parameterType="com.accenture.masterdata.core.inEntity.OrganizationIn">
     	insert into t_organization (
 	    	name, 
