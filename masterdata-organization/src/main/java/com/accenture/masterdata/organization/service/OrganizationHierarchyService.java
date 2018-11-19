@@ -56,4 +56,12 @@ public interface OrganizationHierarchyService {
 	 * @param params
 	 */
 	public int selectOrganizationHierCount(QueryParam params);
+	
+
+	/**
+	 * 获得可添加的Hierarchy下级
+	 * @param params
+	 * curLevel： 当前级
+	 */
+	List<OrganizationHierarchy> getNextLevel( int curLevel);
 }

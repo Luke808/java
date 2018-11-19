@@ -138,9 +138,9 @@
 			org.tenantId
 		FROM
 			t_organization org 
-			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
+			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id and org.tenantId = orh.tenantId
 			LEFT JOIN t_organization orp ON orp.id = org.parentId 
-		WHERE
+		WHERE 
 			org.isDeleted = 0
 			${strParam}
   </select>

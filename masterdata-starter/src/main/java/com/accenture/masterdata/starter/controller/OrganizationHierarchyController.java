@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,6 @@ import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
-import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.google.common.collect.Maps;
 
 @RestController
@@ -25,11 +25,11 @@ import com.google.common.collect.Maps;
 @RequestMapping("/masterdata/orgHierarchy")
 public class OrganizationHierarchyController{
 	@Autowired
-	OrganizationHierarchyService organization;
+	OrganizationHierarchyService hierarchy;
 
 	@PostMapping("/get")
 	public Map<String, Object> get(@RequestParam("id") Long id) {
-		OrganizationHierarchy hierarchies = organization.selectOrganizationHierarchy(id);
+		OrganizationHierarchy hierarchies = hierarchy.selectOrganizationHierarchy(id);
 		Map<String, Object> result = Maps.newHashMap();
 		result.put("data", hierarchies);
 		return result;
@@ -38,8 +38,8 @@ public class OrganizationHierarchyController{
 	@PostMapping("/getList")
 	public Map<String, Object> getList(@RequestBody QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
-		int count = organization.selectOrganizationHierCount(param);
-		List<OrganizationHierarchy> hierarchies = organization.selectOrganizationHierarchys(param);
+		int count = hierarchy.selectOrganizationHierCount(param);
+		List<OrganizationHierarchy> hierarchies = hierarchy.selectOrganizationHierarchys(param);
 		
 		result.put("count", count);
 		result.put("list", hierarchies);
@@ -51,7 +51,7 @@ public class OrganizationHierarchyController{
 	public void createOrUpdateOrganizationHierarchy(@RequestBody OrganizationHierarchy params) throws Exception {
 		try
 		{
-			organization.createOrUpdateOrganizationHierarchy(params);
+			hierarchy.createOrUpdateOrganizationHierarchy(params);
 		}
 		catch (Exception ex) {
 			throw ex;
@@ -60,12 +60,20 @@ public class OrganizationHierarchyController{
 	
 	@DeleteMapping("/delete")
 	public int delete(@RequestParam("id") Long id) {
-		return organization.deleteOrganizationHierarchy(id);
+		return hierarchy.deleteOrganizationHierarchy(id);
 	}
 	
 	@PostMapping("/batchDelete")
 	public void batchDeleteOrganizationHierarchy(@RequestBody BatchDeleteInput idList) {
-		organization.batchDeleteOrganizationHierarchy(idList);
+		hierarchy.batchDeleteOrganizationHierarchy(idList);
+	}
+	
+	@PostMapping("/getNextLevel")
+	public Map<String, Object> getNextLevel(@RequestParam("curLevel") int curLevel) {
+		Map<String, Object> result = Maps.newHashMap();
+		List<OrganizationHierarchy> hierarchies = hierarchy.getNextLevel(curLevel);
+		result.put("list", hierarchies);
+		return result;
 	}
 	
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
 import com.google.common.collect.Maps;
@@ -62,4 +63,13 @@ public class OrganizationController{
 	public int delete(@RequestParam("id") Long id) {
 		return organization.deleteOrganization(id);
 	}
+	
+	@PostMapping("getOrganizationTreeTable")
+	public Map<String, Object> getOrganizationTreeTable(@RequestParam("id") Long id) {
+		Map<String, Object> result = Maps.newHashMap();
+		List<OrganizationTreeTable> organizations = organization.getOrganizationTreeTable(id);
+		result.put("list", organizations);
+		return result;
+	}
+	
 }
