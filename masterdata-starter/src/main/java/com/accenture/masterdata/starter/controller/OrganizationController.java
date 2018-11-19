@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTree;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 import com.accenture.masterdata.organization.service.OrganizationService;
@@ -62,8 +63,23 @@ public class OrganizationController{
 	}
 	
 	@DeleteMapping("/delete")
-	public int delete(@RequestParam("id") Long id) {
-		return organization.deleteOrganization(id);
+	public int delete(@RequestParam("id") Long id) throws Exception {
+		try
+		{
+			return organization.deleteOrganization(id);
+		}
+		catch(Exception ex)
+		{
+			throw ex;
+		}
+	}
+	
+	@PostMapping("getOrganizationTree")
+	public  Map<String, Object> getOrganizationTree(@RequestBody QueryParam param) {
+		Map<String, Object> result = Maps.newHashMap();
+		List<OrganizationTree> organizations = organization.getOrganizationTree(param);
+		result.put("list", organizations);
+		return result;
 	}
 	
 	@PostMapping("getOrganizationTreeTable")

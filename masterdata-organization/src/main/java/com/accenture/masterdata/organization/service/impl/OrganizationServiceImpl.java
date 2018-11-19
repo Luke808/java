@@ -9,6 +9,7 @@ import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationMapper;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTree;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeSelectState;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
@@ -53,13 +54,17 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public int deleteOrganization(Long id) {
+	public int deleteOrganization(Long id) throws Exception {
+		if(hasChildCheck(id))
+		{
+			throw new ApplicationException(90001);
+		}
 		return organization.deleteOrganization(id);
 	}
 
 	@Override
 	public List<OrganizationOut> selectOrganizations(QueryParam params) {
-		String strParmWithPageing = builderParm.buildParmWithPageing(params);
+		String strParmWithPageing = builderParm.buildParmNoPageing(params);
 		return organization.selectOrganizationList(strParmWithPageing);
 	}
 
@@ -107,8 +112,84 @@ public class OrganizationServiceImpl implements OrganizationService {
 		
 	}
 
+	private boolean hasChildCheck(Long id){
+		boolean lb_hasChild = false;
+		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
+		List<OrganizationOut> orgList = organization.selectOrganizationList(strWhere);
+		if(orgList != null && orgList.size() > 0) {
+			lb_hasChild = true;
+		}
+		return lb_hasChild;
+	}
+	
+	public List<OrganizationTree> getOrganizationTree(QueryParam param){
+		List<OrganizationTree> trees = Lists.newArrayList();
+		//获得符合条件的所有结点
+		List<OrganizationOut> orgs = selectOrganizations(param);
+		//找到这些节点中的最上层
+		List<OrganizationOut> fistLevel = Lists.newArrayList();
+		for(OrganizationOut node : orgs) {
+			boolean lb_noParent = true;
+			for(OrganizationOut nodeSub : orgs) {
+				if(nodeSub.getId().equals(node.getParentId()))
+				{
+					lb_noParent = false;
+					break;
+				}
+			}
+			if(lb_noParent) {
+				fistLevel.add(node);
+			}
+		}
+		//从最上层结点开始组织树
+		for(OrganizationOut node : fistLevel) {
+			OrganizationTree t = new OrganizationTree();
+			t.setLabel(node.getName());
+			t.setCollapsedIcon(node.getHierarchyIcon());
+			t.setExpandedIcon(node.getHierarchyIcon());
+			t.setData(node);
+			t.setChildren(getOrganizationTreeSub(orgs, node));
+			trees.add(t);
+		}
+		List<OrganizationTree> targetTree = Lists.newArrayList();
+		//虚拟组织机构
+		OrganizationTree root = new OrganizationTree();
+		root.setLabel("组织机构");
+		root.setCollapsedIcon("fa fa-folder-open");
+		root.setExpandedIcon("fa fa-folder");
+		root.setChildren(trees);
+		OrganizationOut rootData = new OrganizationOut();
+		rootData.setId(0L);
+		rootData.setParentId(-1L);
+		rootData.setHierarchyLevel(0L);
+		rootData.setHierarchyId(0L);
+		rootData.setCode("");
+		rootData.setName("组织机构");
+		rootData.setComment("");
+		root.setData(rootData);
+		targetTree.add(root);
+		
+		return targetTree;
+	}
+	
+	public List<OrganizationTree> getOrganizationTreeSub(List<OrganizationOut> orgs, OrganizationOut parentNode){
+		List<OrganizationTree> treeTable = Lists.newArrayList();	
+		for(OrganizationOut node : orgs) {
+			if(node.getParentId().equals(parentNode.getId())){
+				OrganizationTree child = new OrganizationTree();
+				child.setLabel(node.getName());
+				child.setCollapsedIcon(node.getHierarchyIcon());
+				child.setExpandedIcon(node.getHierarchyIcon());
+				child.setData(node);
+				child.setChildren(getOrganizationTreeSub(orgs, node));
+				treeTable.add(child);
+			}			
+		}
+		return treeTable;
+	}
+	
 	public List<OrganizationTreeTable> getOrganizationTreeTable(Long id){
-		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
+		List<OrganizationTreeTable> treeTable = Lists.newArrayList();
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
@@ -123,7 +204,29 @@ public class OrganizationServiceImpl implements OrganizationService {
 				treeTable.add(treeTableRow);
 			}
 		}
-		return treeTable;
+		List<OrganizationTreeTable> targetTreeTable = Lists.newArrayList();
+		OrganizationTreeTable root = new OrganizationTreeTable();
+		if(id.equals(0L)) {
+			OrganizationOut rootItem = new OrganizationOut();
+			rootItem.setLineno(0L);
+			rootItem.setCode("");
+			rootItem.setName("组织机构");
+			rootItem.setParentId(-1L);
+			rootItem.setHierarchyId(0L);
+			rootItem.setHierarchyName("Root");
+			rootItem.setComment("");
+			root.setData(rootItem);
+			root.setChildren(treeTable);
+		}
+		else
+		{
+			OrganizationOut rootItem = selectOrganization(id);
+			root.setData(rootItem);
+			root.setChildren(treeTable);
+		}
+		targetTreeTable.add(root);
+		
+		return targetTreeTable;
 	}
 	
 	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode, OrganizationOut lineno){

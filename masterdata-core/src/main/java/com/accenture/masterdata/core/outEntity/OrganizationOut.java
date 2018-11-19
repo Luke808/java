@@ -21,6 +21,7 @@ public class OrganizationOut {
 	private String hierarchyName;
 	private Long hierarchyLevel;
 	private Long hierarchyId;
+	private String hierarchyIcon;
 	private Long creatorUserId;
 	private String likeCode;
 	private String creatorName;

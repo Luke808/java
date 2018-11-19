@@ -5,6 +5,7 @@ import java.util.List;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTree;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 
@@ -26,7 +27,7 @@ public interface OrganizationService {
 	 * 
 	 * @param id
 	 */
-	public int deleteOrganization(Long id);
+	public int deleteOrganization(Long id) throws Exception;
 
 	/**
 	 * 
@@ -59,6 +60,12 @@ public interface OrganizationService {
 	 */
 	void duplicationCheck(OrganizationIn params) throws Exception;
 
+	/**
+	 * 获得树结构表
+	 * @param params
+	 */
+	List<OrganizationTree> getOrganizationTree(QueryParam param);
+	
 	/**
 	 * 获得树结构表
 	 * @param params

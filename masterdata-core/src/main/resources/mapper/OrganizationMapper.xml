@@ -125,6 +125,7 @@
 		  	org.hierarchyId,
 			orh.`name` hierarchyName,
 			orh.`level` hierarchyLevel,
+			orh.icon hierarchyIcon,
 		  	org.parentId,
 		  	orp.`name` parentName,
 			org.creationTime,
