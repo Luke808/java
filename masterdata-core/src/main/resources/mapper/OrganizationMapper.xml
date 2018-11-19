@@ -118,6 +118,7 @@
 	
 	<select id="selectOrganizationList" parameterType="String" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,
@@ -158,6 +159,7 @@
   
 	<select id="selectOrganization" parameterType="Long" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,
@@ -185,6 +187,7 @@
   
   <select id="selectOrganizationChild" parameterType="int" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,
@@ -212,6 +215,7 @@
   
 	<select id="selectOrganizationTree" parameterType="String" resultMap="organizationTree">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,

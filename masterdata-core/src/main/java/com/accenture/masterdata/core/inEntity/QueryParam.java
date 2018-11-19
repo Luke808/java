@@ -10,6 +10,9 @@ public class QueryParam {
 	
 	//排序
 	public String sorting;
+	
+	// tenant Table
+	public String tenantTable;
 
 	//第几页
 	public int currentpage;
@@ -51,6 +54,14 @@ public class QueryParam {
 			return "id asc";
 		}
 		return this.sorting;
+	}
+
+	public String getTenantTable() {
+		return tenantTable;
+	}
+
+	public void setTenantTable(String tenantTable) {
+		this.tenantTable = tenantTable;
 	}
 
 }
