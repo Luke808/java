@@ -1,12 +1,12 @@
 server:
-  port: 10036
+  port: 10045
   session-timeout: 3000  
   tomcat.max-threads: 0  
   tomcat.uri-encoding: UTF-8  
 
 spring:
   application:
-    name: smsf-sample-1
+    name: smsf-masterdata
 
 smsf:
   application:
