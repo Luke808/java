@@ -38,7 +38,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		duplicationCheck(params);
 		
 		// 设置租户id
-		params.setTenantId(Integer.valueOf(TenantHolder.get()));
+		params.setTenantId(Long.valueOf(TenantHolder.get()));
 		
 		// 保存数据
 		// 更新
@@ -71,7 +71,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
 	public int selectOrganizationCount(QueryParam params) {
-		String strParmWithPageing = builderParm.buildParmWithPageing(params);
+		String strParmWithPageing = builderParm.buildParmNoPageing(params);
 		return organization.selectOrganizationCount(strParmWithPageing);
 	}
 

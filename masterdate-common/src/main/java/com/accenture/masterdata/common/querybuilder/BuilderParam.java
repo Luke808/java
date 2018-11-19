@@ -28,7 +28,7 @@ public class BuilderParam {
 	public String buildParmNoPageing(QueryParam query) {
 		strCurrentRules = "";
 		// 追加租户ID的条件
-		String strtenantIdRules = " AND tenantId = " + TenantHolder.get() + " ";
+		String strtenantIdRules = " AND " + query.getTenantTable() + ".tenantId = " + TenantHolder.get() + " ";
 		
 		String strSubCurrentRules = "";
 		if(query.filterrule != null && query.filterrule.rules.size() > 0) {

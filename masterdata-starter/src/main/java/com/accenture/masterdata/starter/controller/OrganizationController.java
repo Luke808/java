@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,8 +38,8 @@ public class OrganizationController{
 		return organization.selectOrganization(id);
 	}
 	
-	@GetMapping("/getList")
-	public Map<String, Object> getList(QueryParam param) {
+	@PostMapping("/getList")
+	public Map<String, Object> getList(@RequestBody QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
 		int count = organization.selectOrganizationCount(param);
 		List<OrganizationOut> organizations = organization.selectOrganizations(param);

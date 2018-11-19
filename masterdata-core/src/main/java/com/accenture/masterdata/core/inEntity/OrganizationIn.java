@@ -11,21 +11,21 @@ import lombok.Data;
 @Data
 public class OrganizationIn {
 
-	private Integer id;
-	private Integer parentId;
+	private Long id;
+	private Long parentId;
 	private String code;
 	private String name;
 	private String comment;
 	private String likeCode;
-	private Integer organizationType;
-	private Integer legalEntity;
-	private Integer creatorUserId;
+	private Long organizationType;
+	private Long legalEntity;
+	private Long creatorUserId;
 	private Date creationTime;
-	private Integer lastModifierUserId;
+	private Long lastModifierUserId;
 	private Date lastModificationTime;
 	private boolean isDeleted;
-	private Integer deleterUserId;
+	private Long deleterUserId;
 	private Date deletionTime;
-	private Integer tenantId;
+	private Long tenantId;
 
 }

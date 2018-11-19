@@ -25,7 +25,7 @@
         <collection property="child" ofType="com.accenture.masterdata.core.outEntity.OrganizationOut" column="id" select="selectOrganizationChild"/>
     </resultMap>
 
-	<insert id="inertEmployee" parameterType="com.accenture.masterdata.core.inEntity.OrganizationIn">
+	<insert id="insertOrganization" parameterType="com.accenture.masterdata.core.inEntity.OrganizationIn">
     	insert into t_organization (
 	    	name, 
 	    	parentId, 
@@ -154,12 +154,12 @@
 			LEFT JOIN t_organization orp ON orp.id = org.parentId 
 		WHERE
 			org.isDeleted = 0
-		  	and tenantId = #{tenantid,jdbcType=BIGINT}
 			${strParam}
     </select>
   
-	<select id="selectOrganization" parameterType="Map" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
+	<select id="selectOrganization" parameterType="Long" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,
@@ -181,23 +181,13 @@
 			LEFT JOIN t_organization_hirerarchy orh ON org.hierarchyId = orh.id
 			LEFT JOIN t_organization orp ON orp.id = org.parentId 
 		WHERE
-			org.isDelete = 0
-			<if test="id != null and id != ''">
-        		and org.id = #{id}
-     		</if>
-			<if test="code != null and code != ''">
-        		and org.code = #{code}
-     		</if>
-			<if test="name != null and name != ''">
-        		and org.name = #{name}
-     		</if>
-			<if test="tenantId != null and tenantId != ''">
-        		and org.tenantId = #{tenantId}
-     		</if>
+			org.id = #{id}
+   
   </select>
   
   <select id="selectOrganizationChild" parameterType="int" resultType="com.accenture.masterdata.core.outEntity.OrganizationOut">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,
@@ -225,6 +215,7 @@
   
 	<select id="selectOrganizationTree" parameterType="String" resultMap="organizationTree">
 		SELECT
+			org.id,
 			org.`code`,
 		  	org.`name`,
 		  	org.`comment`,
@@ -248,7 +239,6 @@
 			LEFT JOIN t_organization orp ON orp.id = org.parentId 
 		WHERE
 			org.isDeleted = 0
-		  	and tenantId = #{tenantid,jdbcType=BIGINT}
 			${strParam}
   </select>
   
