@@ -1,6 +1,5 @@
 package com.accenture.masterdata.organization.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,9 +84,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public void duplicationCheck(OrganizationIn params) throws Exception {
 		
 		// 姓名重复check
-		String where = " and name = '" + params.getName() + "' and tenantId = " + TenantHolder.get();
+		String where = " and org.name = '" + params.getName() + "' and org.tenantId = " + TenantHolder.get();
 		if ( params.getId() != null && params.getId() > 0 ) {
-			where += " and id <>" + params.getId().toString();
+			where += " and org.id <>" + params.getId().toString();
 		}
 		int count = organization.selectOrganizationCount(where);
 
@@ -96,9 +95,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		// code重复check
-		where = " and code = '" + params.getCode() + "' and tenantId = " + TenantHolder.get();
+		where = " and org.code = '" + params.getCode() + "' and org.tenantId = " + TenantHolder.get();
 		if ( params.getId() != null && params.getId() > 0 ) {
-			where += " and id <>" + params.getId().toString();
+			where += " and org.id <>" + params.getId().toString();
 		}
 		count = organization.selectOrganizationCount(where);
 		
@@ -120,7 +119,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 				lineno.setLineno(lineno.getLineno() + 1);
 				node.setLineno(lineno.getLineno());
 				treeTableRow.setData(node);
-				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
+//				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
 				treeTable.add(treeTableRow);
 			}
 		}
@@ -137,12 +136,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 				lineno.setLineno(lineno.getLineno() + 1);
 				node.setLineno(lineno.getLineno());
 				treeTableRow.setData(node);
-//				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
+				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
 				treeTable.add(treeTableRow);
 			}
 		}
 		return treeTable;
-		
 	}
 	
 	public List<OrganizationTreeSelect> getOrganizationTreeSelect(Long parentId){
@@ -164,9 +162,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 				treeTable.add(treeSelectRow);
 			}
 		}
+
+		if(parentId == 0)
+		{
+			List<OrganizationTreeSelect> nodes = Lists.newArrayList();
+			OrganizationTreeSelect rootNode = new OrganizationTreeSelect();
+			rootNode.setId(-1L);
+			rootNode.setText("组织机构");
+			rootNode.setParent("");
+			rootNode.setChildren(treeTable);
+			OrganizationTreeSelectState state = new OrganizationTreeSelectState();
+			state.setDisabled(false);
+			state.setOpened(false);
+			state.setSelected(false);
+			rootNode.setState(state);
+			nodes.add(rootNode);
+			treeTable = nodes;
+		}
+		
 		return treeTable;
 	}
-//	
+	
 	private List<OrganizationTreeSelect> getOrganizationTreeSelectSub(OrganizationOut parentNode){
 		List<OrganizationTreeSelect> treeTable = Lists.newArrayList();			
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();

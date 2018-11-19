@@ -58,7 +58,7 @@
   </insert>
   
   <update id="updateOrganization" parameterType="com.accenture.masterdata.core.inEntity.OrganizationIn">
-    update t_employee
+    update t_organization
     <set>
       <if test="name != null and name != ''">
         name = #{name},

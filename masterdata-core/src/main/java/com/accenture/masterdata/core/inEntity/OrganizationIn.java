@@ -17,6 +17,8 @@ public class OrganizationIn {
 	private String name;
 	private String comment;
 	private String likeCode;
+	private Long hierarchyLevel;
+	private Long hierarchyId;
 	private Long organizationType;
 	private Long legalEntity;
 	private Long creatorUserId;

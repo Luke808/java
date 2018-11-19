@@ -20,6 +20,7 @@ import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 @RestController
@@ -51,12 +52,12 @@ public class OrganizationController{
 	}
 	
 	@PostMapping("/add")
-	public int insert(@RequestParam("org_data") OrganizationIn params) throws Exception {
+	public int insert(@RequestBody OrganizationIn params) throws Exception {
 		return organization.saveOrganization(params);
 	}
 	
 	@PutMapping("/save")
-	public int update(@RequestParam("org_data") OrganizationIn params) throws Exception {
+	public int update(@RequestBody OrganizationIn params) throws Exception {
 		return organization.saveOrganization(params);
 	}
 	
