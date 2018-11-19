@@ -213,6 +213,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			rootItem.setName("组织机构");
 			rootItem.setParentId(-1L);
 			rootItem.setHierarchyId(0L);
+			rootItem.setHierarchyLevel(0L);
 			rootItem.setHierarchyName("Root");
 			rootItem.setComment("");
 			root.setData(rootItem);
