@@ -5,6 +5,7 @@ import java.util.List;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 
 /**
@@ -65,5 +66,10 @@ public interface OrganizationService {
 	 */
 	List<OrganizationTreeTable> getOrganizationTreeTable(Long id);
 
-	
+	/**
+	 * 获得下拉选择树
+	 * @param params
+	 * Long parentId: 起始结点上级
+	 */
+	List<OrganizationTreeSelect> getOrganizationTreeSelect(Long parentId);
 }

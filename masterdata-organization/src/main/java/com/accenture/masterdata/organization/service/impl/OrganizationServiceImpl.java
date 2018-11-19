@@ -10,11 +10,14 @@ import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationMapper;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
+import com.accenture.masterdata.core.outEntity.OrganizationTreeSelectState;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.accenture.smsf.model.exception.ApplicationException;
+import com.google.common.collect.Lists;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -106,7 +109,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	public List<OrganizationTreeTable> getOrganizationTreeTable(Long id){
-		List<OrganizationTreeTable> treeTable = new ArrayList();		
+		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
@@ -125,7 +128,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	
 	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode, OrganizationOut lineno){
-		List<OrganizationTreeTable> treeTable = new ArrayList();		
+		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
@@ -134,12 +137,56 @@ public class OrganizationServiceImpl implements OrganizationService {
 				lineno.setLineno(lineno.getLineno() + 1);
 				node.setLineno(lineno.getLineno());
 				treeTableRow.setData(node);
-				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
+//				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
 				treeTable.add(treeTableRow);
 			}
 		}
 		return treeTable;
 		
+	}
+	
+	public List<OrganizationTreeSelect> getOrganizationTreeSelect(Long parentId){
+		List<OrganizationTreeSelect> treeTable = Lists.newArrayList();		
+		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentId;
+		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
+		if(subOrgList != null && subOrgList.size() > 0) {
+			for(OrganizationOut node : subOrgList) {
+				OrganizationTreeSelect treeSelectRow = new OrganizationTreeSelect();
+				treeSelectRow.setId(node.getId());
+				treeSelectRow.setText(node.getName());
+				treeSelectRow.setParent(String.valueOf(node.getParentId()));
+				OrganizationTreeSelectState state = new OrganizationTreeSelectState();
+				state.setDisabled(false);
+				state.setOpened(false);
+				state.setSelected(false);
+				treeSelectRow.setState(state);
+				treeSelectRow.setChildren(getOrganizationTreeSelectSub(node));
+				treeTable.add(treeSelectRow);
+			}
+		}
+		return treeTable;
+	}
+//	
+	private List<OrganizationTreeSelect> getOrganizationTreeSelectSub(OrganizationOut parentNode){
+		List<OrganizationTreeSelect> treeTable = Lists.newArrayList();			
+		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();
+		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
+		if(subOrgList != null && subOrgList.size() > 0) {
+			for(OrganizationOut node : subOrgList) {
+				OrganizationTreeSelect treeSelectRow = new OrganizationTreeSelect();
+				treeSelectRow.setId(node.getId());
+				treeSelectRow.setText(node.getName());
+				treeSelectRow.setParent(String.valueOf(node.getParentId()));
+				OrganizationTreeSelectState state = new OrganizationTreeSelectState();
+				state.setDisabled(false);
+				state.setOpened(false);
+				state.setSelected(false);
+				treeSelectRow.setState(state);
+				treeSelectRow.setChildren(getOrganizationTreeSelectSub(node));
+				treeTable.add(treeSelectRow);
+			}
+		}
+		return treeTable;
 	}
 	
 }

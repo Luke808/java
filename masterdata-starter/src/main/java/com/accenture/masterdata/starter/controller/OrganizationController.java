@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
@@ -67,6 +68,14 @@ public class OrganizationController{
 	public Map<String, Object> getOrganizationTreeTable(@RequestParam("id") Long id) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationTreeTable> organizations = organization.getOrganizationTreeTable(id);
+		result.put("list", organizations);
+		return result;
+	}
+	
+	@PostMapping("getOrganizationTreeSelect")
+	public Map<String, Object> getOrganizationTreeSelect(@RequestParam("parentId") Long parentId) {
+		Map<String, Object> result = Maps.newHashMap();
+		List<OrganizationTreeSelect> organizations = organization.getOrganizationTreeSelect(parentId);
 		result.put("list", organizations);
 		return result;
 	}

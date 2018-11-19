@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class OrganizationOut {
 
-	private int id;
+	private Long id;
 	private String name;
 	private String code;
 	private String comment;
