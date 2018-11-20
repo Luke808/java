@@ -98,7 +98,7 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 	}
 	
 	@Override
-	public List<OrganizationHierarchy> getNextLevel(int curLevel){
+	public List<OrganizationHierarchy> getNextLevel(Long curLevel){
 		String strParmWithPageing = " and (id in (" + 
 									" select min(id) from t_organization_hirerarchy where level > " + String.valueOf(curLevel) + " and tenantid = " + TenantHolder.get() + 
 									" ) or (level = " + String.valueOf(curLevel) + " and allowConcurrently = 1 " + " and tenantid = " + TenantHolder.get() + ")) " + 

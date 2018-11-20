@@ -66,5 +66,5 @@ public interface OrganizationHierarchyService {
 	 * @param params
 	 * curLevel： 当前级
 	 */
-	List<OrganizationHierarchy> getNextLevel( int curLevel);
+	List<OrganizationHierarchy> getNextLevel( Long curLevel);
 }

@@ -77,7 +77,7 @@ public class OrganizationHierarchyController{
 	}
 	
 	@PostMapping("/getNextLevel")
-	public Map<String, Object> getNextLevel(@RequestParam("curLevel") int curLevel) {
+	public Map<String, Object> getNextLevel(@RequestParam("curLevel") Long curLevel) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationHierarchy> hierarchies = hierarchy.getNextLevel(curLevel);
 		result.put("list", hierarchies);

@@ -8,11 +8,13 @@ import com.accenture.masterdata.common.querybuilder.BuilderParam;
 import com.accenture.masterdata.core.inEntity.OrganizationIn;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationMapper;
+import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 import com.accenture.masterdata.core.outEntity.OrganizationOut;
 import com.accenture.masterdata.core.outEntity.OrganizationTree;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeSelectState;
 import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
+import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
@@ -27,6 +29,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 	
 	@Autowired
 	private OrganizationMapper organization;
+	
+	@Autowired
+	private OrganizationHierarchyService oh;
 
 	@Override
 	public int saveOrganization(OrganizationIn params) throws Exception {
@@ -52,7 +57,29 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 			//判断上级是否选择了目前的子节点
 			checkIsChild(params.getId(), params.getParentId());
-			
+			//判断是否存在子节点不能挂在当前HierarcyLevel下
+			List<OrganizationHierarchy> nextLevel = oh.getNextLevel(params.getHierarchyLevel());
+			int count = 0; 
+			if(nextLevel != null && nextLevel.size() > 1) {
+				String strNextLevel = "";
+				for(OrganizationHierarchy nl: nextLevel) {
+					if(strNextLevel=="") {
+						strNextLevel = nl.getId().toString();
+					}
+					else {
+						strNextLevel = "," + nl.getId().toString();
+					}
+				}
+				String strParmWithPageing = " and org.parentId = " + params.getParentId() + "and org.hierarchyId not in (" + strNextLevel + ")";
+				count = organization.selectOrganizationCount(strParmWithPageing);
+			}
+			else {
+				String strParmWithPageing = " and org.parentId = " + params.getParentId();
+				count = organization.selectOrganizationCount(strParmWithPageing);
+			}
+			if (count > 0) {
+				throw new ApplicationException(90006);
+			}
 			result = organization.updateOrganization(params);
 		}
 		// 新增
