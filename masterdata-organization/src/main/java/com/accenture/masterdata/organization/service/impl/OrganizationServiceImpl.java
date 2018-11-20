@@ -194,7 +194,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
 			OrganizationOut lineno = new OrganizationOut();
-			lineno.setLineno(0L);
+			lineno.setLineno(1L);
 			for(OrganizationOut node : subOrgList) {
 				OrganizationTreeTable treeTableRow = new OrganizationTreeTable();
 				lineno.setLineno(lineno.getLineno() + 1);
@@ -208,7 +208,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		OrganizationTreeTable root = new OrganizationTreeTable();
 		if(id.equals(0L)) {
 			OrganizationOut rootItem = new OrganizationOut();
-			rootItem.setLineno(0L);
+			rootItem.setLineno(1L);
 			rootItem.setCode("");
 			rootItem.setName("组织机构");
 			rootItem.setParentId(-1L);
@@ -222,6 +222,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		else
 		{
 			OrganizationOut rootItem = selectOrganization(id);
+			rootItem.setLineno(1L);
 			root.setData(rootItem);
 			root.setChildren(treeTable);
 		}
