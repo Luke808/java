@@ -57,7 +57,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public int deleteOrganization(Long id) throws Exception {
 		if(hasChildCheck(id))
 		{
-			throw new ApplicationException(90001);
+			throw new ApplicationException(90003);
 		}
 		return organization.deleteOrganization(id);
 	}
