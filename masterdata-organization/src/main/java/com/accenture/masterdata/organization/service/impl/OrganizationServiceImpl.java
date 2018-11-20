@@ -58,27 +58,30 @@ public class OrganizationServiceImpl implements OrganizationService {
 			//判断上级是否选择了目前的子节点
 			checkIsChild(params.getId(), params.getParentId());
 			//判断是否存在子节点不能挂在当前HierarcyLevel下
-			List<OrganizationHierarchy> nextLevel = oh.getNextLevel(params.getHierarchyLevel());
-			int count = 0; 
-			if(nextLevel != null && nextLevel.size() > 1) {
-				String strNextLevel = "";
-				for(OrganizationHierarchy nl: nextLevel) {
-					if(strNextLevel=="") {
-						strNextLevel = nl.getId().toString();
+			OrganizationHierarchy ohRow =  oh.selectOrganizationHierarchy(params.getHierarchyId());
+			if(ohRow != null) {
+				List<OrganizationHierarchy> nextLevel = oh.getNextLevel(ohRow.getLevel());
+				int count = 0; 
+				if(nextLevel != null && nextLevel.size() > 0) {
+					String strNextLevel = "";
+					for(OrganizationHierarchy nl: nextLevel) {
+						if(strNextLevel.equals("")) {
+							strNextLevel = nl.getId().toString();
+						}
+						else {
+							strNextLevel += "," + nl.getId().toString();
+						}
 					}
-					else {
-						strNextLevel = "," + nl.getId().toString();
-					}
+					String strParmWithPageing = " and org.parentId = " + params.getId() + " and org.hierarchyId not in (" + strNextLevel + ")";
+					count = organization.selectOrganizationCount(strParmWithPageing);
 				}
-				String strParmWithPageing = " and org.parentId = " + params.getParentId() + "and org.hierarchyId not in (" + strNextLevel + ")";
-				count = organization.selectOrganizationCount(strParmWithPageing);
-			}
-			else {
-				String strParmWithPageing = " and org.parentId = " + params.getParentId();
-				count = organization.selectOrganizationCount(strParmWithPageing);
-			}
-			if (count > 0) {
-				throw new ApplicationException(90006);
+				else {
+					String strParmWithPageing = " and org.parentId = " + params.getParentId();
+					count = organization.selectOrganizationCount(strParmWithPageing);
+				}
+				if (count > 0) {
+					throw new ApplicationException(90006);
+				}
 			}
 			result = organization.updateOrganization(params);
 		}
@@ -338,7 +341,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 				treeSelectRow.setId(node.getId());
 				treeSelectRow.setText(node.getName());
 				treeSelectRow.setParent(String.valueOf(node.getParentId()));
-				treeSelectRow.setHierarchyLevel(parentNode.getHierarchyLevel());
+				treeSelectRow.setHierarchyLevel(node.getHierarchyLevel());
 				OrganizationTreeSelectState state = new OrganizationTreeSelectState();
 				state.setDisabled(false);
 				state.setOpened(false);
