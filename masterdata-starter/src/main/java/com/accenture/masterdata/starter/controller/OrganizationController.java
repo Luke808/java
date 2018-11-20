@@ -82,7 +82,7 @@ public class OrganizationController{
 		return result;
 	}
 	
-	@PostMapping("getOrganizationTreeTable")
+	@GetMapping("getOrganizationTreeTable")
 	public Map<String, Object> getOrganizationTreeTable(@RequestParam("id") Long id) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationTreeTable> organizations = organization.getOrganizationTreeTable(id);
@@ -90,7 +90,7 @@ public class OrganizationController{
 		return result;
 	}
 	
-	@PostMapping("getOrganizationTreeSelect")
+	@GetMapping("getOrganizationTreeSelect")
 	public Map<String, Object> getOrganizationTreeSelect(@RequestParam("parentId") Long parentId) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationTreeSelect> organizations = organization.getOrganizationTreeSelect(parentId);
