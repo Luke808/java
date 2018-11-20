@@ -226,7 +226,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 	
 	public List<OrganizationTreeTable> getOrganizationTreeTable(Long id){
+
 		List<OrganizationTreeTable> treeTable = Lists.newArrayList();
+
+		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
 		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
 		if(subOrgList != null && subOrgList.size() > 0) {
