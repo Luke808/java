@@ -5,6 +5,7 @@ import java.util.List;
 import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
+import com.accenture.masterdata.core.outEntity.dropdownList;
 
 public interface OrganizationHierarchyService {
 	/**
@@ -51,6 +52,8 @@ public interface OrganizationHierarchyService {
 	 */
 	public List<OrganizationHierarchy> selectOrganizationHierarchys(QueryParam params);
 
+	public List<dropdownList> getDropDown();
+	
 	/**
 	 * 
 	 * @param params

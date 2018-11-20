@@ -10,9 +10,11 @@ import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationHierarchyMapper;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
+import com.accenture.masterdata.core.outEntity.dropdownList;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.accenture.smsf.model.exception.ApplicationException;
+import com.google.common.collect.Lists;
 
 public class OrganizationHierarchyServiceImpl implements OrganizationHierarchyService {
 
@@ -43,12 +45,14 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 
 	@Override
 	public int deleteOrganizationHierarchy(Long id) {
-		return hierarchyMapper.deleteOrganizationHierarchy(id);
+		Long uId = 1L;
+		return hierarchyMapper.deleteOrganizationHierarchy(id, uId);
 	}
 	
 	@Override
 	public void batchDeleteOrganizationHierarchy(BatchDeleteInput idList) {
-		hierarchyMapper.batchDeleteOrganizationHierarchy(idList.getIds());
+		Long uId = 1L;
+		hierarchyMapper.batchDeleteOrganizationHierarchy(idList.getIds(), uId);
 	}
 	
 	@Override
@@ -78,6 +82,21 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 		return list;
 	}
 
+	@Override
+	public List<dropdownList> getDropDown()
+	{
+		List<dropdownList> dropdown = Lists.newArrayList();
+		String strParmWithPageing = " and tenantId = " + TenantHolder.get() + " ORDER BY level asc ";
+		List<OrganizationHierarchy> list = hierarchyMapper.selectOrganizatioHierarchyieList(strParmWithPageing);
+		for(OrganizationHierarchy hierarchy : list) {
+			dropdownList dp = new dropdownList();
+			dp.setValue(hierarchy.getId().toString());
+			dp.setName(hierarchy.getName());
+			dropdown.add(dp);
+		}
+		return dropdown;
+	}
+	
 	@Override
 	public List<OrganizationHierarchy> getNextLevel(int curLevel){
 		String strParmWithPageing = " and (id in (" + 

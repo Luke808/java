@@ -79,4 +79,5 @@ public interface OrganizationService {
 	 * Long parentId: 起始结点上级
 	 */
 	List<OrganizationTreeSelect> getOrganizationTreeSelect(Long parentId);
+	
 }

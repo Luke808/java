@@ -97,5 +97,4 @@ public class OrganizationController{
 		result.put("list", organizations);
 		return result;
 	}
-	
 }

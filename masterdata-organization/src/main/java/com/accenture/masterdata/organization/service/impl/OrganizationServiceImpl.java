@@ -37,12 +37,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 		// 重复项check
 		duplicationCheck(params);
 		
+		//判断当前节点下的子节点是否允许挂在当前
+		
 		// 设置租户id
 		params.setTenantId(Long.valueOf(TenantHolder.get()));
 		
 		// 保存数据
 		// 更新
 		if ( params.getId() != null && params.getId() > 0 ) {
+
+			//判断上级节点是否等于其本身
+			if(params.getId().equals(params.getParentId())) {
+				throw new ApplicationException(90005);
+			}
+			//判断上级是否选择了目前的子节点
+			checkIsChild(params.getId(), params.getParentId());
+			
 			result = organization.updateOrganization(params);
 		}
 		// 新增
@@ -209,7 +219,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		if(id.equals(0L)) {
 			OrganizationOut rootItem = new OrganizationOut();
 			rootItem.setLineno(1L);
-			rootItem.setCode("");
+			rootItem.setCode("Root");
 			rootItem.setName("组织机构");
 			rootItem.setParentId(-1L);
 			rootItem.setHierarchyId(0L);
@@ -258,6 +268,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 				treeSelectRow.setId(node.getId());
 				treeSelectRow.setText(node.getName());
 				treeSelectRow.setParent(String.valueOf(node.getParentId()));
+				treeSelectRow.setHierarchyLevel(node.getHierarchyLevel());
 				OrganizationTreeSelectState state = new OrganizationTreeSelectState();
 				state.setDisabled(false);
 				state.setOpened(false);
@@ -275,6 +286,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			rootNode.setId(-1L);
 			rootNode.setText("组织机构");
 			rootNode.setParent("");
+			rootNode.setHierarchyLevel(0L);
 			rootNode.setChildren(treeTable);
 			OrganizationTreeSelectState state = new OrganizationTreeSelectState();
 			state.setDisabled(false);
@@ -298,6 +310,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 				treeSelectRow.setId(node.getId());
 				treeSelectRow.setText(node.getName());
 				treeSelectRow.setParent(String.valueOf(node.getParentId()));
+				treeSelectRow.setHierarchyLevel(parentNode.getHierarchyLevel());
 				OrganizationTreeSelectState state = new OrganizationTreeSelectState();
 				state.setDisabled(false);
 				state.setOpened(false);
@@ -310,4 +323,30 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return treeTable;
 	}
 	
+	private void checkIsChild(Long id, Long parentId) throws Exception {
+		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
+		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
+		if(subOrgList != null && subOrgList.size() > 0) {
+			for(OrganizationOut node : subOrgList) {
+				if(node.getId().equals(parentId)) {
+					throw new ApplicationException(90004); 
+				}
+				checkIsChildSub(node.getId(), parentId);
+			}
+		}
+		
+	}
+	private void checkIsChildSub(Long id, Long parentId) throws Exception {
+		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
+		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
+		if(subOrgList != null && subOrgList.size() > 0) {
+			for(OrganizationOut node : subOrgList) {
+				if(node.getId().equals(parentId)) {
+					throw new ApplicationException(90004); 
+				}
+				checkIsChildSub(node.getId(), parentId);
+			}
+		}
+		
+	}
 }

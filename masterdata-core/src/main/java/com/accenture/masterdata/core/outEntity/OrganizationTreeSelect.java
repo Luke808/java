@@ -11,4 +11,5 @@ public class OrganizationTreeSelect {
 	private String parent;
 	private List<OrganizationTreeSelect> children ;
 	private Long id;
+	private Long hierarchyLevel;
 }
