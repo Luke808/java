@@ -81,6 +81,14 @@ public class OrganizationController{
 		result.put("list", organizations);
 		return result;
 	}
+
+	@PostMapping("getOrganizationTreeByParentId")
+	public  Map<String, Object> getOrganizationTreeByParentId(@RequestParam("id") Long id) {
+		Map<String, Object> result = Maps.newHashMap();
+		List<OrganizationTree> organizations = organization.getOrganizationTreeByParentId(id);
+		result.put("list", organizations);
+		return result;
+	}	
 	
 	@GetMapping("getOrganizationTreeTable")
 	public Map<String, Object> getOrganizationTreeTable(@RequestParam("id") Long id) {

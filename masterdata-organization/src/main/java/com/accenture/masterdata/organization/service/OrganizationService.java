@@ -66,6 +66,8 @@ public interface OrganizationService {
 	 */
 	List<OrganizationTree> getOrganizationTree(QueryParam param);
 	
+	List<OrganizationTree> getOrganizationTreeByParentId(Long id);
+	
 	/**
 	 * 获得树结构表
 	 * @param params

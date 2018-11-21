@@ -162,6 +162,41 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return lb_hasChild;
 	}
 	
+
+	public List<OrganizationTree> getOrganizationTreeByParentId(Long id){
+		List<OrganizationTree> trees = Lists.newArrayList();
+		//获得符合条件的所有结点
+		String strParm = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
+		List<OrganizationOut> orgs = organization.selectOrganizationList(strParm);
+		for(OrganizationOut node : orgs) {
+			OrganizationTree t = new OrganizationTree();
+			t.setLabel(node.getName());
+			t.setCollapsedIcon(node.getHierarchyIcon());
+			t.setExpandedIcon(node.getHierarchyIcon());
+			t.setData(node);
+			t.setChildren(getOrganizationTreeByParentIdSub(node.getId()));
+			trees.add(t);
+		}
+		return trees;
+	}
+
+	public List<OrganizationTree> getOrganizationTreeByParentIdSub(Long id){
+		List<OrganizationTree> trees = Lists.newArrayList();
+		//获得符合条件的所有结点
+		String strParm = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
+		List<OrganizationOut> orgs = organization.selectOrganizationList(strParm);
+		for(OrganizationOut node : orgs) {
+			OrganizationTree t = new OrganizationTree();
+			t.setLabel(node.getName());
+			t.setCollapsedIcon(node.getHierarchyIcon());
+			t.setExpandedIcon(node.getHierarchyIcon());
+			t.setData(node);
+			t.setChildren(getOrganizationTreeByParentIdSub(node.getId()));
+			trees.add(t);
+		}
+		return trees;
+	}
+	
 	public List<OrganizationTree> getOrganizationTree(QueryParam param){
 		List<OrganizationTree> trees = Lists.newArrayList();
 		//获得符合条件的所有结点
