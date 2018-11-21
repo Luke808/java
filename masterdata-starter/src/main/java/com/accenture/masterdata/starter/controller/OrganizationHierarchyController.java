@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class OrganizationHierarchyController{
 	@Autowired
 	OrganizationHierarchyService hierarchy;
 
-	@PostMapping("/get")
+	@GetMapping("/get")
 	public Map<String, Object> get(@RequestParam("id") Long id) {
 		OrganizationHierarchy hierarchies = hierarchy.selectOrganizationHierarchy(id);
 		Map<String, Object> result = Maps.newHashMap();
@@ -47,7 +48,7 @@ public class OrganizationHierarchyController{
 		return result;
 	}
 	
-	@PostMapping("/getDropDown")
+	@GetMapping("/getDropDown")
 	public Map<String, Object> getDropDown() {
 		Map<String, Object> result = Maps.newHashMap();
 		List<dropdownList> hierarchies = hierarchy.getDropDown();
@@ -76,7 +77,7 @@ public class OrganizationHierarchyController{
 		hierarchy.batchDeleteOrganizationHierarchy(idList);
 	}
 	
-	@PostMapping("/getNextLevel")
+	@GetMapping("/getNextLevel")
 	public Map<String, Object> getNextLevel(@RequestParam("curLevel") Long curLevel) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationHierarchy> hierarchies = hierarchy.getNextLevel(curLevel);
