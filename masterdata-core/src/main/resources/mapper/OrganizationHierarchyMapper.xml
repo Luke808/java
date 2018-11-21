@@ -83,7 +83,7 @@
 		   deleterUserId = #{deleterUserId},
 		   deletionTime = now()
 	    where 
-	   	     Id in (
+	   	     id in (
 	    		<foreach collection ="idList" item="idItem" index= "index" separator =",">
 	                	#{idItem}
 	             </foreach >
@@ -145,7 +145,7 @@
 		FROM
 			t_organization_hirerarchy
 		WHERE 
-			1 = 1
+			isDeleted = 0
 			${strParm}
 	</select>
 	

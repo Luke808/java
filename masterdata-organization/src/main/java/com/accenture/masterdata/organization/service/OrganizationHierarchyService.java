@@ -31,14 +31,14 @@ public interface OrganizationHierarchyService {
 	 * 
 	 * @param id
 	 */
-	public int deleteOrganizationHierarchy(Long id);
+	public int deleteOrganizationHierarchy(Long id)  throws Exception;
 
 	/**
 	 * 
 	 * @param id
 	 */
     //批量删除
-	public void batchDeleteOrganizationHierarchy(BatchDeleteInput idList);
+	public void batchDeleteOrganizationHierarchy(BatchDeleteInput idList)  throws Exception ;
     
 	/**
 	 * 
