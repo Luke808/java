@@ -32,9 +32,9 @@ smsf:
       connections:
         default:
           # 正式环境下的配置
-#          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
-#          username: ${smsf.data.database1.username}
-#          password: ${smsf.data.database1.password}
-          url: jdbc:mysql://127.0.0.1:3306/masterdata?useUnicode=true&useSSL=false&characterEncoding=utf-8
-          username: root
-          password: wanfj
+          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
+          username: ${smsf.data.database1.username}
+          password: ${smsf.data.database1.password}
+#          url: jdbc:mysql://127.0.0.1:3306/masterdata?useUnicode=true&useSSL=false&characterEncoding=utf-8
+#          username: root
+#          password: wanfj
