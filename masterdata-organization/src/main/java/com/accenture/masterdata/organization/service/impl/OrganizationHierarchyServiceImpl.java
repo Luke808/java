@@ -3,12 +3,14 @@ package com.accenture.masterdata.organization.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
 import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
 import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationHierarchyMapper;
+import com.accenture.masterdata.core.mapper.OrganizationMapper;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 import com.accenture.masterdata.core.outEntity.dropdownList;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
@@ -24,6 +26,9 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 	@Autowired
 	private OrganizationHierarchyMapper hierarchyMapper;
 	
+	@Autowired
+	private OrganizationMapper organization;
+	
 	@Override
 	public void createOrUpdateOrganizationHierarchy(OrganizationHierarchy params)  throws Exception {
 
@@ -31,27 +36,39 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 		
 		if(params.getId() == null || params.getId() == 0) {
 			//new
-			params.setCreatorUserId(1L);
+			params.setCreatorUserId(1L); // TODO 当前系统取得不到userId，此处为做的假值
 			hierarchyMapper.insertOrganizationHierarchy(params);
 		}
 		else
 		{
 			//update
-			params.setLastModifierUserId(1L);
+			params.setLastModifierUserId(1L); // TODO 当前系统取得不到userId，此处为做的假值
 			hierarchyMapper.updateOrganizationHierarchy(params);
 		}
 		
 	}
 
 	@Override
-	public int deleteOrganizationHierarchy(Long id) {
+	public int deleteOrganizationHierarchy(Long id) throws Exception {
+		// TODO 当前系统取得不到userId，此处为做的假值
 		Long uId = 1L;
+		
+		// 层级下如果如果存在组织数据，则报错
+		checkHierarchyOrganization(id.toString());
+		
 		return hierarchyMapper.deleteOrganizationHierarchy(id, uId);
 	}
 	
 	@Override
-	public void batchDeleteOrganizationHierarchy(BatchDeleteInput idList) {
+	public void batchDeleteOrganizationHierarchy(BatchDeleteInput idList)  throws Exception {
+		
+		// TODO 当前系统取得不到userId，此处为做的假值
 		Long uId = 1L;
+		
+		// 如果删除的id中存在有组织存的的id，则不能批量删除
+		String ids = StringUtils.join(idList.ids, ",");
+		checkHierarchyOrganization(ids);
+		
 		hierarchyMapper.batchDeleteOrganizationHierarchy(idList.getIds(), uId);
 	}
 	
@@ -144,7 +161,29 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 		if( count > 0 ) {
 			throw new ApplicationException(90001);
 		}
+		
+		/*** 修改时如果修改了层级级别，此层级已经存在组织数据，则不允许修改 ***/
+		if ( params.getId() != null && params.getId() > 0 ) {
+			// 取得层级数据
+			OrganizationHierarchy hierarchy = hierarchyMapper.selectOrganizationHierarchy(params.getId());
+			if ( hierarchy.getLevel() != params.getLevel() ) {
+				checkHierarchyOrganization(params.getId().toString());
+			}
+		}
 
+	}
+	
+	// 此层级下存在组织数据，不允许进行操作
+	private void checkHierarchyOrganization(String hierarchyIds) throws Exception  {
+		
+		// 取得当前层级的组织数据
+		String strparam = " And org.hierarchyId in ( " + hierarchyIds + " )";
+		int count = organization.selectOrganizationCount(strparam);
+		
+		if( count > 0 ) {
+			throw new ApplicationException(90003);
+		}
+		
 	}
 
 }

@@ -68,12 +68,12 @@ public class OrganizationHierarchyController{
 	}
 	
 	@DeleteMapping("/delete")
-	public int delete(@RequestParam("id") Long id) {
+	public int delete(@RequestParam("id") Long id)  throws Exception {
 		return hierarchy.deleteOrganizationHierarchy(id);
 	}
 	
 	@PostMapping("/batchDelete")
-	public void batchDeleteOrganizationHierarchy(@RequestBody BatchDeleteInput idList) {
+	public void batchDeleteOrganizationHierarchy(@RequestBody BatchDeleteInput idList)  throws Exception {
 		hierarchy.batchDeleteOrganizationHierarchy(idList);
 	}
 	
