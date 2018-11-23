@@ -38,16 +38,14 @@ public class OrganizationController{
 	@Autowired
 	OrganizationService organization;
 
-	Long eid = Long.parseLong("1");
-	Long tenantid = Long.parseLong("1");
-	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})	
 	@ApiOperation(value="通过组织ID,获取单条组织信息",notes="注意： 参数ID为必须项")
 	@GetMapping("/get")
 	public OrganizationOut get(@ApiParam(name="id",value="组织机构ID",required=true) @RequestParam("id") Long id) {
 		return organization.selectOrganization(id);
 	}
 
-	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})	
 	@ApiOperation(value="根据通用组合查询条件,查询符合条件的组织信息",notes="注意： 参数param为必须项")
 	@PostMapping("/getList")
 	public Map<String, Object> getList(@ApiParam(name="param",value="通用查询条件对象",required=true) @RequestBody QueryParam param) {
@@ -61,18 +59,21 @@ public class OrganizationController{
 		return result;
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_MANAGE_ADD})
 	@ApiOperation(value="插入一条组织机构信息",notes="注意： 参数param为必须项")
 	@PostMapping("/add")
 	public int insert(@ApiParam(name="param",value="要插入的组织数据",required=true) @RequestBody OrganizationIn params) throws Exception {
 		return organization.saveOrganization(params);
 	}
 
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_MANAGE_EDIT})
 	@ApiOperation(value="修改一条组织机构信息",notes="注意： 参数param为必须项")
 	@PutMapping("/save")
 	public int update(@ApiParam(name="param",value="要修改的组织数据",required=true) @RequestBody OrganizationIn params) throws Exception {
 		return organization.saveOrganization(params);
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_MANAGE_DELETE})
 	@ApiOperation(value="删除指定ID的机构信息",notes="注意： 参数id为必须项")
 	@DeleteMapping("/delete")
 	public int delete(@ApiParam(name="id",value="组织机构ID",required=true) @RequestParam("id") Long id) throws Exception {
@@ -86,6 +87,7 @@ public class OrganizationController{
 		}
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据通用组合查询条件,查询符合条件的组织节点",notes="注意： 参数param为必须项")
 	@PostMapping("getOrganizationTree")
 	public  Map<String, Object> getOrganizationTree(@ApiParam(name="param",value="通用查询条件对象",required=true) @RequestBody QueryParam param) {
@@ -95,6 +97,7 @@ public class OrganizationController{
 		return result;
 	}
 
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据父结点ID,获得组织机构树",notes="注意： 参数id为必须项")
 	@PostMapping("getOrganizationTreeByParentId")
 	public  Map<String, Object> getOrganizationTreeByParentId(@ApiParam(name="id",value="父结点ID",required=true) @RequestParam("id") Long id) {
@@ -104,6 +107,7 @@ public class OrganizationController{
 		return result;
 	}	
 	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据结点ID,获得该组织下的节点，返回TreeTable数据格式",notes="注意： 参数id为必须项")
 	@GetMapping("getOrganizationTreeTable")
 	public Map<String, Object> getOrganizationTreeTable(@ApiParam(name="id",value="组织机构ID",required=true) @RequestParam("id") Long id) {
@@ -113,6 +117,7 @@ public class OrganizationController{
 		return result;
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据父结点ID,获得该组织下的节点，返回Ngx-tree-select数据格式",notes="注意： 参数parentId为必须项")
 	@GetMapping("getOrganizationTreeSelect")
 	public Map<String, Object> getOrganizationTreeSelect(@ApiParam(name="parentId",value="父结点ID",required=true) @RequestParam("parentId") Long parentId) {

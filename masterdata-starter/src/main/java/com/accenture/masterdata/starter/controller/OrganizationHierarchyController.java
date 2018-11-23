@@ -35,6 +35,7 @@ public class OrganizationHierarchyController{
 	@Autowired
 	OrganizationHierarchyService hierarchy;
 
+	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_VIEW})
 	@ApiOperation(value="通过层级ID,获取单条层级信息",notes="注意： 参数ID为必须项")
 	@GetMapping("/get")
 	public Map<String, Object> get(@ApiParam(name="id",value="组织层级ID",required=true) @RequestParam("id") Long id) {
@@ -58,6 +59,7 @@ public class OrganizationHierarchyController{
 		return result;
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_VIEW})
 	@ApiOperation(value="获取层级下拉列表",notes="注意： 无需参数")
 	@GetMapping("/getDropDown")
 	public Map<String, Object> getDropDown() {
@@ -67,6 +69,7 @@ public class OrganizationHierarchyController{
 		return result;
 	}
 
+	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_MANAGE_EDIT, Permissions.MASTERDATA_HIERARCHY_MANAGE_ADD})
 	@ApiOperation(value="新建或修改Hierarchy信息;新建时,ID请填0;修改时,ID请为要修改记录的ID",notes="注意： 参数params为必须项")
 	@PutMapping("/createOrUpdate")
 	public void createOrUpdateOrganizationHierarchy(@ApiParam(name="params",value="要修改的层级数据",required=true) @RequestBody OrganizationHierarchy params) throws Exception {
@@ -79,18 +82,21 @@ public class OrganizationHierarchyController{
 		}
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_MANAGE_DELETE})
 	@ApiOperation(value="删除指定ID的组织层级",notes="注意： 参数id为必须项")
 	@DeleteMapping("/delete")
 	public int delete(@ApiParam(name="id",value="组织层级ID",required=true) @RequestParam("id") Long id)  throws Exception {
 		return hierarchy.deleteOrganizationHierarchy(id);
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_MANAGE_DELETE})
 	@ApiOperation(value="批量删除组织层级",notes="注意： 参数idList为必须项")
 	@PostMapping("/batchDelete")
 	public void batchDeleteOrganizationHierarchy(@ApiParam(name="idList",value="层级ID list",required=true) @RequestBody BatchDeleteInput idList)  throws Exception {
 		hierarchy.batchDeleteOrganizationHierarchy(idList);
 	}
 	
+	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_VIEW})
 	@ApiOperation(value="获得指定层级下可添加的下级层级列表",notes="注意： 参数curLevel为必须项")
 	@GetMapping("/getNextLevel")
 	public Map<String, Object> getNextLevel(@ApiParam(name="curLevel",value="指定层级(非ID)",required=true) @RequestParam("curLevel") Long curLevel) {
