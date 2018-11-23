@@ -18,6 +18,8 @@ import com.accenture.masterdata.core.inEntity.QueryParam;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 import com.accenture.masterdata.core.outEntity.dropdownList;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
+import com.accenture.masterdata.starter.Permissions;
+import com.accenture.smsf.authority.permission.loader.annotation.Permission;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
 import com.google.common.collect.Maps;
 
@@ -42,6 +44,7 @@ public class OrganizationHierarchyController{
 		return result;
 	}
 
+	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_VIEW})
 	@ApiOperation(value="根据通用组合查询条件,获取符合条件的层级信息",notes="注意： 参数param为必须项")
 	@PostMapping("/getList")
 	public Map<String, Object> getList(@ApiParam(name="param",value="通用查询条件对象",required=true) @RequestBody QueryParam param) {
