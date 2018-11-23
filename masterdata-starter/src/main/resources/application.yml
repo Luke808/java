@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: masterdata
+    name: masterdata-service
 
 smsf:
   application:
