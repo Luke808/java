@@ -47,7 +47,7 @@ public class OrganizationController{
 		return organization.selectOrganization(id);
 	}
 
-	@Permission(values= {Permissions.MASTERDATA_HIERARCHY_VIEW})
+	
 	@ApiOperation(value="根据通用组合查询条件,查询符合条件的组织信息",notes="注意： 参数param为必须项")
 	@PostMapping("/getList")
 	public Map<String, Object> getList(@ApiParam(name="param",value="通用查询条件对象",required=true) @RequestBody QueryParam param) {
