@@ -47,13 +47,13 @@ public interface OrganizationHierarchyMapper {
 	 * 
 	 * @param param
 	 */
-	public int deleteOrganizationHierarchy(@Param(value="id") Long id, @Param(value="deleterUserId") Long uId);
+	public int deleteOrganizationHierarchy(@Param(value="id") Long id, @Param(value="deleterUserId") String eId);
 
 	/**
 	 * 
 	 * @param param
 	 */
-	public void batchDeleteOrganizationHierarchy(@Param(value="idList") List<Long> idList, @Param(value="deleterUserId") Long uId);
+	public void batchDeleteOrganizationHierarchy(@Param(value="idList") List<Long> idList, @Param(value="deleterUserId") String eId);
 
 	
 }

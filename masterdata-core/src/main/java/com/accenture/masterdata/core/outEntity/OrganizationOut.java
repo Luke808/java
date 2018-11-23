@@ -22,14 +22,14 @@ public class OrganizationOut {
 	private Long hierarchyLevel;
 	private Long hierarchyId;
 	private String hierarchyIcon;
-	private Long creatorUserId;
+	private String creatorUserId;
 	private String likeCode;
 	private String creatorName;
 	private Date creationTime;
-	private Long lastModifierUserId;
+	private String lastModifierUserId;
 	private Date lastModificationTime;
 	private boolean isDeleted;
-	private Long deleterUserId;
+	private String deleterUserId;
 	private String deleterName;
 	private Date deletionTime;
 	private Long tenantId;

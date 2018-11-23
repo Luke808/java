@@ -1,12 +1,12 @@
 server:
-  port: 10045
+  port: 10036
   session-timeout: 3000  
   tomcat.max-threads: 0  
   tomcat.uri-encoding: UTF-8  
 
 spring:
   application:
-    name: smsf-sample-1
+    name: masterdata
 
 smsf:
   application:
@@ -25,6 +25,8 @@ smsf:
           key-name: Authorization
         tenantId:
           key-name: tenantId
+        USER_ID:
+          key-name: USER_ID 
   data:
     mybatis:
       mapper-locations: classpath*:/mapper/*.xml

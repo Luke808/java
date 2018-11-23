@@ -14,6 +14,7 @@ import com.accenture.masterdata.core.mapper.OrganizationMapper;
 import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
 import com.accenture.masterdata.core.outEntity.dropdownList;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
+import com.accenture.smsf.framework.starter.web.principal.PrincipalHolder;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.accenture.smsf.model.exception.ApplicationException;
 import com.google.common.collect.Lists;
@@ -36,13 +37,13 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 		
 		if(params.getId() == null || params.getId() == 0) {
 			//new
-			params.setCreatorUserId(1L); // TODO 当前系统取得不到userId，此处为做的假值
+			params.setCreatorUserId(PrincipalHolder.get()); // TODO 当前系统取得不到userId，此处为做的假值
 			hierarchyMapper.insertOrganizationHierarchy(params);
 		}
 		else
 		{
 			//update
-			params.setLastModifierUserId(1L); // TODO 当前系统取得不到userId，此处为做的假值
+			params.setLastModifierUserId(PrincipalHolder.get()); // TODO 当前系统取得不到userId，此处为做的假值
 			hierarchyMapper.updateOrganizationHierarchy(params);
 		}
 		
@@ -50,26 +51,21 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 
 	@Override
 	public int deleteOrganizationHierarchy(Long id) throws Exception {
-		// TODO 当前系统取得不到userId，此处为做的假值
-		Long uId = 1L;
 		
 		// 层级下如果如果存在组织数据，则报错
 		checkHierarchyOrganization(id.toString());
 		
-		return hierarchyMapper.deleteOrganizationHierarchy(id, uId);
+		return hierarchyMapper.deleteOrganizationHierarchy(id, PrincipalHolder.get());
 	}
 	
 	@Override
 	public void batchDeleteOrganizationHierarchy(BatchDeleteInput idList)  throws Exception {
 		
-		// TODO 当前系统取得不到userId，此处为做的假值
-		Long uId = 1L;
-		
 		// 如果删除的id中存在有组织存的的id，则不能批量删除
 		String ids = StringUtils.join(idList.ids, ",");
 		checkHierarchyOrganization(ids);
 		
-		hierarchyMapper.batchDeleteOrganizationHierarchy(idList.getIds(), uId);
+		hierarchyMapper.batchDeleteOrganizationHierarchy(idList.getIds(), PrincipalHolder.get());
 	}
 	
 	@Override
@@ -83,7 +79,7 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 			hierarchy.setComments("");
 			hierarchy.setTenantId(Integer.valueOf(TenantHolder.get()).longValue());
 			hierarchy.setCreationTime(new Date());
-			hierarchy.setCreatorUserId(1L);
+			hierarchy.setCreatorUserId(PrincipalHolder.get());
 		}
 		else {
 			hierarchy = hierarchyMapper.selectOrganizationHierarchy(id);

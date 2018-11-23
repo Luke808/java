@@ -17,15 +17,15 @@ public class OrganizationHierarchy {
 	private String icon;
 	private int allowConcurrently;
 	private String comments;
-	private Long creatorUserId;
+	private String creatorUserId;
 	private String creatorUserName;
 	private Date creationTime;
-	private Long lastModifierUserId;
+	private String lastModifierUserId;
 	private String lastModifierUserName;
 	private Date lastModificationTime;
 	private int isDeleted;
 	private String deleterUserName;
-	private Long deleterUserId;
+	private String deleterUserId;
 	private Date deletionTime;
 	private Long tenantId;
 	private String tenantName;

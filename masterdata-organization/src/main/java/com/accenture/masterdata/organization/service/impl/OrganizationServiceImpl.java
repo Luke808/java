@@ -17,6 +17,7 @@ import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.masterdata.organization.service.OrganizationService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
+import com.accenture.smsf.framework.starter.web.principal.PrincipalHolder;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.accenture.smsf.model.exception.ApplicationException;
 import com.google.common.collect.Lists;
@@ -83,10 +84,14 @@ public class OrganizationServiceImpl implements OrganizationService {
 					throw new ApplicationException(90006);
 				}
 			}
+			// 更新人EID追加
+			params.setLastModifierUserId(PrincipalHolder.get());
 			result = organization.updateOrganization(params);
 		}
 		// 新增
 		else {
+			// 创建人EID追加
+			params.setCreatorUserId(PrincipalHolder.get());
 			result = organization.insertOrganization(params);
 		}
 
@@ -162,7 +167,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return lb_hasChild;
 	}
 	
-
+	@Override
 	public List<OrganizationTree> getOrganizationTreeByParentId(Long id){
 		List<OrganizationTree> trees = Lists.newArrayList();
 		//获得符合条件的所有结点
@@ -180,7 +185,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return trees;
 	}
 
-	public List<OrganizationTree> getOrganizationTreeByParentIdSub(Long id){
+	
+	private List<OrganizationTree> getOrganizationTreeByParentIdSub(Long id){
 		List<OrganizationTree> trees = Lists.newArrayList();
 		//获得符合条件的所有结点
 		String strParm = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + id;
@@ -197,6 +203,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return trees;
 	}
 	
+	@Override
 	public List<OrganizationTree> getOrganizationTree(QueryParam param){
 		List<OrganizationTree> trees = Lists.newArrayList();
 		//获得符合条件的所有结点
@@ -247,7 +254,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return targetTree;
 	}
 	
-	public List<OrganizationTree> getOrganizationTreeSub(List<OrganizationOut> orgs, OrganizationOut parentNode){
+	private List<OrganizationTree> getOrganizationTreeSub(List<OrganizationOut> orgs, OrganizationOut parentNode){
 		List<OrganizationTree> treeTable = Lists.newArrayList();	
 		for(OrganizationOut node : orgs) {
 			if(node.getParentId().equals(parentNode.getId())){
@@ -263,6 +270,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return treeTable;
 	}
 	
+	@Override
 	public List<OrganizationTreeTable> getOrganizationTreeTable(Long id){
 
 		List<OrganizationTreeTable> treeTable = Lists.newArrayList();	
@@ -276,7 +284,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 				lineno.setLineno(lineno.getLineno() + 1);
 				node.setLineno(lineno.getLineno());
 				treeTableRow.setData(node);
-//				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
+//				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno)); TODO
 				treeTable.add(treeTableRow);
 			}
 		}
@@ -307,23 +315,25 @@ public class OrganizationServiceImpl implements OrganizationService {
 		return targetTreeTable;
 	}
 	
-	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode, OrganizationOut lineno){
-		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
-		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();
-		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
-		if(subOrgList != null && subOrgList.size() > 0) {
-			for(OrganizationOut node : subOrgList) {
-				OrganizationTreeTable treeTableRow = new OrganizationTreeTable();
-				lineno.setLineno(lineno.getLineno() + 1);
-				node.setLineno(lineno.getLineno());
-				treeTableRow.setData(node);
-				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
-				treeTable.add(treeTableRow);
-			}
-		}
-		return treeTable;
-	}
+	// TODO 展开整个层级关系树时的方法，暂时只展开当前节点的树
+//	private List<OrganizationTreeTable> getOrganizationTreeTableSub(OrganizationOut parentNode, OrganizationOut lineno){
+//		List<OrganizationTreeTable> treeTable = Lists.newArrayList();		
+//		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentNode.getId();
+//		List<OrganizationOut> subOrgList = organization.selectOrganizationList(strWhere);
+//		if(subOrgList != null && subOrgList.size() > 0) {
+//			for(OrganizationOut node : subOrgList) {
+//				OrganizationTreeTable treeTableRow = new OrganizationTreeTable();
+//				lineno.setLineno(lineno.getLineno() + 1);
+//				node.setLineno(lineno.getLineno());
+//				treeTableRow.setData(node);
+//				treeTableRow.setChildren(getOrganizationTreeTableSub(node, lineno));
+//				treeTable.add(treeTableRow);
+//			}
+//		}
+//		return treeTable;
+//	}
 	
+	@Override
 	public List<OrganizationTreeSelect> getOrganizationTreeSelect(Long parentId){
 		List<OrganizationTreeSelect> treeTable = Lists.newArrayList();		
 		String strWhere = " and org.tenantId = " + TenantHolder.get() + " and org.parentId = " + parentId;

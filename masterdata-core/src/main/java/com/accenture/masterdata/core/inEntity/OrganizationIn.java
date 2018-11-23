@@ -19,12 +19,12 @@ public class OrganizationIn {
 	private String likeCode;
 	private Long hierarchyLevel;
 	private Long hierarchyId;
-	private Long creatorUserId;
+	private String creatorUserId;
 	private Date creationTime;
-	private Long lastModifierUserId;
+	private String lastModifierUserId;
 	private Date lastModificationTime;
 	private boolean isDeleted;
-	private Long deleterUserId;
+	private String deleterUserId;
 	private Date deletionTime;
 	private Long tenantId;
 
