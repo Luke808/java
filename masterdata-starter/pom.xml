@@ -40,6 +40,10 @@
 	    <groupId>com.accenture.masterdata</groupId>
 	    <artifactId>masterdata-organization</artifactId>
     </dependency>
+	<dependency>
+	    <groupId>com.accenture.smsf.authority</groupId>
+	    <artifactId>authority-permission-loader</artifactId>
+	</dependency> 
   </dependencies>
     <build>
         <finalName>${project.name}</finalName>

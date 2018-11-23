@@ -17,6 +17,10 @@ smsf:
     redis-cache:
       authority:
         duration: 10
+  authority:
+    permission:
+     autoload:
+       enabled: true
   swagger:
     security:
       enabled: true
