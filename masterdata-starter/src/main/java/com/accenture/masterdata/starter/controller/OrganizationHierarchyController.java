@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
-import com.accenture.masterdata.core.inEntity.QueryParam;
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
-import com.accenture.masterdata.core.outEntity.dropdownList;
+import com.accenture.masterdata.core.inentity.BatchDeleteInput;
+import com.accenture.masterdata.core.inentity.QueryParam;
+import com.accenture.masterdata.core.outentity.OrganizationHierarchy;
+import com.accenture.masterdata.core.outentity.dropdownList;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.masterdata.starter.Permissions;
 import com.accenture.smsf.authority.permission.loader.annotation.Permission;

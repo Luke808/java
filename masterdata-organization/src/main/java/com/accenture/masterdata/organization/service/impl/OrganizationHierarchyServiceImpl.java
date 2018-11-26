@@ -7,12 +7,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
-import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
-import com.accenture.masterdata.core.inEntity.QueryParam;
+import com.accenture.masterdata.core.inentity.BatchDeleteInput;
+import com.accenture.masterdata.core.inentity.QueryParam;
 import com.accenture.masterdata.core.mapper.OrganizationHierarchyMapper;
 import com.accenture.masterdata.core.mapper.OrganizationMapper;
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
-import com.accenture.masterdata.core.outEntity.dropdownList;
+import com.accenture.masterdata.core.outentity.OrganizationHierarchy;
+import com.accenture.masterdata.core.outentity.dropdownList;
 import com.accenture.masterdata.organization.service.OrganizationHierarchyService;
 import com.accenture.smsf.framework.starter.web.principal.PrincipalHolder;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;

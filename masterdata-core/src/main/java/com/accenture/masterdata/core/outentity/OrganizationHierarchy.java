@@ -1,4 +1,4 @@
-package com.accenture.masterdata.core.outEntity;
+package com.accenture.masterdata.core.outentity;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package com.accenture.masterdata.core.inEntity;
+package com.accenture.masterdata.core.inentity;
 
 import java.util.List;
 

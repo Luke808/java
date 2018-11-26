@@ -2,12 +2,12 @@ package com.accenture.masterdata.organization.service;
 
 import java.util.List;
 
-import com.accenture.masterdata.core.inEntity.OrganizationIn;
-import com.accenture.masterdata.core.inEntity.QueryParam;
-import com.accenture.masterdata.core.outEntity.OrganizationOut;
-import com.accenture.masterdata.core.outEntity.OrganizationTree;
-import com.accenture.masterdata.core.outEntity.OrganizationTreeSelect;
-import com.accenture.masterdata.core.outEntity.OrganizationTreeTable;
+import com.accenture.masterdata.core.inentity.OrganizationIn;
+import com.accenture.masterdata.core.inentity.QueryParam;
+import com.accenture.masterdata.core.outentity.OrganizationOut;
+import com.accenture.masterdata.core.outentity.OrganizationTree;
+import com.accenture.masterdata.core.outentity.OrganizationTreeSelect;
+import com.accenture.masterdata.core.outentity.OrganizationTreeTable;
 
 /**
  * @author haibo.liu

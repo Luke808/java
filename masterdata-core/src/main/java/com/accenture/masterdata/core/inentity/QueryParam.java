@@ -1,4 +1,4 @@
-package com.accenture.masterdata.core.inEntity;
+package com.accenture.masterdata.core.inentity;
 
 /*
  * 通用查询检索条件参数

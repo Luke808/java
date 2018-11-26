@@ -3,8 +3,8 @@ package com.accenture.masterdata.common.querybuilder;
 
 import java.util.List;
 
-import com.accenture.masterdata.core.inEntity.FilterRule;
-import com.accenture.masterdata.core.inEntity.QueryParam;
+import com.accenture.masterdata.core.inentity.FilterRule;
+import com.accenture.masterdata.core.inentity.QueryParam;
 import com.accenture.smsf.framework.boot.stereotype.Component;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 

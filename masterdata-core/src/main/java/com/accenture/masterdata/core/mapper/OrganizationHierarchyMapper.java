@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
+import com.accenture.masterdata.core.outentity.OrganizationHierarchy;
 
 /**
  * @author haibo.liu

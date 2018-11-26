@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.accenture.masterdata.core.inEntity.OrganizationIn;
-import com.accenture.masterdata.core.outEntity.OrganizationOut;
+import com.accenture.masterdata.core.inentity.OrganizationIn;
+import com.accenture.masterdata.core.outentity.OrganizationOut;
 
 /**
  * @author haibo.liu

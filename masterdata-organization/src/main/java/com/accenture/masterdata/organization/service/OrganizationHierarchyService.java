@@ -2,10 +2,10 @@ package com.accenture.masterdata.organization.service;
 
 import java.util.List;
 
-import com.accenture.masterdata.core.inEntity.BatchDeleteInput;
-import com.accenture.masterdata.core.inEntity.QueryParam;
-import com.accenture.masterdata.core.outEntity.OrganizationHierarchy;
-import com.accenture.masterdata.core.outEntity.dropdownList;
+import com.accenture.masterdata.core.inentity.BatchDeleteInput;
+import com.accenture.masterdata.core.inentity.QueryParam;
+import com.accenture.masterdata.core.outentity.OrganizationHierarchy;
+import com.accenture.masterdata.core.outentity.dropdownList;
 
 public interface OrganizationHierarchyService {
 	/**
