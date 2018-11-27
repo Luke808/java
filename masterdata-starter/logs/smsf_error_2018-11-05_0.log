@@ -1,4 +1,0 @@
-2018-11-05 10:06:01.700 [INFO ] Thread[main] [com.accenture.smsf.framework.starter.cors.config.CorsConfig] [48] --------------------CORS loading--------------------
-2018-11-05 10:06:19.328 [INFO ] Thread[main] [com.accenture.smsf.framework.starter.swagger.config.SwaggerConfig] [39] ---------------------Swagger2 init---------------------
-2018-11-05 10:06:39.261 [WARN ] Thread[XNIO-2 task-12] [com.accenture.smsf.framework.starter.web.principal.filter.PrincipalFilter] [42] Principal was trying to be set to [null]
-2018-11-05 10:06:39.636 [WARN ] Thread[XNIO-2 task-14] [com.accenture.smsf.framework.starter.web.principal.filter.PrincipalFilter] [42] Principal was trying to be set to [null]
