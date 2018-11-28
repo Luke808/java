@@ -84,12 +84,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 					throw new ApplicationException(90006);
 				}
 			}
+			
+			// 如果此节点不是根节点，取得此节点的组织信息 设置组织的lickcode
+			if ( params.getParentId() > 0 ) {
+				OrganizationOut activeOrg = organization.selectOrganization(params.getId());
+				String oldLickParent = activeOrg.getParentId().toString() + ",";
+				String newLickParent = params.getParentId().toString() + ",";
+				params.setLikeCode(activeOrg.getLikeCode().replace(oldLickParent + ",", newLickParent));
+			}
+			
 			// 更新人EID追加
 			params.setLastModifierUserId(PrincipalHolder.get());
 			result = organization.updateOrganization(params);
 		}
 		// 新增
 		else {
+			// 如果此节点不是根节点，取得父id的组织信息 设置组织的lickcode
+			if ( params.getParentId() > 0 ) {
+				OrganizationOut parentOrg = organization.selectOrganization(params.getParentId());
+				params.setLikeCode(parentOrg.getLikeCode() == null ? "" : parentOrg.getLikeCode()  + params.getParentId().toString() +",");
+			} 
+			
 			// 创建人EID追加
 			params.setCreatorUserId(PrincipalHolder.get());
 			result = organization.insertOrganization(params);
@@ -233,25 +248,27 @@ public class OrganizationServiceImpl implements OrganizationService {
 			t.setChildren(getOrganizationTreeSub(orgs, node));
 			trees.add(t);
 		}
-		List<OrganizationTree> targetTree = Lists.newArrayList();
-		//虚拟组织机构
-		OrganizationTree root = new OrganizationTree();
-		root.setLabel("组织机构");
-		root.setCollapsedIcon("fa fa-folder-open");
-		root.setExpandedIcon("fa fa-folder");
-		root.setChildren(trees);
-		OrganizationOut rootData = new OrganizationOut();
-		rootData.setId(0L);
-		rootData.setParentId(-1L);
-		rootData.setHierarchyLevel(0L);
-		rootData.setHierarchyId(0L);
-		rootData.setCode("");
-		rootData.setName("组织机构");
-		rootData.setComment("");
-		root.setData(rootData);
-		targetTree.add(root);
 		
-		return targetTree;
+		// TODO 为组织树增加一个虚拟的根节点，当前系统中不需要此功能
+//		List<OrganizationTree> targetTree = Lists.newArrayList();
+//		//虚拟组织机构
+//		OrganizationTree root = new OrganizationTree();
+//		root.setLabel("组织机构");
+//		root.setCollapsedIcon("fa fa-folder-open");
+//		root.setExpandedIcon("fa fa-folder");
+//		root.setChildren(trees);
+//		OrganizationOut rootData = new OrganizationOut();
+//		rootData.setId(0L);
+//		rootData.setParentId(-1L);
+//		rootData.setHierarchyLevel(0L);
+//		rootData.setHierarchyId(0L);
+//		rootData.setCode("");
+//		rootData.setName("组织机构");
+//		rootData.setComment("");
+//		root.setData(rootData);
+//		targetTree.add(root);
+		
+		return trees;
 	}
 	
 	private List<OrganizationTree> getOrganizationTreeSub(List<OrganizationOut> orgs, OrganizationOut parentNode){

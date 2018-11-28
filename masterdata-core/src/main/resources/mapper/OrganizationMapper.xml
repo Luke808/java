@@ -136,7 +136,20 @@
 			orh.`level` hierarchyLevel,
 			orh.icon hierarchyIcon,
 		  	org.parentId,
-		  	orp.`name` parentName,
+		  	(select 
+				GROUP_CONCAT(name SEPARATOR '-') 
+			 from 
+			 	t_organization 
+			 where id in (
+				select 
+					substring_index(substring_index(a.likeCode,',',b.help_topic_id+1),',',-1)
+				from 
+					t_organization a join mysql.help_topic b
+					on <![CDATA[b.help_topic_id < (length(a.likeCode) - length(replace(a.likeCode,',',''))+1)]]>
+				WHERE
+					a.id = org.id
+				order by a.id )
+			) parentName,
 			org.creationTime,
 			org.creatorUserId,
 			org.deleterUserId,
