@@ -306,28 +306,33 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 		}
 		List<OrganizationTreeTable> targetTreeTable = Lists.newArrayList();
-		OrganizationTreeTable root = new OrganizationTreeTable();
-		if(id.equals(0L)) {
-			OrganizationOut rootItem = new OrganizationOut();
-			rootItem.setLineno(1L);
-			rootItem.setCode("Root");
-			rootItem.setName("组织机构");
-			rootItem.setParentId(-1L);
-			rootItem.setHierarchyId(0L);
-			rootItem.setHierarchyLevel(0L);
-			rootItem.setHierarchyName("Root");
-			rootItem.setComment("");
-			root.setData(rootItem);
-			root.setChildren(treeTable);
+
+		//  TODO 为组织树增加一个虚拟的根节点，当前系统中不需要此功能
+//		if(id.equals(0L)) {
+//			OrganizationOut rootItem = new OrganizationOut();
+//			rootItem.setLineno(1L);
+//			rootItem.setCode("Root");
+//			rootItem.setName("组织机构");
+//			rootItem.setParentId(-1L);
+//			rootItem.setHierarchyId(0L);
+//			rootItem.setHierarchyLevel(0L);
+//			rootItem.setHierarchyName("Root");
+//			rootItem.setComment("");
+//			root.setData(rootItem);
+//			root.setChildren(treeTable);
+//		}
+		if ( id.equals(0L) ) {
+			targetTreeTable = treeTable;
 		}
 		else
 		{
+			OrganizationTreeTable root = new OrganizationTreeTable();
 			OrganizationOut rootItem = selectOrganization(id);
 			rootItem.setLineno(1L);
 			root.setData(rootItem);
 			root.setChildren(treeTable);
+			targetTreeTable.add(root);
 		}
-		targetTreeTable.add(root);
 		
 		return targetTreeTable;
 	}
@@ -349,6 +354,30 @@ public class OrganizationServiceImpl implements OrganizationService {
 //		}
 //		return treeTable;
 //	}
+	
+	@Override
+	public OrganizationTreeSelect getOrganizationTreeSelectOne(Long id) {
+	
+		// 取得当前节点数据
+		OrganizationOut organData = organization.selectOrganization(id);
+		
+		// 设置前台treeSelect数据
+		OrganizationTreeSelect treeSelectRow = new OrganizationTreeSelect();
+		treeSelectRow.setId(organData.getId());
+		treeSelectRow.setText(organData.getName());
+		treeSelectRow.setParent(String.valueOf(organData.getParentId()));
+		treeSelectRow.setHierarchyLevel(organData.getHierarchyLevel());
+		treeSelectRow.setChildren(getOrganizationTreeSelectSub(organData));
+		
+		// 设置当前状态
+		OrganizationTreeSelectState state = new OrganizationTreeSelectState();
+		state.setDisabled(false);
+		state.setOpened(false);
+		state.setSelected(false);
+		treeSelectRow.setState(state);
+		
+		return treeSelectRow;
+	}
 	
 	@Override
 	public List<OrganizationTreeSelect> getOrganizationTreeSelect(Long parentId){
@@ -442,4 +471,5 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 	}
+
 }

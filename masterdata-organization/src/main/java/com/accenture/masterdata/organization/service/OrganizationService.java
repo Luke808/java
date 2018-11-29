@@ -82,4 +82,11 @@ public interface OrganizationService {
 	 */
 	List<OrganizationTreeSelect> getOrganizationTreeSelect(Long parentId);
 	
+	/**
+	 * 获得左侧单独节点信息
+	 * @param params
+	 * Long ID: 起始结点
+	 */
+	OrganizationTreeSelect getOrganizationTreeSelectOne(Long id);
+	
 }

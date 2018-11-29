@@ -13,14 +13,14 @@ smsf:
     name: masterdata
     url: http://localhost:4200
     icon: icon.ico
-  cache:
-    redis-cache:
+  cache: 
+    redis-cache: 
       authority:
         duration: 10
   authority:
     permission:
      autoload:
-       enabled: true
+       enabled: false
   swagger:
     security:
       enabled: true

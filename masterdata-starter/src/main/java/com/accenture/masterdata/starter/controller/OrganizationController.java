@@ -126,4 +126,14 @@ public class OrganizationController{
 		result.put("list", organizations);
 		return result;
 	}
+	
+	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
+	@ApiOperation(value="根据结点ID,获得该组织下的节点，返回Ngx-tree-select数据格式",notes="注意： 参数id为必须项")
+	@GetMapping("getOrganizationTreeOne")
+	public Map<String, Object> getOrganizationTreeOne(@ApiParam(name="id",value="结点ID",required=true) @RequestParam("id") Long id) {
+		Map<String, Object> result = Maps.newHashMap();
+		OrganizationTreeSelect organizationData = organization.getOrganizationTreeSelectOne(id);
+		result.put("data", organizationData);
+		return result;
+	}
 }
