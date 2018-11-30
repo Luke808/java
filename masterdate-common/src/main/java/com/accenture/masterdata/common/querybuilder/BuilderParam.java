@@ -70,7 +70,7 @@ public class BuilderParam {
 	//Change operator
 	private String changeOperator(String operator) {
 		String newOperator = "";
-		switch(operator.toLowerCase()){
+		switch( operator.toLowerCase() ){
 		case "equal":
 			newOperator = "=";
 		    break;
