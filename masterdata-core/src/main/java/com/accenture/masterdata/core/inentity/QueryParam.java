@@ -6,19 +6,19 @@ package com.accenture.masterdata.core.inentity;
 public class QueryParam {
 
 	//检索条件
-	public FilterRule filterrule;
+	private FilterRule filterrule;
 	
 	//排序
-	public String sorting;
-	
+	private String sorting;
+
 	// tenant Table
-	public String tenantTable;
+	private String tenantTable;
 
 	//第几页
-	public int currentpage;
+	private int currentpage;
 	
 	//每页几条数据
-	public int rowsperpage;
+	private int rowsperpage;
 
 	public void setSorting(String sorting) {
 		this.sorting = sorting;

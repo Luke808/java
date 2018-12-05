@@ -6,5 +6,5 @@ import lombok.Data;
 
 @Data
 public class BatchDeleteInput {
-	public List<Long> ids;
+	private List<Long> ids;
 }

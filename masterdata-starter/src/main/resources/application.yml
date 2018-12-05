@@ -32,7 +32,7 @@ smsf:
         tenantId:
           key-name: tenantId
         USER_ID:
-          key-name: USER_ID 
+          key-name: USER_ID
   data:
     mybatis:
       mapper-locations: classpath*:/mapper/*.xml
@@ -46,3 +46,6 @@ smsf:
 #          url: jdbc:mysql://127.0.0.1:3306/masterdata?useUnicode=true&useSSL=false&characterEncoding=utf-8
 #          username: root
 #          password: wanfj
+logging:
+  level:
+    com.accenture.masterdata.core.mapper: debug

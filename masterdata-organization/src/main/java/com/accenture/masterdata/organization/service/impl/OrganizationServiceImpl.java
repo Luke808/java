@@ -88,9 +88,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 			// 如果此节点不是根节点，取得此节点的组织信息 设置组织的lickcode
 			if ( params.getParentId() > 0 ) {
 				OrganizationOut activeOrg = organization.selectOrganization(params.getId());
-				String oldLickParent = activeOrg.getParentId().toString() + ",";
-				String newLickParent = params.getParentId().toString() + ",";
-				params.setLikeCode(activeOrg.getLikeCode().replace(oldLickParent + ",", newLickParent));
+				String oldLikeParent = activeOrg.getParentId().toString() + ",";
+				String newLikeParent = params.getParentId().toString() + ",";
+				params.setLikeCode(activeOrg.getLikeCode().replace(oldLikeParent, newLikeParent));
 			}
 			
 			// 更新人EID追加
@@ -102,7 +102,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			// 如果此节点不是根节点，取得父id的组织信息 设置组织的lickcode
 			if ( params.getParentId() > 0 ) {
 				OrganizationOut parentOrg = organization.selectOrganization(params.getParentId());
-				params.setLikeCode(parentOrg.getLikeCode() == null ? "" : parentOrg.getLikeCode()  + params.getParentId().toString() +",");
+				params.setLikeCode( (parentOrg.getLikeCode() == null ? "" : parentOrg.getLikeCode())  +  params.getParentId().toString() + ",");
 			} 
 			
 			// 创建人EID追加
@@ -130,7 +130,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
 	public OrganizationOut selectOrganization(Long id) {
-		return organization.selectOrganization(id);
+	    return organization.selectOrganization(id);
 	}
 
 	@Override
@@ -149,10 +149,15 @@ public class OrganizationServiceImpl implements OrganizationService {
 	public void duplicationCheck(OrganizationIn params) throws Exception {
 		
 		// 姓名重复check
-		String where = " and org.name = '" + params.getName() + "' and org.tenantId = " + TenantHolder.get();
+		String where = " and org.name = '" + params.getName();
+		where += "' and org.tenantId = " + TenantHolder.get();
+		where += " and org.parentId = " + params.getParentId().toString();
+
+		// 修改时追加id为检索条件
 		if ( params.getId() != null && params.getId() > 0 ) {
 			where += " and org.id <>" + params.getId().toString();
 		}
+
 		int count = organization.selectOrganizationCount(where);
 
 		if( count > 0 ) {
@@ -160,7 +165,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		// code重复check
-		where = " and org.code = '" + params.getCode() + "' and org.tenantId = " + TenantHolder.get();
+		where = " and org.code = '" + params.getCode();
+		where += "' and org.tenantId = " + TenantHolder.get();
+		where += " and org.parentId = " + params.getParentId().toString();
+		// 修改时追加id为检索条件
 		if ( params.getId() != null && params.getId() > 0 ) {
 			where += " and org.id <>" + params.getId().toString();
 		}
@@ -356,27 +364,22 @@ public class OrganizationServiceImpl implements OrganizationService {
 //	}
 	
 	@Override
-	public OrganizationTreeSelect getOrganizationTreeSelectOne(Long id) {
+	public OrganizationTree getOrganizationTreeOne(Long id) {
 	
 		// 取得当前节点数据
 		OrganizationOut organData = organization.selectOrganization(id);
-		
-		// 设置前台treeSelect数据
-		OrganizationTreeSelect treeSelectRow = new OrganizationTreeSelect();
-		treeSelectRow.setId(organData.getId());
-		treeSelectRow.setText(organData.getName());
-		treeSelectRow.setParent(String.valueOf(organData.getParentId()));
-		treeSelectRow.setHierarchyLevel(organData.getHierarchyLevel());
-		treeSelectRow.setChildren(getOrganizationTreeSelectSub(organData));
-		
-		// 设置当前状态
-		OrganizationTreeSelectState state = new OrganizationTreeSelectState();
-		state.setDisabled(false);
-		state.setOpened(false);
-		state.setSelected(false);
-		treeSelectRow.setState(state);
-		
-		return treeSelectRow;
+		OrganizationTree trees = new OrganizationTree();
+
+		if ( null != organData ) {
+			trees.setLabel(organData.getName());
+			trees.setCollapsedIcon(organData.getHierarchyIcon());
+			trees.setExpandedIcon(organData.getHierarchyIcon());
+			trees.setData(organData);
+			trees.setChildren(getOrganizationTreeByParentIdSub(organData.getId()));
+		}
+
+		return trees;
+
 	}
 	
 	@Override
@@ -390,6 +393,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 				treeSelectRow.setId(node.getId());
 				treeSelectRow.setText(node.getName());
 				treeSelectRow.setParent(String.valueOf(node.getParentId()));
+				treeSelectRow.setLikeCode(node.getLikeCode());
 				treeSelectRow.setHierarchyLevel(node.getHierarchyLevel());
 				OrganizationTreeSelectState state = new OrganizationTreeSelectState();
 				state.setDisabled(false);

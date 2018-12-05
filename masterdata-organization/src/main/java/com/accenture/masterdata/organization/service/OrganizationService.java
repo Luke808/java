@@ -87,6 +87,6 @@ public interface OrganizationService {
 	 * @param params
 	 * Long ID: 起始结点
 	 */
-	OrganizationTreeSelect getOrganizationTreeSelectOne(Long id);
+	OrganizationTree getOrganizationTreeOne(Long id);
 	
 }

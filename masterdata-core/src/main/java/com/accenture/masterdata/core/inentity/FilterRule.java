@@ -8,21 +8,21 @@ import lombok.Data;
 public class FilterRule {
 	
 	//AND OR
-	public String condition;
+	private String condition;
 	
 	//字段名
-	public String field;
+	private String field;
 	
 	//比较符 >,>=,=,<,<=,!=
-	public String operator;
+	private String operator;
 	
 	//子查询条件
-	public List<FilterRule> rules;
+	private List<FilterRule> rules;
 	
 	//字段类型(string,int,date....)
-	public String type;
+	private String type;
 	
 	//条件值
-	public String value;
+	private String value;
 
 }

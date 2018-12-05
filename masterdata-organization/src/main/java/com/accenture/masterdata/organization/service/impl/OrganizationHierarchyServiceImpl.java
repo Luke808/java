@@ -62,7 +62,7 @@ public class OrganizationHierarchyServiceImpl implements OrganizationHierarchySe
 	public void batchDeleteOrganizationHierarchy(BatchDeleteInput idList)  throws Exception {
 		
 		// 如果删除的id中存在有组织存的的id，则不能批量删除
-		String ids = StringUtils.join(idList.ids, ",");
+		String ids = StringUtils.join(idList.getIds(), ",");
 		checkHierarchyOrganization(ids);
 		
 		hierarchyMapper.batchDeleteOrganizationHierarchy(idList.getIds(), PrincipalHolder.get());

@@ -31,8 +31,8 @@ public class BuilderParam {
 		String strtenantIdRules = " AND " + (query.getTenantTable() == null || query.getTenantTable().trim().equals("") ? "" : (query.getTenantTable() + ".")) + "tenantId = " + TenantHolder.get() + " ";
 		
 		String strSubCurrentRules = "";
-		if(query.filterrule != null && query.filterrule.rules.size() > 0) {
-			strSubCurrentRules = buildFilterRules(query.filterrule.getCondition(), query.filterrule.getRules());
+		if(query.getFilterrule() != null && query.getFilterrule().getRules().size() > 0) {
+			strSubCurrentRules = buildFilterRules(query.getFilterrule().getCondition(), query.getFilterrule().getRules());
 			strSubCurrentRules = strSubCurrentRules.replace(" () ", "");	//这种情况属于无条件的
 		}
 		String strTargetRules = strtenantIdRules;
@@ -48,14 +48,14 @@ public class BuilderParam {
 			strCurrentRules += " (";
 			int i = 0;
 			int iCount = rules.size();
-			for (FilterRule o : rules) {
+			for (FilterRule rule : rules) {
 				i = i + 1;
-				if(o.condition != null && o.rules != null) {
-					buildFilterRules(o.condition, o.rules);
+				if(rule.getCondition() != null && rule.getRules() != null) {
+					buildFilterRules(rule.getCondition(), rule.getRules());
 				}
-				if(o.operator != null && o.field != null && o.value != null && o.type != null) {
-					String strOperator = changeOperator(o.operator);
-					strCurrentRules += o.field + " " + strOperator + " " + changeValue(strOperator, o.value, o.type);
+				if(rule.getOperator() != null && rule.getField() != null && rule.getValue() != null && rule.getType() != null) {
+					String strOperator = changeOperator(rule.getOperator());
+					strCurrentRules += rule.getField() + " " + strOperator + " " + changeValue(strOperator, rule.getValue(), rule.getType());
 				}
 				if (i < iCount) {
 					strCurrentRules += " " + condition + " ";

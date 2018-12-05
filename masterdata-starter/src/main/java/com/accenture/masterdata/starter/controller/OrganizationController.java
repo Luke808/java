@@ -86,7 +86,7 @@ public class OrganizationController{
 	
 	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据通用组合查询条件,查询符合条件的组织节点",notes="参数:param 通用查询条件")
-	@PostMapping("getOrganizationTree")
+	@PostMapping("/getOrganizationTree")
 	public  Map<String, Object> getOrganizationTree(@RequestBody QueryParam param) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationTree> organizations = organization.getOrganizationTree(param);
@@ -96,7 +96,7 @@ public class OrganizationController{
 
 	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据父结点ID,获得组织机构树",notes="参数:id")
-	@PostMapping("getOrganizationTreeByParentId")
+	@PostMapping("/getOrganizationTreeByParentId")
 	public  Map<String, Object> getOrganizationTreeByParentId(@RequestParam("id") Long id) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationTree> organizations = organization.getOrganizationTreeByParentId(id);
@@ -106,7 +106,7 @@ public class OrganizationController{
 	
 	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据结点ID,获得该组织下的节点，返回TreeTable数据格式",notes="参数:id")
-	@GetMapping("getOrganizationTreeTable")
+	@GetMapping("/getOrganizationTreeTable")
 	public Map<String, Object> getOrganizationTreeTable(@RequestParam("id") Long id) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationTreeTable> organizations = organization.getOrganizationTreeTable(id);
@@ -116,7 +116,7 @@ public class OrganizationController{
 	
 	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据父结点ID,获得该组织下的节点，返回Ngx-tree-select数据格式",notes="注意： 参数parentId为必须项")
-	@GetMapping("getOrganizationTreeSelect")
+	@GetMapping("/getOrganizationTreeSelect")
 	public Map<String, Object> getOrganizationTreeSelect(@RequestParam("parentId") Long parentId) {
 		Map<String, Object> result = Maps.newHashMap();
 		List<OrganizationTreeSelect> organizations = organization.getOrganizationTreeSelect(parentId);
@@ -126,10 +126,10 @@ public class OrganizationController{
 	
 	@Permission(values= {Permissions.MASTERDATA_ORGANIZATION_VIEW})
 	@ApiOperation(value="根据结点ID,获得该组织下的节点，返回Ngx-tree-select数据格式",notes="参数:id")
-	@GetMapping("getOrganizationTreeOne")
+	@GetMapping("/getOrganizationTreeOne")
 	public Map<String, Object> getOrganizationTreeOne(@RequestParam("id") Long id) {
 		Map<String, Object> result = Maps.newHashMap();
-		OrganizationTreeSelect organizationData = organization.getOrganizationTreeSelectOne(id);
+		OrganizationTree organizationData = organization.getOrganizationTreeOne(id);
 		result.put("data", organizationData);
 		return result;
 	}
