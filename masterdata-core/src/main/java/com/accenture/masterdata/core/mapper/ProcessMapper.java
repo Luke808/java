@@ -1,6 +1,7 @@
 package com.accenture.masterdata.core.mapper;
 
 import com.ac.smsf.codegen.core.mapper.BaseMapper;
+import com.accenture.masterdata.core.entity.Process;
 import com.accenture.masterdata.core.entity.ProcessExample;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,5 +1,6 @@
 package com.accenture.masterdata.starter.controller;
 
+import com.accenture.masterdata.core.entity.Process;
 import com.accenture.masterdata.service.ProcessService;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
 import com.github.pagehelper.PageInfo;
