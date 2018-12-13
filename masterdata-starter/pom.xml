@@ -37,6 +37,11 @@
 	    <artifactId>masterdata-core</artifactId>
     </dependency>
     <dependency>
+        <groupId>com.accenture.masterdata</groupId>
+        <artifactId>masterdata-service-impl</artifactId>
+        <version>0.0.1</version>
+    </dependency>
+    <dependency>
 	    <groupId>com.accenture.masterdata</groupId>
 	    <artifactId>masterdata-organization</artifactId>
     </dependency>

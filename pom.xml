@@ -56,12 +56,19 @@
   			<artifactId>masterdata-common</artifactId>
   			<version>0.0.1</version>
   		</dependency>
+		<dependency>
+			<groupId>com.accenture.smsf.codegen</groupId>
+			<artifactId>code-generator-core</artifactId>
+			<version>1.0.0</version>
+		</dependency>
   	</dependencies>
   </dependencyManagement>
   <modules>
-    <module>masterdata-organization</module>
-    <module>masterdata-starter</module>
-    <module>masterdata-core</module>
-    <module>masterdate-common</module>
+	<module>masterdata-organization</module>
+	<module>masterdata-starter</module>
+	<module>masterdata-core</module>
+	<module>masterdate-common</module>
+	<module>masterdata-service</module>
+	<module>masterdata-service-impl</module>
   </modules>
 </project>
