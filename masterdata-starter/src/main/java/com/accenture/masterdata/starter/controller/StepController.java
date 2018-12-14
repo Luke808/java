@@ -14,7 +14,7 @@ import java.util.List;
  * @author s.c.gao
  */
 @RestController
-@RequestMapping("/task/step")
+@RequestMapping("/masterdata/step")
 public class StepController {
 
     @Autowired
@@ -50,24 +50,35 @@ public class StepController {
         return stepService.findById(id);
     }
 
-    @GetMapping("/list/{page-no}/{page-size}")
-    public PageInfo<List<Step>> stepList(@PathVariable(value="page-no") int
+    @GetMapping("/list-paged/{page-no}/{page-size}")
+    public PageInfo<List<Step>> stepListPaged(@PathVariable(value="page-no") int
     pageNumber,
-    @PathVariable(value="page-size") int pageSize) {
+                                              @PathVariable(value="page-size") int pageSize) {
         List<Step> list = stepService.list(pageNumber, pageSize);
         return new PageInfo(list);
     }
 
-    @PostMapping("/find-by/{page-no}/{page-size}")
-    public PageInfo<List<Step>> stepFindBy(@RequestBody Step
+    @GetMapping("/list")
+    public List<Step> stepList() {
+        return stepService.list();
+    }
+
+    @PostMapping("/find-by-paged/{page-no}/{page-size}")
+    public PageInfo<List<Step>> stepFindByPaged(@RequestBody Step
     step, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Step> list = stepService.findBy(step, pageNumber, pageSize);
         return new PageInfo(list);
     }
 
+    @PostMapping("/find-by")
+    public List<Step> stepFindByPaged(@RequestBody Step
+    step) {
+        return stepService.findBy(step);
+    }
+
     @GetMapping("/find-one")
     public Step stepFindOne(@RequestParam("fieldName") String fieldName,
-    @RequestParam("value") String
+                            @RequestParam("value") String
     value) {
         return stepService.findBy(fieldName, value);
     }

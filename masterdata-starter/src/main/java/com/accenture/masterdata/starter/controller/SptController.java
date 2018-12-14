@@ -14,7 +14,7 @@ import java.util.List;
  * @author s.c.gao
  */
 @RestController
-@RequestMapping("/task/spt")
+@RequestMapping("/masterdata/spt")
 public class SptController {
 
     @Autowired
@@ -50,24 +50,35 @@ public class SptController {
         return sptService.findById(id);
     }
 
-    @GetMapping("/list/{page-no}/{page-size}")
-    public PageInfo<List<Spt>> sptList(@PathVariable(value="page-no") int
+    @GetMapping("/list-paged/{page-no}/{page-size}")
+    public PageInfo<List<Spt>> sptListPaged(@PathVariable(value="page-no") int
     pageNumber,
-    @PathVariable(value="page-size") int pageSize) {
+                                            @PathVariable(value="page-size") int pageSize) {
         List<Spt> list = sptService.list(pageNumber, pageSize);
         return new PageInfo(list);
     }
 
-    @PostMapping("/find-by/{page-no}/{page-size}")
-    public PageInfo<List<Spt>> sptFindBy(@RequestBody Spt
+    @GetMapping("/list")
+    public List<Spt> sptList() {
+        return sptService.list();
+    }
+
+    @PostMapping("/find-by-paged/{page-no}/{page-size}")
+    public PageInfo<List<Spt>> sptFindByPaged(@RequestBody Spt
     spt, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Spt> list = sptService.findBy(spt, pageNumber, pageSize);
         return new PageInfo(list);
     }
 
+    @PostMapping("/find-by")
+    public List<Spt> sptFindByPaged(@RequestBody Spt
+    spt) {
+        return sptService.findBy(spt);
+    }
+
     @GetMapping("/find-one")
     public Spt sptFindOne(@RequestParam("fieldName") String fieldName,
-    @RequestParam("value") String
+                          @RequestParam("value") String
     value) {
         return sptService.findBy(fieldName, value);
     }

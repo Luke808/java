@@ -14,7 +14,7 @@ import java.util.List;
  * @author s.c.gao
  */
 @RestController
-@RequestMapping("/task/cutoffTime")
+@RequestMapping("/masterdata/cutoffTime")
 public class CutoffTimeController {
 
     @Autowired
@@ -50,24 +50,35 @@ public class CutoffTimeController {
         return cutoffTimeService.findById(id);
     }
 
-    @GetMapping("/list/{page-no}/{page-size}")
-    public PageInfo<List<CutoffTime>> cutoffTimeList(@PathVariable(value="page-no") int
+    @GetMapping("/list-paged/{page-no}/{page-size}")
+    public PageInfo<List<CutoffTime>> cutoffTimeListPaged(@PathVariable(value="page-no") int
     pageNumber,
-    @PathVariable(value="page-size") int pageSize) {
+                                                          @PathVariable(value="page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.list(pageNumber, pageSize);
         return new PageInfo(list);
     }
 
-    @PostMapping("/find-by/{page-no}/{page-size}")
-    public PageInfo<List<CutoffTime>> cutoffTimeFindBy(@RequestBody CutoffTime
+    @GetMapping("/list")
+    public List<CutoffTime> cutoffTimeList() {
+        return cutoffTimeService.list();
+    }
+
+    @PostMapping("/find-by-paged/{page-no}/{page-size}")
+    public PageInfo<List<CutoffTime>> cutoffTimeFindByPaged(@RequestBody CutoffTime
     cutoffTime, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.findBy(cutoffTime, pageNumber, pageSize);
         return new PageInfo(list);
     }
 
+    @PostMapping("/find-by")
+    public List<CutoffTime> cutoffTimeFindByPaged(@RequestBody CutoffTime
+    cutoffTime) {
+        return cutoffTimeService.findBy(cutoffTime);
+    }
+
     @GetMapping("/find-one")
     public CutoffTime cutoffTimeFindOne(@RequestParam("fieldName") String fieldName,
-    @RequestParam("value") String
+                                        @RequestParam("value") String
     value) {
         return cutoffTimeService.findBy(fieldName, value);
     }

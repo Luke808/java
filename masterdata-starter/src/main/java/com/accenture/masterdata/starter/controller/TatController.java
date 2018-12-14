@@ -14,7 +14,7 @@ import java.util.List;
  * @author s.c.gao
  */
 @RestController
-@RequestMapping("/task/tat")
+@RequestMapping("/masterdata/tat")
 public class TatController {
 
     @Autowired
@@ -50,24 +50,35 @@ public class TatController {
         return tatService.findById(id);
     }
 
-    @GetMapping("/list/{page-no}/{page-size}")
-    public PageInfo<List<Tat>> tatList(@PathVariable(value="page-no") int
+    @GetMapping("/list-paged/{page-no}/{page-size}")
+    public PageInfo<List<Tat>> tatListPaged(@PathVariable(value="page-no") int
     pageNumber,
-    @PathVariable(value="page-size") int pageSize) {
+                                            @PathVariable(value="page-size") int pageSize) {
         List<Tat> list = tatService.list(pageNumber, pageSize);
         return new PageInfo(list);
     }
 
-    @PostMapping("/find-by/{page-no}/{page-size}")
-    public PageInfo<List<Tat>> tatFindBy(@RequestBody Tat
+    @GetMapping("/list")
+    public List<Tat> tatList() {
+        return tatService.list();
+    }
+
+    @PostMapping("/find-by-paged/{page-no}/{page-size}")
+    public PageInfo<List<Tat>> tatFindByPaged(@RequestBody Tat
     tat, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Tat> list = tatService.findBy(tat, pageNumber, pageSize);
         return new PageInfo(list);
     }
 
+    @PostMapping("/find-by")
+    public List<Tat> tatFindByPaged(@RequestBody Tat
+    tat) {
+        return tatService.findBy(tat);
+    }
+
     @GetMapping("/find-one")
     public Tat tatFindOne(@RequestParam("fieldName") String fieldName,
-    @RequestParam("value") String
+                          @RequestParam("value") String
     value) {
         return tatService.findBy(fieldName, value);
     }

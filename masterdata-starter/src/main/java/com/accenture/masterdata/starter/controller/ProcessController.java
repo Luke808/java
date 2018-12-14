@@ -14,7 +14,7 @@ import java.util.List;
  * @author s.c.gao
  */
 @RestController
-@RequestMapping("/task/process")
+@RequestMapping("/masterdata/process")
 public class ProcessController {
 
     @Autowired
@@ -50,24 +50,35 @@ public class ProcessController {
         return processService.findById(id);
     }
 
-    @GetMapping("/list/{page-no}/{page-size}")
-    public PageInfo<List<Process>> processList(@PathVariable(value="page-no") int
+    @GetMapping("/list-paged/{page-no}/{page-size}")
+    public PageInfo<List<Process>> processListPaged(@PathVariable(value="page-no") int
     pageNumber,
-    @PathVariable(value="page-size") int pageSize) {
+                                                    @PathVariable(value="page-size") int pageSize) {
         List<Process> list = processService.list(pageNumber, pageSize);
         return new PageInfo(list);
     }
 
-    @PostMapping("/find-by/{page-no}/{page-size}")
-    public PageInfo<List<Process>> processFindBy(@RequestBody Process
+    @GetMapping("/list")
+    public List<Process> processList() {
+        return processService.list();
+    }
+
+    @PostMapping("/find-by-paged/{page-no}/{page-size}")
+    public PageInfo<List<Process>> processFindByPaged(@RequestBody Process
     process, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Process> list = processService.findBy(process, pageNumber, pageSize);
         return new PageInfo(list);
     }
 
+    @PostMapping("/find-by")
+    public List<Process> processFindByPaged(@RequestBody Process
+    process) {
+        return processService.findBy(process);
+    }
+
     @GetMapping("/find-one")
     public Process processFindOne(@RequestParam("fieldName") String fieldName,
-    @RequestParam("value") String
+                                  @RequestParam("value") String
     value) {
         return processService.findBy(fieldName, value);
     }
