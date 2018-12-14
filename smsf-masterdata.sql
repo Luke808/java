@@ -29,6 +29,15 @@ CREATE TABLE `t_client_service_level` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `t_company_service_level`;
+CREATE TABLE `t_company_service_level` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(20) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `t_cutoff_time`;
 CREATE TABLE `t_cutoff_time` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
