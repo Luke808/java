@@ -164,6 +164,66 @@ public class ProcessExample {
             return (Criteria) this;
         }
 
+        public Criteria andCompanyServiceLevelIdIsNull() {
+            addCriterion("company_service_level_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdIsNotNull() {
+            addCriterion("company_service_level_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdEqualTo(Long value) {
+            addCriterion("company_service_level_id =", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdNotEqualTo(Long value) {
+            addCriterion("company_service_level_id <>", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdGreaterThan(Long value) {
+            addCriterion("company_service_level_id >", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("company_service_level_id >=", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdLessThan(Long value) {
+            addCriterion("company_service_level_id <", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdLessThanOrEqualTo(Long value) {
+            addCriterion("company_service_level_id <=", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdIn(List<Long> values) {
+            addCriterion("company_service_level_id in", values, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdNotIn(List<Long> values) {
+            addCriterion("company_service_level_id not in", values, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdBetween(Long value1, Long value2) {
+            addCriterion("company_service_level_id between", value1, value2, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdNotBetween(Long value1, Long value2) {
+            addCriterion("company_service_level_id not between", value1, value2, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;

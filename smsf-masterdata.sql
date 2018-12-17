@@ -66,6 +66,7 @@ CREATE TABLE `t_step` (
 DROP TABLE IF EXISTS `t_process`;
 CREATE TABLE `t_process` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `company_service_level_id` bigint(20) DEFAULT NULL,
   `name` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
