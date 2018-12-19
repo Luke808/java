@@ -14,7 +14,7 @@ import java.util.List;
  * @author s.c.gao
  */
 @RestController
-@RequestMapping("/task/employee")
+@RequestMapping("/masterdata/employee")
 public class EmployeeController {
 
     @Autowired
@@ -50,24 +50,35 @@ public class EmployeeController {
         return employeeService.findById(id);
     }
 
-    @GetMapping("/list/{page-no}/{page-size}")
-    public PageInfo<List<Employee>> employeeList(@PathVariable(value="page-no") int
+    @GetMapping("/list-paged/{page-no}/{page-size}")
+    public PageInfo<List<Employee>> employeeListPaged(@PathVariable(value="page-no") int
     pageNumber,
-    @PathVariable(value="page-size") int pageSize) {
+                                                      @PathVariable(value="page-size") int pageSize) {
         List<Employee> list = employeeService.list(pageNumber, pageSize);
         return new PageInfo(list);
     }
 
-    @PostMapping("/find-by/{page-no}/{page-size}")
-    public PageInfo<List<Employee>> employeeFindBy(@RequestBody Employee
+    @GetMapping("/list")
+    public List<Employee> employeeList() {
+        return employeeService.list();
+    }
+
+    @PostMapping("/find-by-paged/{page-no}/{page-size}")
+    public PageInfo<List<Employee>> employeeFindByPaged(@RequestBody Employee
     employee, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Employee> list = employeeService.findBy(employee, pageNumber, pageSize);
         return new PageInfo(list);
     }
 
+    @PostMapping("/find-by")
+    public List<Employee> employeeFindByPaged(@RequestBody Employee
+    employee) {
+        return employeeService.findBy(employee);
+    }
+
     @GetMapping("/find-one")
     public Employee employeeFindOne(@RequestParam("fieldName") String fieldName,
-    @RequestParam("value") String
+                                    @RequestParam("value") String
     value) {
         return employeeService.findBy(fieldName, value);
     }

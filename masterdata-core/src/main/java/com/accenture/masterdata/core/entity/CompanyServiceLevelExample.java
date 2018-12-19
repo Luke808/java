@@ -3,14 +3,14 @@ package com.accenture.masterdata.core.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProcessExample {
+public class CompanyServiceLevelExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public ProcessExample() {
+    public CompanyServiceLevelExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -164,63 +164,133 @@ public class ProcessExample {
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdIsNull() {
-            addCriterion("company_service_level_id is null");
+        public Criteria andParentIdIsNull() {
+            addCriterion("parent_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdIsNotNull() {
-            addCriterion("company_service_level_id is not null");
+        public Criteria andParentIdIsNotNull() {
+            addCriterion("parent_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdEqualTo(Long value) {
-            addCriterion("company_service_level_id =", value, "companyServiceLevelId");
+        public Criteria andParentIdEqualTo(Long value) {
+            addCriterion("parent_id =", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdNotEqualTo(Long value) {
-            addCriterion("company_service_level_id <>", value, "companyServiceLevelId");
+        public Criteria andParentIdNotEqualTo(Long value) {
+            addCriterion("parent_id <>", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdGreaterThan(Long value) {
-            addCriterion("company_service_level_id >", value, "companyServiceLevelId");
+        public Criteria andParentIdGreaterThan(Long value) {
+            addCriterion("parent_id >", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("company_service_level_id >=", value, "companyServiceLevelId");
+        public Criteria andParentIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("parent_id >=", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdLessThan(Long value) {
-            addCriterion("company_service_level_id <", value, "companyServiceLevelId");
+        public Criteria andParentIdLessThan(Long value) {
+            addCriterion("parent_id <", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdLessThanOrEqualTo(Long value) {
-            addCriterion("company_service_level_id <=", value, "companyServiceLevelId");
+        public Criteria andParentIdLessThanOrEqualTo(Long value) {
+            addCriterion("parent_id <=", value, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdIn(List<Long> values) {
-            addCriterion("company_service_level_id in", values, "companyServiceLevelId");
+        public Criteria andParentIdIn(List<Long> values) {
+            addCriterion("parent_id in", values, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdNotIn(List<Long> values) {
-            addCriterion("company_service_level_id not in", values, "companyServiceLevelId");
+        public Criteria andParentIdNotIn(List<Long> values) {
+            addCriterion("parent_id not in", values, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdBetween(Long value1, Long value2) {
-            addCriterion("company_service_level_id between", value1, value2, "companyServiceLevelId");
+        public Criteria andParentIdBetween(Long value1, Long value2) {
+            addCriterion("parent_id between", value1, value2, "parentId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdNotBetween(Long value1, Long value2) {
-            addCriterion("company_service_level_id not between", value1, value2, "companyServiceLevelId");
+        public Criteria andParentIdNotBetween(Long value1, Long value2) {
+            addCriterion("parent_id not between", value1, value2, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeIsNull() {
+            addCriterion("code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeIsNotNull() {
+            addCriterion("code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeEqualTo(String value) {
+            addCriterion("code =", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeNotEqualTo(String value) {
+            addCriterion("code <>", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeGreaterThan(String value) {
+            addCriterion("code >", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("code >=", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeLessThan(String value) {
+            addCriterion("code <", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeLessThanOrEqualTo(String value) {
+            addCriterion("code <=", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeLike(String value) {
+            addCriterion("code like", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeNotLike(String value) {
+            addCriterion("code not like", value, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeIn(List<String> values) {
+            addCriterion("code in", values, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeNotIn(List<String> values) {
+            addCriterion("code not in", values, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeBetween(String value1, String value2) {
+            addCriterion("code between", value1, value2, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeNotBetween(String value1, String value2) {
+            addCriterion("code not between", value1, value2, "code");
             return (Criteria) this;
         }
 

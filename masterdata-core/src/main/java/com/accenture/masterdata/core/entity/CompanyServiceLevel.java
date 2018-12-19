@@ -4,13 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "t_process")
-public class Process {
+@Table(name = "t_company_service_level")
+public class CompanyServiceLevel {
     @Id
     private Long id;
 
-    @Column(name = "company_service_level_id")
-    private Long companyServiceLevelId;
+    @Column(name = "parent_id")
+    private Long parentId;
+
+    private String code;
 
     private String name;
 
@@ -29,17 +31,31 @@ public class Process {
     }
 
     /**
-     * @return company_service_level_id
+     * @return parent_id
      */
-    public Long getCompanyServiceLevelId() {
-        return companyServiceLevelId;
+    public Long getParentId() {
+        return parentId;
     }
 
     /**
-     * @param companyServiceLevelId
+     * @param parentId
      */
-    public void setCompanyServiceLevelId(Long companyServiceLevelId) {
-        this.companyServiceLevelId = companyServiceLevelId;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    /**
+     * @return code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * @param code
+     */
+    public void setCode(String code) {
+        this.code = code;
     }
 
     /**

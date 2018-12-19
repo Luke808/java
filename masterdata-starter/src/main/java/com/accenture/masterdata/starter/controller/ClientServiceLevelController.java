@@ -14,7 +14,7 @@ import java.util.List;
  * @author s.c.gao
  */
 @RestController
-@RequestMapping("/task/clientServiceLevel")
+@RequestMapping("/masterdata/clientServiceLevel")
 public class ClientServiceLevelController {
 
     @Autowired
@@ -50,24 +50,35 @@ public class ClientServiceLevelController {
         return clientServiceLevelService.findById(id);
     }
 
-    @GetMapping("/list/{page-no}/{page-size}")
-    public PageInfo<List<ClientServiceLevel>> clientServiceLevelList(@PathVariable(value="page-no") int
+    @GetMapping("/list-paged/{page-no}/{page-size}")
+    public PageInfo<List<ClientServiceLevel>> clientServiceLevelListPaged(@PathVariable(value="page-no") int
     pageNumber,
-    @PathVariable(value="page-size") int pageSize) {
+                                                                          @PathVariable(value="page-size") int pageSize) {
         List<ClientServiceLevel> list = clientServiceLevelService.list(pageNumber, pageSize);
         return new PageInfo(list);
     }
 
-    @PostMapping("/find-by/{page-no}/{page-size}")
-    public PageInfo<List<ClientServiceLevel>> clientServiceLevelFindBy(@RequestBody ClientServiceLevel
+    @GetMapping("/list")
+    public List<ClientServiceLevel> clientServiceLevelList() {
+        return clientServiceLevelService.list();
+    }
+
+    @PostMapping("/find-by-paged/{page-no}/{page-size}")
+    public PageInfo<List<ClientServiceLevel>> clientServiceLevelFindByPaged(@RequestBody ClientServiceLevel
     clientServiceLevel, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<ClientServiceLevel> list = clientServiceLevelService.findBy(clientServiceLevel, pageNumber, pageSize);
         return new PageInfo(list);
     }
 
+    @PostMapping("/find-by")
+    public List<ClientServiceLevel> clientServiceLevelFindByPaged(@RequestBody ClientServiceLevel
+    clientServiceLevel) {
+        return clientServiceLevelService.findBy(clientServiceLevel);
+    }
+
     @GetMapping("/find-one")
     public ClientServiceLevel clientServiceLevelFindOne(@RequestParam("fieldName") String fieldName,
-    @RequestParam("value") String
+                                                        @RequestParam("value") String
     value) {
         return clientServiceLevelService.findBy(fieldName, value);
     }
