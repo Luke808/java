@@ -72,21 +72,15 @@
       <if test="name != null and name != ''">
         name = #{name},
       </if>
-      <if test="parentId != null and parentId != ''">
-        parentId = #{parentId},
-      </if>
+      parentId = #{parentId},
       <if test="code != null and code != ''">
         code = #{code},
       </if>
       <if test="hierarchyId != null and hierarchyId != ''">
         hierarchyId = #{hierarchyId},
       </if>
-      <if test="likeCode != null and likeCode != ''">
-        likeCode = #{likeCode},
-      </if>
-      <if test="comment != null and comment != ''">
-        comment = #{comment},
-      </if>
+      likeCode = #{likeCode},
+      comment = #{comment},
       <if test="tenantId != null and tenantId != ''">
         tenantId = #{tenantId},
       </if>
@@ -109,7 +103,16 @@
    where 
 	   id = #{id,jdbcType=BIGINT}
    </update>
-  
+
+	<update id="updateOrganizaitonLikeCode">
+	   update
+		   t_organization
+	   set
+		   likeCode =  REPLACE(likeCode,'${nowCode}','${replaceCode}')
+	   where
+		   likeCode like '%${likeCode}%'
+   </update>
+
    <update id="batchDeleteOrganizations">
 	   update 
 	       t_organization

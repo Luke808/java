@@ -1,11 +1,11 @@
 package com.accenture.masterdata.core.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.accenture.masterdata.core.inentity.OrganizationIn;
 import com.accenture.masterdata.core.outentity.OrganizationOut;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author haibo.liu
@@ -46,7 +46,7 @@ public interface OrganizationMapper {
 
 	/**
 	 * 
-	 * @param params
+	 * @param strparam
 	 */
 	public int selectOrganizationCount(@Param(value="strParam") String strparam);
 
@@ -62,4 +62,9 @@ public interface OrganizationMapper {
 	 */
 	public List<OrganizationOut> selectOrganizationChild(Long id);
 
+	/**
+	 *
+	 * @param id
+	 */
+	public int updateOrganizaitonLikeCode(Map<String, Object> param);
 }

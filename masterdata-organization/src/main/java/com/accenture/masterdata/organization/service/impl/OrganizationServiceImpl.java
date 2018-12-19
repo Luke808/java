@@ -1,7 +1,9 @@
 package com.accenture.masterdata.organization.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.accenture.masterdata.common.querybuilder.BuilderParam;
@@ -21,6 +23,7 @@ import com.accenture.smsf.framework.starter.web.principal.PrincipalHolder;
 import com.accenture.smsf.framework.starter.web.principal.TenantHolder;
 import com.accenture.smsf.model.exception.ApplicationException;
 import com.google.common.collect.Lists;
+import tk.mybatis.mapper.util.StringUtil;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -86,16 +89,35 @@ public class OrganizationServiceImpl implements OrganizationService {
 			}
 			
 			// 如果此节点不是根节点，取得此节点的组织信息 设置组织的lickcode
-			if ( params.getParentId() > 0 ) {
-				OrganizationOut activeOrg = organization.selectOrganization(params.getId());
-				String oldLikeParent = activeOrg.getParentId().toString() + ",";
-				String newLikeParent = params.getParentId().toString() + ",";
-				params.setLikeCode(activeOrg.getLikeCode().replace(oldLikeParent, newLikeParent));
+			String oldLikeParent = "";
+			String newLikeParent = "";
+			OrganizationOut activeOrg = organization.selectOrganization(params.getId());
+			if ( params.getParentId() != activeOrg.getParentId() ) {
+				if ( params.getParentId() > 0) {
+					oldLikeParent = activeOrg.getParentId().toString() + ",";
+					newLikeParent = params.getParentId().toString() + ",";
+					if ( StringUtil.isEmpty(activeOrg.getLikeCode()) ) {
+						params.setLikeCode(newLikeParent);
+					} else {
+						params.setLikeCode(activeOrg.getLikeCode().replace(oldLikeParent, newLikeParent));
+					}
+				} else {
+					params.setLikeCode("");
+				}
 			}
 			
 			// 更新人EID追加
 			params.setLastModifierUserId(PrincipalHolder.get());
 			result = organization.updateOrganization(params);
+
+			// 更新likecode
+			if ( params.getParentId() != activeOrg.getParentId() ) {
+				Map<String, Object> codeWhere = Maps.newHashMap();
+				codeWhere.put("nowCode", oldLikeParent);
+				codeWhere.put("replaceCode", newLikeParent);
+				codeWhere.put("likeCode", activeOrg.getId().toString() + ",");
+				result = organization.updateOrganizaitonLikeCode(codeWhere);
+			}
 		}
 		// 新增
 		else {
@@ -254,6 +276,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 			t.setExpandedIcon(node.getHierarchyIcon());
 			t.setData(node);
 			t.setChildren(getOrganizationTreeSub(orgs, node));
+			if ( node.getParentId() > 0 ) {
+				t.setParent(getOrganizationTreeOne(node.getParentId()));
+			}
 			trees.add(t);
 		}
 		
@@ -288,6 +313,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 				child.setCollapsedIcon(node.getHierarchyIcon());
 				child.setExpandedIcon(node.getHierarchyIcon());
 				child.setData(node);
+				if ( node.getParentId() > 0 ) {
+					child.setParent(getOrganizationTreeOne(node.getParentId()));
+				}
 				child.setChildren(getOrganizationTreeSub(orgs, node));
 				treeTable.add(child);
 			}			
@@ -375,6 +403,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 			trees.setCollapsedIcon(organData.getHierarchyIcon());
 			trees.setExpandedIcon(organData.getHierarchyIcon());
 			trees.setData(organData);
+			trees.setParent(getOrganizationTreeOne(organData.getParentId()));
 			trees.setChildren(getOrganizationTreeByParentIdSub(organData.getId()));
 		}
 

@@ -9,5 +9,7 @@ public class OrganizationTree {
 	private OrganizationOut data;
 	private String expandedIcon;
 	private String collapsedIcon;
+	private OrganizationTree parent;
+	private boolean expanded;
 	private List<OrganizationTree> children;
 }
