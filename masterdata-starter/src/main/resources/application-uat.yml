@@ -22,7 +22,7 @@ smsf:
   authority:
     permission:
      autoload:
-       enabled: false
+       enabled: true
   swagger:
     security:
       enabled: true
