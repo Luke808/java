@@ -41,10 +41,6 @@
         <artifactId>masterdata-service-impl</artifactId>
         <version>0.0.1</version>
     </dependency>
-    <dependency>
-	    <groupId>com.accenture.masterdata</groupId>
-	    <artifactId>masterdata-organization</artifactId>
-    </dependency>
 	<dependency>
 		<groupId>com.accenture.smsf.authority</groupId>
 		<artifactId>authority-permission-loader</artifactId>
@@ -86,7 +82,7 @@
                         </manifestEntries>
                     </archive>
                     <excludes>
-                        <exclude>application.yml</exclude>
+                        <exclude>application*.yml</exclude>
                         <exclude>bootstrap.yml</exclude>
                         <exclude>Dockerfile</exclude>
                     </excludes>
@@ -129,7 +125,7 @@
                                 <resource>
                                     <directory>src/main/resources</directory>
                                     <includes>
-                                        <include>application.yml</include>
+                                        <include>application*.yml</include>
                                         <include>bootstrap.yml</include>
                                         <include>Dockerfile</include>
                                     </includes>

@@ -38,22 +38,12 @@
 		</dependency>
   		<dependency>
 			<groupId>com.accenture.masterdata</groupId>
-  			<artifactId>masterdata-organization</artifactId>
-  			<version>0.0.1</version>
-  		</dependency>
-  		<dependency>
-			<groupId>com.accenture.masterdata</groupId>
   			<artifactId>masterdata-starter</artifactId>
   			<version>0.0.1</version>
   		</dependency>
   		<dependency>
 			<groupId>com.accenture.masterdata</groupId>
   			<artifactId>masterdata-core</artifactId>
-  			<version>0.0.1</version>
-  		</dependency>
-  		<dependency>
-			<groupId>com.accenture.masterdata</groupId>
-  			<artifactId>masterdata-common</artifactId>
   			<version>0.0.1</version>
   		</dependency>
 		<dependency>
@@ -64,10 +54,8 @@
   	</dependencies>
   </dependencyManagement>
   <modules>
-	<module>masterdata-organization</module>
 	<module>masterdata-starter</module>
 	<module>masterdata-core</module>
-	<module>masterdate-common</module>
 	<module>masterdata-service</module>
 	<module>masterdata-service-impl</module>
   </modules>
