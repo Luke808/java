@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:11
 WORKDIR /apps
 COPY masterdata-starter.jar ./smsf-service.jar
 COPY application*.yml ./
