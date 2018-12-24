@@ -5,7 +5,8 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="company_service_level_id" jdbcType="VARCHAR" property="companyServiceLevelId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -76,7 +77,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    id, name
+    id, company_service_level_id, name
   </sql>
   <select id="selectByExample" parameterType="com.accenture.masterdata.core.entity.ProcessExample" resultMap="BaseResultMap">
     <!--
@@ -120,7 +121,10 @@
     update t_process
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyServiceLevelId != null">
+        company_service_level_id = #{record.companyServiceLevelId,jdbcType=VARCHAR},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
@@ -135,7 +139,8 @@
       WARNING - @mbg.generated
     -->
     update t_process
-    set id = #{record.id,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=VARCHAR},
+      company_service_level_id = #{record.companyServiceLevelId,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

@@ -5,8 +5,8 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="name" jdbcType="VARCHAR" property="name" />
   </resultMap>
@@ -122,10 +122,10 @@
     update t_company_service_level
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.parentId != null">
-        parent_id = #{record.parentId,jdbcType=BIGINT},
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
       </if>
       <if test="record.code != null">
         code = #{record.code,jdbcType=VARCHAR},
@@ -143,8 +143,8 @@
       WARNING - @mbg.generated
     -->
     update t_company_service_level
-    set id = #{record.id,jdbcType=BIGINT},
-      parent_id = #{record.parentId,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
       code = #{record.code,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR}
     <if test="_parameter != null">

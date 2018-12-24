@@ -5,9 +5,9 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="process_id" jdbcType="BIGINT" property="processId" />
-    <result column="step_id" jdbcType="BIGINT" property="stepId" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="process_id" jdbcType="VARCHAR" property="processId" />
+    <result column="step_id" jdbcType="VARCHAR" property="stepId" />
     <result column="spt" jdbcType="DECIMAL" property="spt" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -122,13 +122,13 @@
     update t_spt
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.processId != null">
-        process_id = #{record.processId,jdbcType=BIGINT},
+        process_id = #{record.processId,jdbcType=VARCHAR},
       </if>
       <if test="record.stepId != null">
-        step_id = #{record.stepId,jdbcType=BIGINT},
+        step_id = #{record.stepId,jdbcType=VARCHAR},
       </if>
       <if test="record.spt != null">
         spt = #{record.spt,jdbcType=DECIMAL},
@@ -143,9 +143,9 @@
       WARNING - @mbg.generated
     -->
     update t_spt
-    set id = #{record.id,jdbcType=BIGINT},
-      process_id = #{record.processId,jdbcType=BIGINT},
-      step_id = #{record.stepId,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=VARCHAR},
+      process_id = #{record.processId,jdbcType=VARCHAR},
+      step_id = #{record.stepId,jdbcType=VARCHAR},
       spt = #{record.spt,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />

@@ -5,12 +5,12 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="ety" jdbcType="DECIMAL" property="ety" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
-    <result column="process_id" jdbcType="BIGINT" property="processId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="process_id" jdbcType="VARCHAR" property="processId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -124,7 +124,7 @@
     update t_client_service_level
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+        id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.code != null">
         code = #{record.code,jdbcType=VARCHAR},
@@ -136,10 +136,10 @@
         name = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.parentId != null">
-        parent_id = #{record.parentId,jdbcType=BIGINT},
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
       </if>
       <if test="record.processId != null">
-        process_id = #{record.processId,jdbcType=BIGINT},
+        process_id = #{record.processId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -151,12 +151,12 @@
       WARNING - @mbg.generated
     -->
     update t_client_service_level
-    set id = #{record.id,jdbcType=BIGINT},
+    set id = #{record.id,jdbcType=VARCHAR},
       code = #{record.code,jdbcType=VARCHAR},
       ety = #{record.ety,jdbcType=DECIMAL},
       name = #{record.name,jdbcType=VARCHAR},
-      parent_id = #{record.parentId,jdbcType=BIGINT},
-      process_id = #{record.processId,jdbcType=BIGINT}
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      process_id = #{record.processId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
