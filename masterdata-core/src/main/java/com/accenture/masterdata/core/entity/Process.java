@@ -7,38 +7,38 @@ import javax.persistence.Table;
 @Table(name = "t_process")
 public class Process {
     @Id
-    private Long id;
+    private String id;
 
     @Column(name = "company_service_level_id")
-    private Long companyServiceLevelId;
+    private String companyServiceLevelId;
 
     private String name;
 
     /**
      * @return id
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     /**
      * @return company_service_level_id
      */
-    public Long getCompanyServiceLevelId() {
+    public String getCompanyServiceLevelId() {
         return companyServiceLevelId;
     }
 
     /**
      * @param companyServiceLevelId
      */
-    public void setCompanyServiceLevelId(Long companyServiceLevelId) {
+    public void setCompanyServiceLevelId(String companyServiceLevelId) {
         this.companyServiceLevelId = companyServiceLevelId;
     }
 

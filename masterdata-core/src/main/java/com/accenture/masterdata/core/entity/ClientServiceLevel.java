@@ -1,12 +1,14 @@
 package com.accenture.masterdata.core.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import javax.persistence.*;
 
 @Table(name = "t_client_service_level")
 public class ClientServiceLevel {
     @Id
-    private Long id;
+    private String id;
 
     private String code;
 
@@ -15,22 +17,22 @@ public class ClientServiceLevel {
     private String name;
 
     @Column(name = "parent_id")
-    private Long parentId;
+    private String parentId;
 
     @Column(name = "process_id")
-    private Long processId;
+    private String processId;
 
     /**
      * @return id
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -79,28 +81,28 @@ public class ClientServiceLevel {
     /**
      * @return parent_id
      */
-    public Long getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
     /**
      * @param parentId
      */
-    public void setParentId(Long parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 
     /**
      * @return process_id
      */
-    public Long getProcessId() {
+    public String getProcessId() {
         return processId;
     }
 
     /**
      * @param processId
      */
-    public void setProcessId(Long processId) {
+    public void setProcessId(String processId) {
         this.processId = processId;
     }
 }

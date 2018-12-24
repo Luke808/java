@@ -114,52 +114,62 @@ public class ProcessExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Long value) {
+        public Criteria andIdEqualTo(String value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Long value) {
+        public Criteria andIdNotEqualTo(String value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Long value) {
+        public Criteria andIdGreaterThan(String value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andIdGreaterThanOrEqualTo(String value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Long value) {
+        public Criteria andIdLessThan(String value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Long value) {
+        public Criteria andIdLessThanOrEqualTo(String value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Long> values) {
+        public Criteria andIdLike(String value) {
+            addCriterion("id like", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotLike(String value) {
+            addCriterion("id not like", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<String> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Long> values) {
+        public Criteria andIdNotIn(List<String> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Long value1, Long value2) {
+        public Criteria andIdBetween(String value1, String value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Long value1, Long value2) {
+        public Criteria andIdNotBetween(String value1, String value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -174,52 +184,62 @@ public class ProcessExample {
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdEqualTo(Long value) {
+        public Criteria andCompanyServiceLevelIdEqualTo(String value) {
             addCriterion("company_service_level_id =", value, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdNotEqualTo(Long value) {
+        public Criteria andCompanyServiceLevelIdNotEqualTo(String value) {
             addCriterion("company_service_level_id <>", value, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdGreaterThan(Long value) {
+        public Criteria andCompanyServiceLevelIdGreaterThan(String value) {
             addCriterion("company_service_level_id >", value, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andCompanyServiceLevelIdGreaterThanOrEqualTo(String value) {
             addCriterion("company_service_level_id >=", value, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdLessThan(Long value) {
+        public Criteria andCompanyServiceLevelIdLessThan(String value) {
             addCriterion("company_service_level_id <", value, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdLessThanOrEqualTo(Long value) {
+        public Criteria andCompanyServiceLevelIdLessThanOrEqualTo(String value) {
             addCriterion("company_service_level_id <=", value, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdIn(List<Long> values) {
+        public Criteria andCompanyServiceLevelIdLike(String value) {
+            addCriterion("company_service_level_id like", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdNotLike(String value) {
+            addCriterion("company_service_level_id not like", value, "companyServiceLevelId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCompanyServiceLevelIdIn(List<String> values) {
             addCriterion("company_service_level_id in", values, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdNotIn(List<Long> values) {
+        public Criteria andCompanyServiceLevelIdNotIn(List<String> values) {
             addCriterion("company_service_level_id not in", values, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdBetween(Long value1, Long value2) {
+        public Criteria andCompanyServiceLevelIdBetween(String value1, String value2) {
             addCriterion("company_service_level_id between", value1, value2, "companyServiceLevelId");
             return (Criteria) this;
         }
 
-        public Criteria andCompanyServiceLevelIdNotBetween(Long value1, Long value2) {
+        public Criteria andCompanyServiceLevelIdNotBetween(String value1, String value2) {
             addCriterion("company_service_level_id not between", value1, value2, "companyServiceLevelId");
             return (Criteria) this;
         }

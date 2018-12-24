@@ -1,42 +1,44 @@
 package com.accenture.masterdata.core.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_cutoff_time")
 public class CutoffTime {
     @Id
-    private Long id;
+    private String id;
 
     @Column(name = "process_id")
-    private Long processId;
+    private String processId;
 
     private String time;
 
     /**
      * @return id
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     /**
      * @return process_id
      */
-    public Long getProcessId() {
+    public String getProcessId() {
         return processId;
     }
 
     /**
      * @param processId
      */
-    public void setProcessId(Long processId) {
+    public void setProcessId(String processId) {
         this.processId = processId;
     }
 

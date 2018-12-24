@@ -7,10 +7,10 @@ import javax.persistence.Table;
 @Table(name = "t_company_service_level")
 public class CompanyServiceLevel {
     @Id
-    private Long id;
+    private String id;
 
     @Column(name = "parent_id")
-    private Long parentId;
+    private String parentId;
 
     private String code;
 
@@ -19,28 +19,28 @@ public class CompanyServiceLevel {
     /**
      * @return id
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     /**
      * @return parent_id
      */
-    public Long getParentId() {
+    public String getParentId() {
         return parentId;
     }
 
     /**
      * @param parentId
      */
-    public void setParentId(Long parentId) {
+    public void setParentId(String parentId) {
         this.parentId = parentId;
     }
 

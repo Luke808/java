@@ -1,60 +1,62 @@
 package com.accenture.masterdata.core.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
-import javax.persistence.*;
 
 @Table(name = "t_spt")
 public class Spt {
     @Id
-    private Long id;
+    private String id;
 
     @Column(name = "process_id")
-    private Long processId;
+    private String processId;
 
     @Column(name = "step_id")
-    private Long stepId;
+    private String stepId;
 
     private BigDecimal spt;
 
     /**
      * @return id
      */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     /**
      * @return process_id
      */
-    public Long getProcessId() {
+    public String getProcessId() {
         return processId;
     }
 
     /**
      * @param processId
      */
-    public void setProcessId(Long processId) {
+    public void setProcessId(String processId) {
         this.processId = processId;
     }
 
     /**
      * @return step_id
      */
-    public Long getStepId() {
+    public String getStepId() {
         return stepId;
     }
 
     /**
      * @param stepId
      */
-    public void setStepId(Long stepId) {
+    public void setStepId(String stepId) {
         this.stepId = stepId;
     }
 
