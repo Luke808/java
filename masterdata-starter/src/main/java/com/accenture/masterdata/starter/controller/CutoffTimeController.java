@@ -1,6 +1,7 @@
 package com.accenture.masterdata.starter.controller;
 
 import com.accenture.masterdata.core.entity.CutoffTime;
+import com.accenture.masterdata.dto.CutoffTimeDto;
 import com.accenture.masterdata.service.CutoffTimeService;
 import com.accenture.masterdata.starter.Permissions;
 import com.accenture.smsf.authority.permission.loader.annotation.Permission;
@@ -75,7 +76,7 @@ public class CutoffTimeController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public PageInfo<List<CutoffTime>> cutoffTimeFindByPaged(@RequestBody CutoffTime
+    public PageInfo<List<CutoffTimeDto>> cutoffTimeFindByPaged(@RequestBody CutoffTime
     cutoffTime, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.findBy(cutoffTime, pageNumber, pageSize);
         return new PageInfo(list);
