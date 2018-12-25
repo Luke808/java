@@ -16,6 +16,10 @@
   <dependencies>
     <dependency>
         <groupId>com.accenture.smsf</groupId>
+        <artifactId>starter-cache-redis</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.accenture.smsf</groupId>
         <artifactId>starter-web-undertow</artifactId>
     </dependency>
      <!-- spring cloud -->
@@ -45,6 +49,11 @@
 		<groupId>com.accenture.smsf.authority</groupId>
 		<artifactId>authority-permission-loader</artifactId>
 	</dependency>
+      <dependency>
+          <groupId>com.accenture.masterdata</groupId>
+          <artifactId>masterdata-dto</artifactId>
+          <version>0.0.1</version>
+      </dependency>
   </dependencies>
     <build>
         <finalName>${project.name}</finalName>

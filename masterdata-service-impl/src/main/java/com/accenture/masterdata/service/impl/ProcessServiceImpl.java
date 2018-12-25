@@ -4,7 +4,12 @@ import com.ac.smsf.codegen.core.service.impl.AbstractMapperServiceImpl;
 import com.accenture.masterdata.core.entity.Process;
 import com.accenture.masterdata.service.ProcessService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -14,5 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(rollbackFor = {Exception.class})
 public class ProcessServiceImpl extends AbstractMapperServiceImpl<Process> implements ProcessService {
 
+    @Override
+    @Cacheable(cacheNames = "process")
+    public Map<String, String> getIdNameMapping() {
+        return this.list().parallelStream().collect(Collectors.toMap(Process::getId, Process::getName));
 
+    }
 }

@@ -17,7 +17,7 @@ smsf:
     icon: icon.ico
   cache: 
     redis-cache: 
-      authority:
+      process:
         duration: 10
   authority:
     permission:
