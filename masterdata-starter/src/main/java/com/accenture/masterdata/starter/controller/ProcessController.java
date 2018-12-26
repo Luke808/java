@@ -1,15 +1,20 @@
 package com.accenture.masterdata.starter.controller;
 
 import com.accenture.masterdata.core.entity.Process;
+import com.accenture.masterdata.dto.ProcessDto;
 import com.accenture.masterdata.service.ProcessService;
+import com.accenture.masterdata.service.CompanyServiceLevelService;
 import com.accenture.masterdata.starter.Permissions;
 import com.accenture.smsf.authority.permission.loader.annotation.Permission;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,6 +26,9 @@ public class ProcessController {
 
     @Autowired
     ProcessService processService;
+
+    @Autowired
+    CompanyServiceLevelService companyServiceLevelService;
 
     @PostMapping("/save")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_MANAGE})
@@ -78,7 +86,16 @@ public class ProcessController {
     public PageInfo<List<Process>> processFindByPaged(@RequestBody Process
     process, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Process> list = processService.findBy(process, pageNumber, pageSize);
-        return new PageInfo(list);
+        Page<ProcessDto> pagedProcess = new Page<>();
+        BeanUtils.copyProperties(list , pagedProcess);
+        Map<String , String> idNameMapping = companyServiceLevelService.getIdNameMapping();
+        list.forEach(entity->{
+            ProcessDto dto = new ProcessDto();
+            BeanUtils.copyProperties(entity, dto);
+            dto.setCompanyservicelevelName(idNameMapping.get(entity.getCompanyServiceLevelId()));
+            pagedProcess.add(dto);
+        });
+        return new PageInfo(pagedProcess);
     }
 
     @PostMapping("/find-by")
