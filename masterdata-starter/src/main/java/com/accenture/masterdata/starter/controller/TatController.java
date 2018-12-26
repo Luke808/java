@@ -1,15 +1,20 @@
 package com.accenture.masterdata.starter.controller;
 
 import com.accenture.masterdata.core.entity.Tat;
+import com.accenture.masterdata.dto.TatDto;
+import com.accenture.masterdata.service.ProcessService;
 import com.accenture.masterdata.service.TatService;
 import com.accenture.masterdata.starter.Permissions;
 import com.accenture.smsf.authority.permission.loader.annotation.Permission;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,6 +26,8 @@ public class TatController {
 
     @Autowired
     TatService tatService;
+    @Autowired
+    ProcessService processService;
 
     @PostMapping("/save")
     @Permission(values= {Permissions.MASTERDATA_TAT_MANAGE})
@@ -75,10 +82,19 @@ public class TatController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public PageInfo<List<Tat>> tatFindByPaged(@RequestBody Tat
+    public PageInfo<List<TatDto>> tatFindByPaged(@RequestBody Tat
     tat, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Tat> list = tatService.findBy(tat, pageNumber, pageSize);
-        return new PageInfo(list);
+        Page<TatDto> pagedTat = new Page<>();
+        BeanUtils.copyProperties(list, pagedTat);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        list.forEach(entity->{
+            TatDto dto = new TatDto();
+            BeanUtils.copyProperties(entity, dto);
+            dto.setProcessName(idNameMapping.get(entity.getProcessId()));
+            pagedTat.add(dto);
+        });
+        return new PageInfo(pagedTat);
     }
 
     @PostMapping("/find-by")
