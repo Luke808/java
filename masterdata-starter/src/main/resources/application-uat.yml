@@ -19,6 +19,8 @@ smsf:
     redis-cache: 
       process:
         duration: 10
+      step:
+        duration: 10
   authority:
     permission:
      autoload:
