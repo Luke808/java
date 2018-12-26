@@ -60,11 +60,11 @@ public class ClientServiceLevelController {
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public PageInfo<List<ClientServiceLevel>> clientServiceLevelListPaged(@PathVariable(value="page-no") int
+    public PageInfo<ClientServiceLevel> clientServiceLevelListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                                           @PathVariable(value="page-size") int pageSize) {
         List<ClientServiceLevel> list = clientServiceLevelService.list(pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
@@ -75,15 +75,15 @@ public class ClientServiceLevelController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public PageInfo<List<ClientServiceLevel>> clientServiceLevelFindByPaged(@RequestBody ClientServiceLevel
+    public PageInfo<ClientServiceLevel> clientServiceLevelFindByPaged(@RequestBody ClientServiceLevel
     clientServiceLevel, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<ClientServiceLevel> list = clientServiceLevelService.findBy(clientServiceLevel, pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public List<ClientServiceLevel> clientServiceLevelFindByPaged(@RequestBody ClientServiceLevel
+    public List<ClientServiceLevel> clientServiceLevelFindBy(@RequestBody ClientServiceLevel
     clientServiceLevel) {
         return clientServiceLevelService.findBy(clientServiceLevel);
     }

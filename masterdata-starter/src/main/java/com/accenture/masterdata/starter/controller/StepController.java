@@ -60,11 +60,11 @@ public class StepController {
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public PageInfo<List<Step>> stepListPaged(@PathVariable(value="page-no") int
+    public PageInfo<Step> stepListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                               @PathVariable(value="page-size") int pageSize) {
         List<Step> list = stepService.list(pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
@@ -75,15 +75,15 @@ public class StepController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public PageInfo<List<Step>> stepFindByPaged(@RequestBody Step
+    public PageInfo<Step> stepFindByPaged(@RequestBody Step
     step, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Step> list = stepService.findBy(step, pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public List<Step> stepFindByPaged(@RequestBody Step
+    public List<Step> stepFindBy(@RequestBody Step
     step) {
         return stepService.findBy(step);
     }

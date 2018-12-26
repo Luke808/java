@@ -60,11 +60,11 @@ public class ProcessController {
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public PageInfo<List<Process>> processListPaged(@PathVariable(value="page-no") int
+    public PageInfo<Process> processListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                     @PathVariable(value="page-size") int pageSize) {
         List<Process> list = processService.list(pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
@@ -75,15 +75,15 @@ public class ProcessController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public PageInfo<List<Process>> processFindByPaged(@RequestBody Process
+    public PageInfo<Process> processFindByPaged(@RequestBody Process
     process, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Process> list = processService.findBy(process, pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public List<Process> processFindByPaged(@RequestBody Process
+    public List<Process> processFindBy(@RequestBody Process
     process) {
         return processService.findBy(process);
     }

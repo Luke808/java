@@ -60,11 +60,11 @@ public class TatController {
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public PageInfo<List<Tat>> tatListPaged(@PathVariable(value="page-no") int
+    public PageInfo<Tat> tatListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                             @PathVariable(value="page-size") int pageSize) {
         List<Tat> list = tatService.list(pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
@@ -75,15 +75,15 @@ public class TatController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public PageInfo<List<Tat>> tatFindByPaged(@RequestBody Tat
+    public PageInfo<Tat> tatFindByPaged(@RequestBody Tat
     tat, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Tat> list = tatService.findBy(tat, pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public List<Tat> tatFindByPaged(@RequestBody Tat
+    public List<Tat> tatFindBy(@RequestBody Tat
     tat) {
         return tatService.findBy(tat);
     }
