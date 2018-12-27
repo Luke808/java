@@ -88,10 +88,9 @@ public class SptController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public PageInfo<Spt> sptFindByPaged(@RequestBody Spt
+    public PageInfo<SptDto> sptFindByPaged(@RequestBody Spt
     spt, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Spt> list = sptService.findBy(spt, pageNumber, pageSize);
-        return new PageInfo<>(list);
         Page<SptDto> pagedSpt = new Page<>();
         BeanUtils.copyProperties(list,pagedSpt);
         Map<String,String> processNameMapping = processService.getIdNameMapping();

@@ -83,10 +83,9 @@ public class CutoffTimeController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public PageInfo<CutoffTime> cutoffTimeFindByPaged(@RequestBody CutoffTime
+    public PageInfo<CutoffTimeDto> cutoffTimeFindByPaged(@RequestBody CutoffTime
     cutoffTime, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.findBy(cutoffTime, pageNumber, pageSize);
-        return new PageInfo<>(list);
         Page<CutoffTimeDto> pagedCutoffTime = new Page<>();
         BeanUtils.copyProperties(list,pagedCutoffTime);
         Map<String,String> idNameMapping = processService.getIdNameMapping();
