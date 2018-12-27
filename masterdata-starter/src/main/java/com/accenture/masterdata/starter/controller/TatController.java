@@ -82,7 +82,7 @@ public class TatController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public PageInfo<Tat> tatFindByPaged(@RequestBody Tat
+    public PageInfo<TatDto> tatFindByPaged(@RequestBody Tat
     tat, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Tat> list = tatService.findBy(tat, pageNumber, pageSize);
         Page<TatDto> pagedTat = new Page<>();

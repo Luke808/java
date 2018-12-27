@@ -83,7 +83,7 @@ public class ProcessController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public PageInfo<Process> processFindByPaged(@RequestBody Process
+    public PageInfo<ProcessDto> processFindByPaged(@RequestBody Process
     process, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Process> list = processService.findBy(process, pageNumber, pageSize);
         Page<ProcessDto> pagedProcess = new Page<>();
