@@ -73,11 +73,11 @@ public class SptController {
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public PageInfo<List<Spt>> sptListPaged(@PathVariable(value="page-no") int
+    public PageInfo<Spt> sptListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                             @PathVariable(value="page-size") int pageSize) {
         List<Spt> list = sptService.list(pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
@@ -88,9 +88,10 @@ public class SptController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public PageInfo<List<SptDto>> sptFindByPaged(@RequestBody Spt
+    public PageInfo<Spt> sptFindByPaged(@RequestBody Spt
     spt, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Spt> list = sptService.findBy(spt, pageNumber, pageSize);
+        return new PageInfo<>(list);
         Page<SptDto> pagedSpt = new Page<>();
         BeanUtils.copyProperties(list,pagedSpt);
         Map<String,String> processNameMapping = processService.getIdNameMapping();
@@ -103,12 +104,12 @@ public class SptController {
             dto.setStepName(stepNameMapping.get(entity.getStepId()));
             pagedSpt.add(dto);
         });
-        return new PageInfo(pagedSpt);
+        return new PageInfo<>(pagedSpt);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public List<Spt> sptFindByPaged(@RequestBody Spt
+    public List<Spt> sptFindBy(@RequestBody Spt
     spt) {
         return sptService.findBy(spt);
     }

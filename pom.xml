@@ -59,5 +59,6 @@
 	<module>masterdata-service</module>
 	<module>masterdata-service-impl</module>
 	  <module>masterdata-dto</module>
+	  <module>masterdata-sdk</module>
   </modules>
 </project>

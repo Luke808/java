@@ -60,11 +60,11 @@ public class CompanyServiceLevelController {
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_COMPANY_SERVICE_LEVEL_VIEW})
-    public PageInfo<List<CompanyServiceLevel>> companyServiceLevelListPaged(@PathVariable(value="page-no") int
+    public PageInfo<CompanyServiceLevel> companyServiceLevelListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                                             @PathVariable(value="page-size") int pageSize) {
         List<CompanyServiceLevel> list = companyServiceLevelService.list(pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
@@ -75,15 +75,15 @@ public class CompanyServiceLevelController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_COMPANY_SERVICE_LEVEL_VIEW})
-    public PageInfo<List<CompanyServiceLevel>> companyServiceLevelFindByPaged(@RequestBody CompanyServiceLevel
+    public PageInfo<CompanyServiceLevel> companyServiceLevelFindByPaged(@RequestBody CompanyServiceLevel
     companyServiceLevel, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<CompanyServiceLevel> list = companyServiceLevelService.findBy(companyServiceLevel, pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_COMPANY_SERVICE_LEVEL_VIEW})
-    public List<CompanyServiceLevel> companyServiceLevelFindByPaged(@RequestBody CompanyServiceLevel
+    public List<CompanyServiceLevel> companyServiceLevelFindBy(@RequestBody CompanyServiceLevel
     companyServiceLevel) {
         return companyServiceLevelService.findBy(companyServiceLevel);
     }

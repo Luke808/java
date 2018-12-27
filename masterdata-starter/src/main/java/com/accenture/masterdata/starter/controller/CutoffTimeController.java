@@ -68,11 +68,11 @@ public class CutoffTimeController {
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public PageInfo<List<CutoffTime>> cutoffTimeListPaged(@PathVariable(value="page-no") int
+    public PageInfo<CutoffTime> cutoffTimeListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                           @PathVariable(value="page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.list(pageNumber, pageSize);
-        return new PageInfo(list);
+        return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
@@ -83,9 +83,10 @@ public class CutoffTimeController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public PageInfo<List<CutoffTimeDto>> cutoffTimeFindByPaged(@RequestBody CutoffTime
+    public PageInfo<CutoffTime> cutoffTimeFindByPaged(@RequestBody CutoffTime
     cutoffTime, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.findBy(cutoffTime, pageNumber, pageSize);
+        return new PageInfo<>(list);
         Page<CutoffTimeDto> pagedCutoffTime = new Page<>();
         BeanUtils.copyProperties(list,pagedCutoffTime);
         Map<String,String> idNameMapping = processService.getIdNameMapping();
@@ -95,12 +96,12 @@ public class CutoffTimeController {
             dto.setProcessName(idNameMapping.get(entity.getProcessId()));
             pagedCutoffTime.add(dto);
         });
-        return new PageInfo(pagedCutoffTime);
+        return new PageInfo<>(pagedCutoffTime);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public List<CutoffTime> cutoffTimeFindByPaged(@RequestBody CutoffTime
+    public List<CutoffTime> cutoffTimeFindBy(@RequestBody CutoffTime
     cutoffTime) {
         return cutoffTimeService.findBy(cutoffTime);
     }
