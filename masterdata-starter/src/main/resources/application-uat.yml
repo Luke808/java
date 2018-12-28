@@ -26,7 +26,7 @@ smsf:
   authority:
     permission:
      autoload:
-       enabled: true
+       enabled: false
   swagger:
     security:
       enabled: true
