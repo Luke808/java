@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,6 +26,7 @@ public class MasterdataApplication {
     }
 
     @Bean
+    @Profile("dev")
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
             @Override
