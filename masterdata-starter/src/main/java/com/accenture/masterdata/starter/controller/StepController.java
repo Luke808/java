@@ -1,15 +1,20 @@
 package com.accenture.masterdata.starter.controller;
 
 import com.accenture.masterdata.core.entity.Step;
+import com.accenture.masterdata.dto.StepDto;
+import com.accenture.masterdata.service.ProcessService;
 import com.accenture.masterdata.service.StepService;
 import com.accenture.masterdata.starter.Permissions;
 import com.accenture.smsf.authority.permission.loader.annotation.Permission;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,6 +26,9 @@ public class StepController {
 
     @Autowired
     StepService stepService;
+
+    @Autowired
+    ProcessService processService;
 
     @PostMapping("/save")
     @Permission(values= {Permissions.MASTERDATA_STEP_MANAGE})
@@ -74,11 +82,20 @@ public class StepController {
     }
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
-    @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public PageInfo<Step> stepFindByPaged(@RequestBody Step
-    step, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
+    @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
+    public PageInfo<StepDto> stepFindByPaged(@RequestBody Step
+                                                     step, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Step> list = stepService.findBy(step, pageNumber, pageSize);
-        return new PageInfo<>(list);
+        Page<StepDto> pagedStep = new Page<>();
+        BeanUtils.copyProperties(list,pagedStep);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        list.forEach(entity->{
+            StepDto dto = new StepDto();
+            BeanUtils.copyProperties(entity,dto);
+            dto.setProcessName(idNameMapping.get(entity.getProcessId()));
+            pagedStep.add(dto);
+        });
+        return new PageInfo<>(pagedStep);
     }
 
     @PostMapping("/find-by")
