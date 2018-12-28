@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "smsf-masterdata-service", configuration = {FeignConfig.class})
+@FeignClient(name = "smsf-masterdata-service-uat", configuration = {FeignConfig.class})
 @RequestMapping("/masterdata/process")
 public interface ProcessControllerService {
     @GetMapping("/find")
