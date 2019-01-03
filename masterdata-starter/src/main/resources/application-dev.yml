@@ -14,9 +14,17 @@ smsf:
     jdbc:
       connections:
         default:
-          url: jdbc:mysql://127.0.0.1:3306/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
-          username: root
-          password: root
+          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
+          username: ${smsf.data.database1.username}
+          password: ${smsf.data.database1.password}
+  cache:
+    redis-cache:
+      process:
+        duration: 10
+      step:
+        duration: 10
+      companyservicelevel:
+        duration: 10
 logging:
   level:
     com.accenture.masterdata.core.mapper: debug
