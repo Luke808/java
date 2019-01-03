@@ -67,23 +67,30 @@ public class SptController {
 
     @GetMapping("/find")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public Spt sptFind(@RequestParam("id") String id) {
-        return sptService.findById(id);
+    public SptDto sptFind(@RequestParam("id") String id) {
+        return transformDto(sptService.findById(id));
     }
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public PageInfo<Spt> sptListPaged(@PathVariable(value="page-no") int
+    public PageInfo<SptDto> sptListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                             @PathVariable(value="page-size") int pageSize) {
         List<Spt> list = sptService.list(pageNumber, pageSize);
-        return new PageInfo<>(list);
+        Page<SptDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return new PageInfo<>(page);
     }
 
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public List<Spt> sptList() {
-        return sptService.list();
+    public List<SptDto> sptList() {
+        List<Spt> list = sptService.list();
+        Page<SptDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
@@ -108,23 +115,46 @@ public class SptController {
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public List<Spt> sptFindBy(@RequestBody Spt
+    public List<SptDto> sptFindBy(@RequestBody Spt
     spt) {
-        return sptService.findBy(spt);
+        List<Spt> list = sptService.findBy(spt);
+        Page<SptDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @GetMapping("/find-one")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public Spt sptFindOne(@RequestParam("fieldName") String fieldName,
+    public SptDto sptFindOne(@RequestParam("fieldName") String fieldName,
                           @RequestParam("value") String
     value) {
-        return sptService.findBy(fieldName, value);
+        return transformDto(sptService.findBy(fieldName, value));
     }
 
     @PostMapping("/find-by/{columns}")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
-    public List<Spt> sptFindByColumnsPaged(@RequestBody Spt spt,
+    public List<SptDto> sptFindByColumnsPaged(@RequestBody Spt spt,
                                            @PathVariable("columns") String columns) {
-        return sptService.findByColumns(spt, columns);
+        List<Spt> list = sptService.findByColumns(spt,columns);
+        Page<SptDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
+    }
+    private Page<SptDto> transformList(List<Spt> list){
+        Page<SptDto> pagedClientServiceLevel = new Page<>();
+        BeanUtils.copyProperties(list, pagedClientServiceLevel);
+        list.forEach(entity->{
+            SptDto dto = new SptDto();
+            BeanUtils.copyProperties(entity, dto);
+            pagedClientServiceLevel.add(dto);
+        });
+        return pagedClientServiceLevel;
+    }
+    private SptDto transformDto(Spt entity) {
+        SptDto dto = new SptDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
     }
 }

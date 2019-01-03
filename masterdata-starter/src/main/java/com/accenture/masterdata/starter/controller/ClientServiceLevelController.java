@@ -67,23 +67,30 @@ public class ClientServiceLevelController {
 
     @GetMapping("/find")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public ClientServiceLevel clientServiceLevelFind(@RequestParam("id") String id) {
-        return clientServiceLevelService.findById(id);
+    public ClientServiceLevelDto clientServiceLevelFind(@RequestParam("id") String id) {
+        return transformDto(clientServiceLevelService.findById(id));
     }
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public PageInfo<ClientServiceLevel> clientServiceLevelListPaged(@PathVariable(value="page-no") int
+    public PageInfo<ClientServiceLevelDto> clientServiceLevelListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                                           @PathVariable(value="page-size") int pageSize) {
         List<ClientServiceLevel> list = clientServiceLevelService.list(pageNumber, pageSize);
-        return new PageInfo<>(list);
+        Page<ClientServiceLevelDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return new PageInfo<>(page);
     }
 
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public List<ClientServiceLevel> clientServiceLevelList() {
-        return clientServiceLevelService.list();
+    public List<ClientServiceLevelDto> clientServiceLevelList() {
+        List<ClientServiceLevel> list = clientServiceLevelService.list();
+        Page<ClientServiceLevelDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
@@ -99,9 +106,13 @@ public class ClientServiceLevelController {
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public List<ClientServiceLevel> clientServiceLevelFindBy(@RequestBody ClientServiceLevel
+    public List<ClientServiceLevelDto> clientServiceLevelFindBy(@RequestBody ClientServiceLevel
     clientServiceLevel) {
-        return clientServiceLevelService.findBy(clientServiceLevel);
+        List<ClientServiceLevel> list = clientServiceLevelService.findBy(clientServiceLevel);
+        Page<ClientServiceLevelDto> page =transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @GetMapping("/find-one")
@@ -114,9 +125,13 @@ public class ClientServiceLevelController {
 
     @PostMapping("/find-by/{columns}")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public List<ClientServiceLevel> clientServiceLevelFindByColumnsPaged(@RequestBody ClientServiceLevel clientServiceLevel,
+    public List<ClientServiceLevelDto> clientServiceLevelFindByColumnsPaged(@RequestBody ClientServiceLevel clientServiceLevel,
                                                                          @PathVariable("columns") String columns) {
-        return clientServiceLevelService.findByColumns(clientServiceLevel, columns);
+        List<ClientServiceLevel> list = clientServiceLevelService.findByColumns(clientServiceLevel,columns);
+        Page<ClientServiceLevelDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
     
     private Page<ClientServiceLevelDto> transformList(List<ClientServiceLevel> list){
