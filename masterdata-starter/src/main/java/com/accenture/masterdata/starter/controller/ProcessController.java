@@ -62,23 +62,26 @@ public class ProcessController {
 
     @GetMapping("/find")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public Process processFind(@RequestParam("id") String id) {
-        return processService.findById(id);
+    public ProcessDto processFind(@RequestParam("id") String id) {
+        return transformDto(processService.findById(id));
     }
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public PageInfo<Process> processListPaged(@PathVariable(value="page-no") int
+    public PageInfo<ProcessDto> processListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                     @PathVariable(value="page-size") int pageSize) {
-        List<Process> list = processService.list(pageNumber, pageSize);
-        return new PageInfo<>(list);
+        List<Process> list = processService.list(pageNumber , pageSize);
+        Page<ProcessDto> pagedProcess = transformList(list);
+        return new PageInfo<>(pagedProcess);
     }
 
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public List<Process> processList() {
-        return processService.list();
+    public List<ProcessDto> processList() {
+        List<Process> list = processService.list();
+        Page<ProcessDto> pagedProcess = transformList(list);
+        return pagedProcess;
     }
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
@@ -86,37 +89,50 @@ public class ProcessController {
     public PageInfo<ProcessDto> processFindByPaged(@RequestBody Process
     process, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Process> list = processService.findBy(process, pageNumber, pageSize);
-        Page<ProcessDto> pagedProcess = new Page<>();
-        BeanUtils.copyProperties(list , pagedProcess);
+        Page<ProcessDto> pagedProcess = transformList(list);
         Map<String , String> idNameMapping = companyServiceLevelService.getIdNameMapping();
-        list.forEach(entity->{
-            ProcessDto dto = new ProcessDto();
-            BeanUtils.copyProperties(entity, dto);
-            dto.setCompanyservicelevelName(idNameMapping.get(entity.getCompanyServiceLevelId()));
-            pagedProcess.add(dto);
-        });
+        pagedProcess.forEach(dto -> dto.setCompanyservicelevelName(idNameMapping.get(dto.getCompanyServiceLevelId())));
         return new PageInfo<>(pagedProcess);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public List<Process> processFindBy(@RequestBody Process
-    process) {
-        return processService.findBy(process);
+    public List<ProcessDto> processFindBy(@RequestBody Process
+    process){
+        List<Process> list = processService.findBy(process);
+        Page<ProcessDto> pagedProcess = transformList(list);
+        return pagedProcess;
     }
 
     @GetMapping("/find-one")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public Process processFindOne(@RequestParam("fieldName") String fieldName,
+    public ProcessDto processFindOne(@RequestParam("fieldName") String fieldName,
                                   @RequestParam("value") String
     value) {
-        return processService.findBy(fieldName, value);
+        return transformDto(processService.findBy(fieldName, value));
     }
 
     @PostMapping("/find-by/{columns}")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public List<Process> processFindByColumnsPaged(@RequestBody Process process,
+    public List<ProcessDto> processFindByColumnsPaged(@RequestBody Process process,
                                                    @PathVariable("columns") String columns) {
-        return processService.findByColumns(process, columns);
+        List<Process> list = processService.findByColumns(process , columns);
+        Page<ProcessDto> pagedProcess = transformList(list);
+        return pagedProcess;
+    }
+    private Page<ProcessDto> transformList(List<Process> list){
+        Page<ProcessDto> pagedProcess = new Page<>();
+        BeanUtils.copyProperties(list, pagedProcess);
+        list.forEach(entity->{
+            ProcessDto dto = new ProcessDto();
+            BeanUtils.copyProperties(entity, dto);
+            pagedProcess.add(dto);
+        });
+        return pagedProcess;
+    }
+    private ProcessDto transformDto(Process entity) {
+        ProcessDto dto = new ProcessDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
     }
 }

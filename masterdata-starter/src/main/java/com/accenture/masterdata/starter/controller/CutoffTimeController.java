@@ -62,23 +62,26 @@ public class CutoffTimeController {
 
     @GetMapping("/find")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public CutoffTime cutoffTimeFind(@RequestParam("id") String id) {
-        return cutoffTimeService.findById(id);
+    public CutoffTimeDto cutoffTimeFind(@RequestParam("id") String id) {
+        return transformDto(cutoffTimeService.findById(id));
     }
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public PageInfo<CutoffTime> cutoffTimeListPaged(@PathVariable(value="page-no") int
+    public PageInfo<CutoffTimeDto> cutoffTimeListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                           @PathVariable(value="page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.list(pageNumber, pageSize);
-        return new PageInfo<>(list);
+        Page<CutoffTimeDto> page = transformList(list);
+        return new PageInfo<>(page);
     }
 
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public List<CutoffTime> cutoffTimeList() {
-        return cutoffTimeService.list();
+    public List<CutoffTimeDto> cutoffTimeList() {
+        List<CutoffTime> list = cutoffTimeService.list();
+        Page<CutoffTimeDto> page = transformList(list);
+        return page;
     }
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
@@ -86,31 +89,27 @@ public class CutoffTimeController {
     public PageInfo<CutoffTimeDto> cutoffTimeFindByPaged(@RequestBody CutoffTime
     cutoffTime, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<CutoffTime> list = cutoffTimeService.findBy(cutoffTime, pageNumber, pageSize);
-        Page<CutoffTimeDto> pagedCutoffTime = new Page<>();
-        BeanUtils.copyProperties(list,pagedCutoffTime);
-        Map<String,String> idNameMapping = processService.getIdNameMapping();
-        list.forEach(entity->{
-            CutoffTimeDto dto = new CutoffTimeDto();
-            BeanUtils.copyProperties(entity,dto);
-            dto.setProcessName(idNameMapping.get(entity.getProcessId()));
-            pagedCutoffTime.add(dto);
-        });
-        return new PageInfo<>(pagedCutoffTime);
+        Page<CutoffTimeDto> pagedcutoffTime = transformList(list);
+        Map<String , String> idNameMapping = processService.getIdNameMapping();
+        pagedcutoffTime.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return new PageInfo<>(pagedcutoffTime);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public List<CutoffTime> cutoffTimeFindBy(@RequestBody CutoffTime
+    public List<CutoffTimeDto> cutoffTimeFindBy(@RequestBody CutoffTime
     cutoffTime) {
-        return cutoffTimeService.findBy(cutoffTime);
+        List<CutoffTime> list = cutoffTimeService.findBy(cutoffTime);
+        Page<CutoffTimeDto> page = transformList(list);
+        return page;
     }
 
     @GetMapping("/find-one")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
-    public CutoffTime cutoffTimeFindOne(@RequestParam("fieldName") String fieldName,
+    public CutoffTimeDto cutoffTimeFindOne(@RequestParam("fieldName") String fieldName,
                                         @RequestParam("value") String
     value) {
-        return cutoffTimeService.findBy(fieldName, value);
+        return transformDto(cutoffTimeService.findBy(fieldName, value));
     }
 
     @PostMapping("/find-by/{columns}")
@@ -118,5 +117,20 @@ public class CutoffTimeController {
     public List<CutoffTime> cutoffTimeFindByColumnsPaged(@RequestBody CutoffTime cutoffTime,
                                                          @PathVariable("columns") String columns) {
         return cutoffTimeService.findByColumns(cutoffTime, columns);
+    }
+    private Page<CutoffTimeDto> transformList(List<CutoffTime> list){
+        Page<CutoffTimeDto> pagedCutoffTime = new Page<>();
+        BeanUtils.copyProperties(list, pagedCutoffTime);
+        list.forEach(entity->{
+            CutoffTimeDto dto = new CutoffTimeDto();
+            BeanUtils.copyProperties(entity, dto);
+            pagedCutoffTime.add(dto);
+        });
+        return pagedCutoffTime;
+    }
+    private CutoffTimeDto transformDto(CutoffTime entity) {
+        CutoffTimeDto dto = new CutoffTimeDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
     }
 }
