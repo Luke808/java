@@ -91,15 +91,9 @@ public class ClientServiceLevelController {
     public PageInfo<ClientServiceLevelDto> clientServiceLevelFindByPaged(@RequestBody ClientServiceLevel
     clientServiceLevel, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<ClientServiceLevel> list = clientServiceLevelService.findBy(clientServiceLevel, pageNumber, pageSize);
-        Page<ClientServiceLevelDto> pagedClientServiceLevel = new Page<>();
-        BeanUtils.copyProperties(list, pagedClientServiceLevel);
+        Page<ClientServiceLevelDto> pagedClientServiceLevel = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
-        list.forEach(entity->{
-            ClientServiceLevelDto dto = new ClientServiceLevelDto();
-            BeanUtils.copyProperties(entity, dto);
-            dto.setProcessName(idNameMapping.get(entity.getProcessId()));
-            pagedClientServiceLevel.add(dto);
-        });
+        pagedClientServiceLevel.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
         return new PageInfo<>(pagedClientServiceLevel);
     }
 
@@ -112,10 +106,10 @@ public class ClientServiceLevelController {
 
     @GetMapping("/find-one")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public ClientServiceLevel clientServiceLevelFindOne(@RequestParam("fieldName") String fieldName,
+    public ClientServiceLevelDto clientServiceLevelFindOne(@RequestParam("fieldName") String fieldName,
                                                         @RequestParam("value") String
     value) {
-        return clientServiceLevelService.findBy(fieldName, value);
+        return transformDto(clientServiceLevelService.findBy(fieldName, value));
     }
 
     @PostMapping("/find-by/{columns}")
@@ -123,5 +117,21 @@ public class ClientServiceLevelController {
     public List<ClientServiceLevel> clientServiceLevelFindByColumnsPaged(@RequestBody ClientServiceLevel clientServiceLevel,
                                                                          @PathVariable("columns") String columns) {
         return clientServiceLevelService.findByColumns(clientServiceLevel, columns);
+    }
+    
+    private Page<ClientServiceLevelDto> transformList(List<ClientServiceLevel> list){
+        Page<ClientServiceLevelDto> pagedClientServiceLevel = new Page<>();
+        BeanUtils.copyProperties(list, pagedClientServiceLevel);
+        list.forEach(entity->{
+            ClientServiceLevelDto dto = new ClientServiceLevelDto();
+            BeanUtils.copyProperties(entity, dto);
+            pagedClientServiceLevel.add(dto);
+        });
+        return pagedClientServiceLevel;
+    }
+    private ClientServiceLevelDto transformDto(ClientServiceLevel entity) {
+        ClientServiceLevelDto dto = new ClientServiceLevelDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
     }
 }
