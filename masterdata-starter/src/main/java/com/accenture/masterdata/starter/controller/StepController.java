@@ -62,8 +62,8 @@ public class StepController {
 
     @GetMapping("/find")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public Step stepFind(@RequestParam("id") String id) {
-        return stepService.findById(id);
+    public StepDto stepFind(@RequestParam("id") String id) {
+        return transformDto(stepService.findById(id));
     }
 
     @GetMapping("/list-paged/{page-no}/{page-size}")
@@ -72,13 +72,20 @@ public class StepController {
     pageNumber,
                                               @PathVariable(value="page-size") int pageSize) {
         List<Step> list = stepService.list(pageNumber, pageSize);
+        Page<StepDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
         return new PageInfo<>(list);
     }
 
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public List<Step> stepList() {
-        return stepService.list();
+    public List<StepDto> stepList() {
+        List<Step> list = stepService.list();
+        Page<StepDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
@@ -86,37 +93,55 @@ public class StepController {
     public PageInfo<StepDto> stepFindByPaged(@RequestBody Step
                                                      step, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Step> list = stepService.findBy(step, pageNumber, pageSize);
-        Page<StepDto> pagedStep = new Page<>();
-        BeanUtils.copyProperties(list,pagedStep);
+        Page<StepDto> page = new Page<>();
         Map<String, String> idNameMapping = processService.getIdNameMapping();
-        list.forEach(entity->{
-            StepDto dto = new StepDto();
-            BeanUtils.copyProperties(entity,dto);
-            dto.setProcessName(idNameMapping.get(entity.getProcessId()));
-            pagedStep.add(dto);
-        });
-        return new PageInfo<>(pagedStep);
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return new PageInfo<>(page);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public List<Step> stepFindBy(@RequestBody Step
+    public List<StepDto> stepFindBy(@RequestBody Step
     step) {
-        return stepService.findBy(step);
+        List<Step> list = stepService.findBy(step);
+        Page<StepDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @GetMapping("/find-one")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public Step stepFindOne(@RequestParam("fieldName") String fieldName,
+    public StepDto stepFindOne(@RequestParam("fieldName") String fieldName,
                             @RequestParam("value") String
     value) {
-        return stepService.findBy(fieldName, value);
+
+        return transformDto(stepService.findBy(fieldName, value));
     }
 
     @PostMapping("/find-by/{columns}")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public List<Step> stepFindByColumnsPaged(@RequestBody Step step,
+    public List<StepDto> stepFindByColumnsPaged(@RequestBody Step step,
                                              @PathVariable("columns") String columns) {
-        return stepService.findByColumns(step, columns);
+        List<Step> list = stepService.findByColumns(step,columns);
+        Page<StepDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
+    }
+    private Page<StepDto> transformList(List<Step> list){
+        Page<StepDto> pagedClientServiceLevel = new Page<>();
+        BeanUtils.copyProperties(list, pagedClientServiceLevel);
+        list.forEach(entity->{
+            StepDto dto = new StepDto();
+            BeanUtils.copyProperties(entity, dto);
+            pagedClientServiceLevel.add(dto);
+        });
+        return pagedClientServiceLevel;
+    }
+    private StepDto transformDto(Step entity) {
+        StepDto dto = new StepDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
     }
 }

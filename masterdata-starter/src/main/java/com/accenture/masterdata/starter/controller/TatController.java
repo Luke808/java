@@ -61,23 +61,18 @@ public class TatController {
 
     @GetMapping("/find")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public Tat tatFind(@RequestParam("id") String id) {
-        return tatService.findById(id);
-    }
-
-    @GetMapping("/list-paged/{page-no}/{page-size}")
-    @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public PageInfo<Tat> tatListPaged(@PathVariable(value="page-no") int
-    pageNumber,
-                                            @PathVariable(value="page-size") int pageSize) {
-        List<Tat> list = tatService.list(pageNumber, pageSize);
-        return new PageInfo<>(list);
+    public TatDto tatFind(@RequestParam("id") String id) {
+        return transformDto(tatService.findById(id));
     }
 
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public List<Tat> tatList() {
-        return tatService.list();
+    public List<TatDto> tatList() {
+        List<Tat> list = tatService.list();
+        Page<TatDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
@@ -85,37 +80,54 @@ public class TatController {
     public PageInfo<TatDto> tatFindByPaged(@RequestBody Tat
     tat, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Tat> list = tatService.findBy(tat, pageNumber, pageSize);
-        Page<TatDto> pagedTat = new Page<>();
-        BeanUtils.copyProperties(list, pagedTat);
+        Page<TatDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
-        list.forEach(entity->{
-            TatDto dto = new TatDto();
-            BeanUtils.copyProperties(entity, dto);
-            dto.setProcessName(idNameMapping.get(entity.getProcessId()));
-            pagedTat.add(dto);
-        });
-        return new PageInfo<>(pagedTat);
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return new PageInfo<>(page);
     }
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public List<Tat> tatFindBy(@RequestBody Tat
+    public List<TatDto> tatFindBy(@RequestBody Tat
     tat) {
-        return tatService.findBy(tat);
+        List<Tat> list = tatService.findBy(tat);
+        Page<TatDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
     }
 
     @GetMapping("/find-one")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public Tat tatFindOne(@RequestParam("fieldName") String fieldName,
+    public TatDto tatFindOne(@RequestParam("fieldName") String fieldName,
                           @RequestParam("value") String
     value) {
-        return tatService.findBy(fieldName, value);
+        return transformDto(tatService.findById(fieldName));
     }
 
     @PostMapping("/find-by/{columns}")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
-    public List<Tat> tatFindByColumnsPaged(@RequestBody Tat tat,
+    public List<TatDto> tatFindByColumnsPaged(@RequestBody Tat tat,
                                            @PathVariable("columns") String columns) {
-        return tatService.findByColumns(tat, columns);
+        List<Tat> list = tatService.findByColumns(tat,columns);
+        Page<TatDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
+    }
+    private Page<TatDto> transformList(List<Tat> list){
+        Page<TatDto> pagedClientServiceLevel = new Page<>();
+        BeanUtils.copyProperties(list, pagedClientServiceLevel);
+        list.forEach(entity->{
+            TatDto dto = new TatDto();
+            BeanUtils.copyProperties(entity, dto);
+            pagedClientServiceLevel.add(dto);
+        });
+        return pagedClientServiceLevel;
+    }
+    private TatDto transformDto(Tat entity) {
+        TatDto dto = new TatDto();
+        BeanUtils.copyProperties(entity, dto);
+        return dto;
     }
 }
