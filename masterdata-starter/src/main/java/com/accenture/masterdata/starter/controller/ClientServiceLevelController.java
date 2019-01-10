@@ -138,7 +138,7 @@ public class ClientServiceLevelController {
     
     @GetMapping("/filter-by/{keyWord}")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public Map<String, List<ClientServiceLevelDto>> filterByName(@PathVariable("keyWord") String keyWord) {
+    public Map<String, List<ClientServiceLevelDto>> clientServiceLevelFilterByName(@PathVariable("keyWord") String keyWord) {
         String lowerKeyWord = keyWord.toLowerCase();
         List<ClientServiceLevelDto> list = transformList(clientServiceLevelService.list());
         return list.stream().filter(dto -> fatherMatches(list, dto, lowerKeyWord) || childrenMatches(list, dto, lowerKeyWord))
