@@ -101,8 +101,10 @@ public class StepController {
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
-    public List<StepDto> stepFindBy(@RequestBody Step
-    step) {
+    public List<StepDto> stepFindBy(@RequestBody StepDto
+    stepDto) {
+        Step step = new Step();
+        BeanUtils.copyProperties(stepDto, step);
         List<Step> list = stepService.findBy(step);
         Page<StepDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();

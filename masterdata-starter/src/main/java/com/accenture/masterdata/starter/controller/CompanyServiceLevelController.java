@@ -91,8 +91,10 @@ public class CompanyServiceLevelController {
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_COMPANY_SERVICE_LEVEL_VIEW})
-    public List<CompanyServiceLevelDto> companyServiceLevelFindBy(@RequestBody CompanyServiceLevel
-    companyServiceLevel) {
+    public List<CompanyServiceLevelDto> companyServiceLevelFindBy(@RequestBody CompanyServiceLevelDto
+    companyServiceLevelDto) {
+        CompanyServiceLevel companyServiceLevel = new CompanyServiceLevel();
+        BeanUtils.copyProperties(companyServiceLevelDto, companyServiceLevel);
         List<CompanyServiceLevel> list = companyServiceLevelService.findBy(companyServiceLevel);
         Page<CompanyServiceLevelDto> pagedProcess = transformList(list);
         return pagedProcess;

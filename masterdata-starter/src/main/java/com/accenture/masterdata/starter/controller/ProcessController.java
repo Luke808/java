@@ -97,8 +97,10 @@ public class ProcessController {
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
-    public List<ProcessDto> processFindBy(@RequestBody Process
-    process){
+    public List<ProcessDto> processFindBy(@RequestBody ProcessDto
+    processDto){
+        Process process = new Process();
+        BeanUtils.copyProperties(processDto, process);
         List<Process> list = processService.findBy(process);
         Page<ProcessDto> pagedProcess = transformList(list);
         return pagedProcess;

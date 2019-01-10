@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.accenture.masterdata</groupId>
-            <artifactId>masterdata-core</artifactId>
+            <artifactId>masterdata-dto</artifactId>
         </dependency>
         <dependency>
             <groupId>com.accenture.smsf</groupId>

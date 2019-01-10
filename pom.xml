@@ -47,6 +47,21 @@
   			<version>0.0.1</version>
   		</dependency>
 		<dependency>
+			<groupId>com.accenture.masterdata</groupId>
+			<artifactId>masterdata-dto</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.accenture.masterdata</groupId>
+			<artifactId>masterdata-service</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.accenture.masterdata</groupId>
+			<artifactId>masterdata-service-impl</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>com.accenture.smsf.codegen</groupId>
 			<artifactId>code-generator-core</artifactId>
 			<version>1.0.0</version>

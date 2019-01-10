@@ -1,6 +1,6 @@
 package com.accenture.masterdata.sdk;
 
-import com.accenture.masterdata.core.entity.Step;
+import com.accenture.masterdata.dto.StepDto;
 import com.accenture.smsf.framework.starter.web.sdk.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +11,8 @@ import java.util.List;
 @RequestMapping("/masterdata/step")
 public interface StepControllerService {
     @GetMapping("/find")
-    Step stepFind(@RequestParam("id") String id);
+    StepDto stepFind(@RequestParam("id") String id);
 
     @PostMapping("/find-by")
-    List<Step> stepFindBy(@RequestBody Step step);
+    List<StepDto> stepFindBy(@RequestBody StepDto stepDto);
 }

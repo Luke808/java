@@ -17,9 +17,9 @@ import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.temporal.ChronoField;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -106,8 +106,10 @@ public class ClientServiceLevelController {
 
     @PostMapping("/find-by")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public List<ClientServiceLevelDto> clientServiceLevelFindBy(@RequestBody ClientServiceLevel
-    clientServiceLevel) {
+    public List<ClientServiceLevelDto> clientServiceLevelFindBy(@RequestBody ClientServiceLevelDto
+    clientServiceLevelDto) {
+        ClientServiceLevel clientServiceLevel = new ClientServiceLevel();
+        BeanUtils.copyProperties(clientServiceLevelDto, clientServiceLevel);
         List<ClientServiceLevel> list = clientServiceLevelService.findBy(clientServiceLevel);
         Page<ClientServiceLevelDto> page =transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
@@ -132,6 +134,51 @@ public class ClientServiceLevelController {
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
         return page;
+    }
+    
+    @GetMapping("/filter-by/{keyWord}")
+    @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
+    public Map<String, List<ClientServiceLevelDto>> filterByName(@PathVariable("keyWord") String keyWord) {
+        String lowerKeyWord = keyWord.toLowerCase();
+        List<ClientServiceLevelDto> list = transformList(clientServiceLevelService.list());
+        return list.stream().filter(dto -> fatherMatches(list, dto, lowerKeyWord) || childrenMatches(list, dto, lowerKeyWord))
+                .collect(Collectors.groupingBy(dto -> "L" + ((dto.getId().length() / 2) - 1)));
+
+//        return list.stream().filter(dto -> dto.getId().startsWith(keyWord))
+//                .collect(Collectors.groupingBy(dto -> "L" + ((dto.getId().length() / 2) - 1)));
+    }
+
+    private boolean fatherMatches(List<ClientServiceLevelDto> list, ClientServiceLevelDto dto, String keyWord) {
+        if (dto.getName().toLowerCase().contains(keyWord)) {
+            return true;
+        }
+        ClientServiceLevelDto curr = dto;
+        ClientServiceLevelDto parent;
+        while((parent = findFather(list, curr)) != null) {
+            curr = parent;
+            if (parent.getName().toLowerCase().contains(keyWord)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private ClientServiceLevelDto findFather(List<ClientServiceLevelDto> list, ClientServiceLevelDto dto) {
+        return list.stream().filter(each -> Objects.equals(each.getId(), dto.getParentId())).findAny().orElse(null);
+    }
+
+    private boolean childrenMatches(List<ClientServiceLevelDto> list, ClientServiceLevelDto dto, String keyWord) {
+        List<ClientServiceLevelDto> children = list.stream().filter(each -> Objects.equals(each.getParentId(), dto.getId()))
+                .collect(Collectors.toList());
+        if (children.stream().anyMatch(each -> each.getName().toLowerCase().contains(keyWord))) {
+            return true;
+        }
+        for (ClientServiceLevelDto each: children) {
+            if (childrenMatches(list, each, keyWord)) {
+                return true;
+            }
+        }
+        return false;
     }
     
     private Page<ClientServiceLevelDto> transformList(List<ClientServiceLevel> list){
