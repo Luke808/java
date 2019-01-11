@@ -10,6 +10,7 @@ import com.accenture.smsf.authority.permission.loader.annotation.Permission;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -141,11 +142,12 @@ public class ClientServiceLevelController {
     public Map<String, List<ClientServiceLevelDto>> clientServiceLevelFilterByName(@PathVariable("keyWord") String keyWord) {
         String lowerKeyWord = keyWord.toLowerCase();
         List<ClientServiceLevelDto> list = transformList(clientServiceLevelService.list());
-        return list.stream().filter(dto -> fatherMatches(list, dto, lowerKeyWord) || childrenMatches(list, dto, lowerKeyWord))
-                .collect(Collectors.groupingBy(dto -> "L" + ((dto.getId().length() / 2) - 1)));
-
-//        return list.stream().filter(dto -> dto.getId().startsWith(keyWord))
-//                .collect(Collectors.groupingBy(dto -> "L" + ((dto.getId().length() / 2) - 1)));
+        List<ClientServiceLevelDto> filteredList = list;
+        if (!StringUtils.isEmpty(keyWord)) {
+            filteredList = list.stream().filter(dto -> fatherMatches(list, dto, lowerKeyWord) || childrenMatches(list, dto, lowerKeyWord))
+                    .collect(Collectors.toList());
+        }
+        return filteredList.stream().collect(Collectors.groupingBy(dto -> "L" + ((dto.getId().length() / 2) - 1)));
     }
 
     private boolean fatherMatches(List<ClientServiceLevelDto> list, ClientServiceLevelDto dto, String keyWord) {
