@@ -129,6 +129,9 @@ public class CutoffTimeController {
         return pagedCutoffTime;
     }
     private CutoffTimeDto transformDto(CutoffTime entity) {
+        if (entity == null) {
+            return null;
+        }
         CutoffTimeDto dto = new CutoffTimeDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;

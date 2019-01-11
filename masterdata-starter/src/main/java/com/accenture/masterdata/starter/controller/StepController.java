@@ -142,6 +142,9 @@ public class StepController {
         return pagedClientServiceLevel;
     }
     private StepDto transformDto(Step entity) {
+        if (entity == null) {
+            return null;
+        }
         StepDto dto = new StepDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;

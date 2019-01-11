@@ -133,6 +133,9 @@ public class ProcessController {
         return pagedProcess;
     }
     private ProcessDto transformDto(Process entity) {
+        if (entity == null) {
+            return null;
+        }
         ProcessDto dto = new ProcessDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;

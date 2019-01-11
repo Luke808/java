@@ -126,6 +126,9 @@ public class TatController {
         return pagedClientServiceLevel;
     }
     private TatDto transformDto(Tat entity) {
+        if (entity == null) {
+            return null;
+        }
         TatDto dto = new TatDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;

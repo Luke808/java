@@ -127,6 +127,9 @@ public class NcTypeController {
         return pagedProcess;
     }
     private NcTypeDto transformDto(NcType entity) {
+        if (entity == null) {
+            return null;
+        }
         NcTypeDto dto = new NcTypeDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;

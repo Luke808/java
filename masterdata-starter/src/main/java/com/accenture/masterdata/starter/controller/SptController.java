@@ -153,6 +153,9 @@ public class SptController {
         return pagedClientServiceLevel;
     }
     private SptDto transformDto(Spt entity) {
+        if (entity == null) {
+            return null;
+        }
         SptDto dto = new SptDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;

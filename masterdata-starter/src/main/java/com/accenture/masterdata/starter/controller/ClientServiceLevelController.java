@@ -194,6 +194,9 @@ public class ClientServiceLevelController {
         return pagedClientServiceLevel;
     }
     private ClientServiceLevelDto transformDto(ClientServiceLevel entity) {
+        if (entity == null) {
+            return null;
+        }
         ClientServiceLevelDto dto = new ClientServiceLevelDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;

@@ -128,6 +128,9 @@ public class CompanyServiceLevelController {
         return pagedCompanyServiceLevel;
     }
     private CompanyServiceLevelDto transformDto(CompanyServiceLevel entity) {
+        if (entity == null) {
+            return null;
+        }
         CompanyServiceLevelDto dto = new CompanyServiceLevelDto();
         BeanUtils.copyProperties(entity, dto);
         return dto;
