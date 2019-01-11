@@ -137,13 +137,13 @@ public class ClientServiceLevelController {
         return page;
     }
     
-    @GetMapping("/filter-by/{keyWord}")
+    @GetMapping({"/filter-by"})
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
-    public Map<String, List<ClientServiceLevelDto>> clientServiceLevelFilterByName(@PathVariable("keyWord") String keyWord) {
-        String lowerKeyWord = keyWord.toLowerCase();
+    public Map<String, List<ClientServiceLevelDto>> clientServiceLevelFilterByName(@RequestParam(value = "keyWord", required = false) String keyWord) {
         List<ClientServiceLevelDto> list = transformList(clientServiceLevelService.list());
         List<ClientServiceLevelDto> filteredList = list;
         if (!StringUtils.isEmpty(keyWord)) {
+            String lowerKeyWord = keyWord.toLowerCase();
             filteredList = list.stream().filter(dto -> fatherMatches(list, dto, lowerKeyWord) || childrenMatches(list, dto, lowerKeyWord))
                     .collect(Collectors.toList());
         }
