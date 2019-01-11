@@ -46,5 +46,10 @@ public class Permissions {
     public static final String MASTERDATA_COMPANY_SERVICE_LEVEL_VIEW = "masterdata.company.service.level.view";
     @PermissionId(value = "masterdata.company.service.level.manage")
     public static final String MASTERDATA_COMPANY_SERVICE_LEVEL_MANAGE = "masterdata.company.service.level.manage";
-    
+    // NcType权限设置
+    @PermissionId(value = "masterdata.nc.type.view")
+    public static final String MASTERDATA_NC_TYPE_VIEW = "masterdata.nc.type.view";
+    @PermissionId(value = "masterdata.nc.type.manage")
+    public static final String MASTERDATA_NC_TYPE_MANAGE = "masterdata.nc.type.manage";
+
 }
