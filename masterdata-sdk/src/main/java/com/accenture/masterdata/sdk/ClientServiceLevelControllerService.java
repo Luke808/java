@@ -17,7 +17,7 @@ public interface ClientServiceLevelControllerService {
     @PostMapping("/find-by")
     List<ClientServiceLevelDto> clientServiceLevelFindBy(@RequestBody ClientServiceLevelDto clientServiceLevelDto);
 
-    @GetMapping("/filter-by/{keyWord}")
+    @GetMapping({"/filter-by"})
     Map<String, List<ClientServiceLevelDto>> clientServiceLevelFilterByName(@RequestParam(value = "keyWord", required = false) String keyWord);
 
     }
