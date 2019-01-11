@@ -93,10 +93,10 @@ public class StepController {
     public PageInfo<StepDto> stepFindByPaged(@RequestBody Step
                                                      step, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<Step> list = stepService.findBy(step, pageNumber, pageSize);
-        Page<StepDto> page = new Page<>();
+        Page<StepDto> pagedStep = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
-        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
-        return new PageInfo<>(page);
+        pagedStep.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return new PageInfo<>(pagedStep);
     }
 
     @PostMapping("/find-by")
