@@ -3,6 +3,7 @@ package com.accenture.masterdata.starter.controller;
 import com.accenture.masterdata.core.entity.NcType;
 import com.accenture.masterdata.dto.NcTypeDto;
 import com.accenture.masterdata.service.NcTypeService;
+import com.accenture.masterdata.service.ProcessService;
 import com.accenture.masterdata.starter.Permissions;
 import com.accenture.smsf.authority.permission.loader.annotation.Permission;
 import com.accenture.smsf.framework.starter.web.core.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -24,6 +26,8 @@ public class NcTypeController {
 
     @Autowired
     NcTypeService ncTypeService;
+    @Autowired
+    ProcessService processService;
 
     @PostMapping("/save")
     @Permission(values= {Permissions.MASTERDATA_NC_TYPE_MANAGE})
@@ -81,13 +85,13 @@ public class NcTypeController {
 
     @PostMapping("/find-by-paged/{page-no}/{page-size}")
     @Permission(values= {Permissions.MASTERDATA_NC_TYPE_VIEW})
-    public PageInfo<NcTypeDto> ncTypeFindByPaged(@RequestBody NcTypeDto
-    ncTypeDto, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
-        NcType ncType = new NcType();
-        BeanUtils.copyProperties(ncTypeDto, ncType);
+    public PageInfo<NcTypeDto> ncTypeFindByPaged(@RequestBody NcType
+    ncType, @PathVariable("page-no") int pageNumber, @PathVariable("page-size") int pageSize) {
         List<NcType> list = ncTypeService.findBy(ncType, pageNumber, pageSize);
-        Page<NcTypeDto> pagedNcType= transformList(list);
-        return new PageInfo<>(pagedNcType);
+        Page<NcTypeDto> page = transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return new PageInfo<>(page);
     }
 
     @PostMapping("/find-by")
@@ -96,7 +100,12 @@ public class NcTypeController {
     ncTypeDto) {
         NcType ncType = new NcType();
         BeanUtils.copyProperties(ncTypeDto, ncType);
-        return transformList(ncTypeService.findBy(ncType));
+        List<NcType> list = ncTypeService.findBy(ncType);
+        Page<NcTypeDto> page =transformList(list);
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
+        return page;
+
     }
 
     @GetMapping("/find-one")

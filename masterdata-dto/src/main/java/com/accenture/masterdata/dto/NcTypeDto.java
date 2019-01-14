@@ -11,4 +11,5 @@ public class NcTypeDto {
     private String parentId;
 
     private String processId;
+    private String processName;
 }
