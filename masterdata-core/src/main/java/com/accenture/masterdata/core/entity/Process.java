@@ -5,9 +5,10 @@ import com.ac.smsf.codegen.core.annotation.IsId;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Table(name = "t_process")
-public class Process {
+public class Process implements Serializable {
     @Id
     @IsId
     private String id;
