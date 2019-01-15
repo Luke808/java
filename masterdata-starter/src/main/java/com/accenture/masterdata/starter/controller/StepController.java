@@ -63,7 +63,10 @@ public class StepController {
     @GetMapping("/find")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
     public StepDto stepFind(@RequestParam("id") String id) {
-        return transformDto(stepService.findById(id));
+        Map<String, String> idNameMapping = processService.getIdNameMapping();
+        StepDto stepDto = transformDto(stepService.findById(id));
+        stepDto.setProcessName(idNameMapping.get(stepDto.getProcessId()));
+        return stepDto;
     }
 
     @GetMapping("/list-paged/{page-no}/{page-size}")

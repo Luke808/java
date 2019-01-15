@@ -1,5 +1,7 @@
 package com.accenture.masterdata.core.entity;
 
+import com.ac.smsf.codegen.core.annotation.IsId;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,6 +10,7 @@ import java.math.BigDecimal;
 @Table(name = "t_client_service_level")
 public class ClientServiceLevel {
     @Id
+    @IsId
     private String id;
 
     private String code;
@@ -17,9 +20,11 @@ public class ClientServiceLevel {
     private String name;
 
     @Column(name = "parent_id")
+    @IsId
     private String parentId;
 
     @Column(name = "process_id")
+    @IsId
     private String processId;
 
     /**

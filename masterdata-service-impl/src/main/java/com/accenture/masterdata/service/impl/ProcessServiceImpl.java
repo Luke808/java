@@ -4,6 +4,7 @@ import com.ac.smsf.codegen.core.service.impl.AbstractMapperServiceImpl;
 import com.accenture.masterdata.core.entity.Process;
 import com.accenture.masterdata.service.ProcessService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,35 @@ public class ProcessServiceImpl extends AbstractMapperServiceImpl<Process> imple
     @Cacheable(cacheNames = "process")
     public Map<String, String> getIdNameMapping() {
         return this.list().parallelStream().collect(Collectors.toMap(Process::getId, Process::getName));
+    }
 
+    @Override
+    @CacheEvict(cacheNames = "process")
+    public int save(Process model) {
+        return super.save(model);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "process")
+    public int save(List<Process> models) {
+        return super.save(models);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "process")
+    public int update(Process model) {
+        return super.update(model);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "process")
+    public int delete(String id) {
+        return super.delete(id);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "process")
+    public int batchDelete(String ids) {
+        return super.batchDelete(ids);
     }
 }

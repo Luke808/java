@@ -1,5 +1,7 @@
 package com.accenture.masterdata.core.entity;
 
+import com.ac.smsf.codegen.core.annotation.IsId;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -7,9 +9,11 @@ import javax.persistence.Table;
 @Table(name = "t_cutoff_time")
 public class CutoffTime {
     @Id
+    @IsId
     private String id;
 
     @Column(name = "process_id")
+    @IsId
     private String processId;
 
     private String time;

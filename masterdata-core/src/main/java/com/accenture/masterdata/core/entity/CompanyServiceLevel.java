@@ -1,5 +1,7 @@
 package com.accenture.masterdata.core.entity;
 
+import com.ac.smsf.codegen.core.annotation.IsId;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -7,9 +9,11 @@ import javax.persistence.Table;
 @Table(name = "t_company_service_level")
 public class CompanyServiceLevel {
     @Id
+    @IsId
     private String id;
 
     @Column(name = "parent_id")
+    @IsId
     private String parentId;
 
     private String code;

@@ -1,5 +1,7 @@
 package com.accenture.masterdata.core.entity;
 
+import com.ac.smsf.codegen.core.annotation.IsId;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 @Table(name = "t_process")
 public class Process {
     @Id
+    @IsId
     private String id;
 
     @Column(name = "company_service_level_id")

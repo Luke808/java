@@ -1,5 +1,7 @@
 package com.accenture.masterdata.core.entity;
 
+import com.ac.smsf.codegen.core.annotation.IsId;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -8,12 +10,15 @@ import java.math.BigDecimal;
 @Table(name = "t_spt")
 public class Spt {
     @Id
+    @IsId
     private String id;
 
     @Column(name = "process_id")
+    @IsId
     private String processId;
 
     @Column(name = "step_id")
+    @IsId
     private String stepId;
 
     private BigDecimal spt;
