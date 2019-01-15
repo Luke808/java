@@ -12,6 +12,5 @@ import java.util.Map;
  */
 public interface ProcessService extends MapperService<Process> {
 
-    @Cacheable
     Map<String, String> getIdNameMapping();
 }

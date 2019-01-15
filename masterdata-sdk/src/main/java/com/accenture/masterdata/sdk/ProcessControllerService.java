@@ -15,4 +15,7 @@ public interface ProcessControllerService {
 
     @PostMapping("/find-by")
     List<ProcessDto> processFindBy(@RequestBody ProcessDto processDto);
+
+    @GetMapping("/list")
+    List<ProcessDto> processList();
 }
