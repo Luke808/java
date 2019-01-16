@@ -9,6 +9,8 @@ import java.io.Serializable;
 
 @Table(name = "t_process")
 public class Process implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @IsId
     private String id;
