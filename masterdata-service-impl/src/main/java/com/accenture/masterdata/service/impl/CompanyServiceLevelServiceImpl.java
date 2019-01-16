@@ -26,31 +26,31 @@ public class CompanyServiceLevelServiceImpl extends AbstractMapperServiceImpl<Co
     }
 
     @Override
-    @CacheEvict(cacheNames = "companyservicelevel")
+    @CacheEvict(cacheNames = "companyservicelevel", allEntries=true)
     public int save(CompanyServiceLevel model) {
         return super.save(model);
     }
 
     @Override
-    @CacheEvict(cacheNames = "companyservicelevel")
+    @CacheEvict(cacheNames = "companyservicelevel", allEntries=true)
     public int save(List<CompanyServiceLevel> models) {
         return super.save(models);
     }
 
     @Override
-    @CacheEvict(cacheNames = "companyservicelevel")
+    @CacheEvict(cacheNames = "companyservicelevel", allEntries=true)
     public int update(CompanyServiceLevel model) {
         return super.update(model);
     }
 
     @Override
-    @CacheEvict(cacheNames = "companyservicelevel")
+    @CacheEvict(cacheNames = "companyservicelevel", allEntries=true)
     public int delete(String id) {
         return super.delete(id);
     }
 
     @Override
-    @CacheEvict(cacheNames = "companyservicelevel")
+    @CacheEvict(cacheNames = "companyservicelevel", allEntries=true)
     public int batchDelete(String ids) {
         return super.batchDelete(ids);
     }

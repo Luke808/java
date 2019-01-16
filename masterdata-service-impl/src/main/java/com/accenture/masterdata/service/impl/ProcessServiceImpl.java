@@ -32,31 +32,31 @@ public class ProcessServiceImpl extends AbstractMapperServiceImpl<Process> imple
     }
 
     @Override
-    @CacheEvict(cacheNames = "process")
+    @CacheEvict(cacheNames = "process", allEntries=true)
     public int save(Process model) {
         return super.save(model);
     }
 
     @Override
-    @CacheEvict(cacheNames = "process")
+    @CacheEvict(cacheNames = "process", allEntries=true)
     public int save(List<Process> models) {
         return super.save(models);
     }
 
     @Override
-    @CacheEvict(cacheNames = "process")
+    @CacheEvict(cacheNames = "process", allEntries=true)
     public int update(Process model) {
         return super.update(model);
     }
 
     @Override
-    @CacheEvict(cacheNames = "process")
+    @CacheEvict(cacheNames = "process", allEntries=true)
     public int delete(String id) {
         return super.delete(id);
     }
 
     @Override
-    @CacheEvict(cacheNames = "process")
+    @CacheEvict(cacheNames = "process", allEntries=true)
     public int batchDelete(String ids) {
         return super.batchDelete(ids);
     }

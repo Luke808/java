@@ -29,31 +29,31 @@ public class StepServiceImpl extends AbstractMapperServiceImpl<Step> implements 
     }
 
     @Override
-    @CacheEvict(cacheNames = "step")
+    @CacheEvict(cacheNames = "step", allEntries=true)
     public int update(Step model) {
         return super.update(model);
     }
 
     @Override
-    @CacheEvict(cacheNames = "step")
+    @CacheEvict(cacheNames = "step", allEntries=true)
     public int save(Step model) {
         return super.save(model);
     }
 
     @Override
-    @CacheEvict(cacheNames = "step")
+    @CacheEvict(cacheNames = "step", allEntries=true)
     public int save(List<Step> models) {
         return super.save(models);
     }
 
     @Override
-    @CacheEvict(cacheNames = "step")
+    @CacheEvict(cacheNames = "step", allEntries=true)
     public int delete(String id) {
         return super.delete(id);
     }
 
     @Override
-    @CacheEvict(cacheNames = "step")
+    @CacheEvict(cacheNames = "step", allEntries=true)
     public int batchDelete(String ids) {
         return super.batchDelete(ids);
     }
