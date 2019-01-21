@@ -6,7 +6,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @FeignClient(name = "smsf-masterdata-service-uat", configuration = {FeignConfig.class})
 @RequestMapping("/masterdata/clientServiceLevel")
@@ -17,7 +16,6 @@ public interface ClientServiceLevelControllerService {
     @PostMapping("/find-by")
     List<ClientServiceLevelDto> clientServiceLevelFindBy(@RequestBody ClientServiceLevelDto clientServiceLevelDto);
 
-    @GetMapping({"/filter-by"})
-    Map<String, List<ClientServiceLevelDto>> clientServiceLevelFilterByName(@RequestParam(value = "keyWord", required = false) String keyWord);
-
-    }
+    @GetMapping("/list")
+    List<ClientServiceLevelDto> clientServiceLevelList();
+}
