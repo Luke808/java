@@ -11,7 +11,5 @@ import java.util.Map;
  * @author s.c.gao
  */
 public interface StepService extends MapperService<Step> {
-
-    @Cacheable
     Map<String, String> getIdNameMapping();
 }

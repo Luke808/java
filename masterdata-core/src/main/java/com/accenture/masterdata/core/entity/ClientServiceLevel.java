@@ -5,10 +5,13 @@ import com.ac.smsf.codegen.core.annotation.IsId;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Table(name = "t_client_service_level")
-public class ClientServiceLevel {
+public class ClientServiceLevel  implements Serializable {
+    private static final long serialVersionUID = 8768358858942959732L;
+
     @Id
     @IsId
     private String id;

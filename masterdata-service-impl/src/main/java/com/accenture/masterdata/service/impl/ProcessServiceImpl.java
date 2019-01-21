@@ -21,12 +21,13 @@ import java.util.stream.Collectors;
 public class ProcessServiceImpl extends AbstractMapperServiceImpl<Process> implements ProcessService {
 
     @Override
+    @Cacheable(cacheNames = "process", key="#root.methodName")
     public Map<String, String> getIdNameMapping() {
         return this.list().parallelStream().collect(Collectors.toMap(Process::getId, Process::getName));
     }
 
     @Override
-    @Cacheable(cacheNames = "process")
+    @Cacheable(cacheNames = "process", key="#root.methodName")
     public List<Process> list() {
         return super.list();
     }

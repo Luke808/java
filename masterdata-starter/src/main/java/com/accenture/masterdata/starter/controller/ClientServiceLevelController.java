@@ -136,6 +136,12 @@ public class ClientServiceLevelController {
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
         return page;
     }
+
+    @GetMapping("/id-name-map")
+    @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
+    public Map<String, String> clientServiceLevelIdNameMapping(){
+        return clientServiceLevelService.getIdNameMapping();
+    }
     
     private Page<ClientServiceLevelDto> transformList(List<ClientServiceLevel> list){
         Page<ClientServiceLevelDto> pagedClientServiceLevel = new Page<>();

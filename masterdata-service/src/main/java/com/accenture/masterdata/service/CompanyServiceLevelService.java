@@ -11,6 +11,5 @@ import java.util.Map;
  * @author s.c.gao
  */
 public interface CompanyServiceLevelService extends MapperService<CompanyServiceLevel> {
-    @Cacheable
     Map<String, String> getIdNameMapping();
 }

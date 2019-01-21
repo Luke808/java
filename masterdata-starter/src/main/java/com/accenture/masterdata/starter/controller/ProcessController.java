@@ -122,6 +122,13 @@ public class ProcessController {
         Page<ProcessDto> pagedProcess = transformList(list);
         return pagedProcess;
     }
+
+    @GetMapping("/id-name-map")
+    @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
+    public Map<String, String> processIdNameMapping(){
+        return processService.getIdNameMapping();
+    }
+
     private Page<ProcessDto> transformList(List<Process> list){
         Page<ProcessDto> pagedProcess = new Page<>();
         BeanUtils.copyProperties(list, pagedProcess);

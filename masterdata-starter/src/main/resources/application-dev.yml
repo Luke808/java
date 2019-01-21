@@ -25,6 +25,8 @@ smsf:
         duration: 10
       companyservicelevel:
         duration: 10
+      clientservicelevel:
+        duration: 10
 logging:
   level:
     com.accenture.masterdata.core.mapper: debug
