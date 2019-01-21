@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @FeignClient(name = "smsf-masterdata-service-uat", configuration = {FeignConfig.class})
 @RequestMapping("/masterdata/process")
@@ -18,4 +19,7 @@ public interface ProcessControllerService {
 
     @GetMapping("/list")
     List<ProcessDto> processList();
+
+    @GetMapping("/id-name-map")
+    Map<String, String> processIdNameMapping();
 }
