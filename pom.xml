@@ -9,9 +9,9 @@
       <version>1.0.1</version>
   </parent>
   
-  <groupId>com.accenture.masterdata</groupId>
+  <groupId>com.accenture.smsf.masterdata</groupId>
   <artifactId>masterdata</artifactId>
-  <version>0.0.1</version>
+  <version>1.0.1</version>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,29 +37,29 @@
 		   <version>2.5</version> 
 		</dependency>
   		<dependency>
-			<groupId>com.accenture.masterdata</groupId>
+			<groupId>com.accenture.smsf.masterdata</groupId>
   			<artifactId>masterdata-starter</artifactId>
-  			<version>0.0.1</version>
+  			<version>1.0.1</version>
   		</dependency>
   		<dependency>
-			<groupId>com.accenture.masterdata</groupId>
+			<groupId>com.accenture.smsf.masterdata</groupId>
   			<artifactId>masterdata-core</artifactId>
-  			<version>0.0.1</version>
+  			<version>1.0.1</version>
   		</dependency>
 		<dependency>
-			<groupId>com.accenture.masterdata</groupId>
+			<groupId>com.accenture.smsf.masterdata</groupId>
 			<artifactId>masterdata-dto</artifactId>
-			<version>0.0.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.accenture.masterdata</groupId>
+			<groupId>com.accenture.smsf.masterdata</groupId>
 			<artifactId>masterdata-service</artifactId>
-			<version>0.0.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>com.accenture.masterdata</groupId>
+			<groupId>com.accenture.smsf.masterdata</groupId>
 			<artifactId>masterdata-service-impl</artifactId>
-			<version>0.0.1</version>
+			<version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.accenture.smsf.codegen</groupId>
@@ -73,7 +73,7 @@
 	<module>masterdata-core</module>
 	<module>masterdata-service</module>
 	<module>masterdata-service-impl</module>
-	  <module>masterdata-dto</module>
-	  <module>masterdata-sdk</module>
+    <module>masterdata-dto</module>
+    <module>masterdata-sdk</module>
   </modules>
 </project>

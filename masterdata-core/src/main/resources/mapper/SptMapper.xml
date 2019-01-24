@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.accenture.masterdata.core.mapper.SptMapper">
-  <resultMap id="BaseResultMap" type="com.accenture.masterdata.core.entity.Spt">
+<mapper namespace="com.accenture.smsf.masterdata.core.mapper.SptMapper">
+  <resultMap id="BaseResultMap" type="com.accenture.smsf.masterdata.core.entity.Spt">
     <!--
       WARNING - @mbg.generated
     -->
@@ -80,7 +80,7 @@
     -->
     id, process_id, step_id, spt
   </sql>
-  <select id="selectByExample" parameterType="com.accenture.masterdata.core.entity.SptExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.accenture.smsf.masterdata.core.entity.SptExample" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated
     -->
@@ -97,7 +97,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.accenture.masterdata.core.entity.SptExample">
+  <delete id="deleteByExample" parameterType="com.accenture.smsf.masterdata.core.entity.SptExample">
     <!--
       WARNING - @mbg.generated
     -->
@@ -106,7 +106,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <select id="countByExample" parameterType="com.accenture.masterdata.core.entity.SptExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.accenture.smsf.masterdata.core.entity.SptExample" resultType="java.lang.Long">
     <!--
       WARNING - @mbg.generated
     -->

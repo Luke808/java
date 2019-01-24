@@ -3,9 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.accenture.masterdata</groupId>
+    <groupId>com.accenture.smsf.masterdata</groupId>
     <artifactId>masterdata</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
   </parent>
   <artifactId>masterdata-core</artifactId>
 

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.accenture.masterdata.service.config.MasterdataServiceConfig
+com.accenture.smsf.masterdata.service.config.MasterdataServiceConfig

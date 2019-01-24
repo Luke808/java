@@ -54,4 +54,4 @@ smsf:
 #          password: wanfj
 logging:
   level:
-    com.accenture.masterdata.core.mapper: debug
+    com.accenture.smsf.masterdata.core.mapper: debug
