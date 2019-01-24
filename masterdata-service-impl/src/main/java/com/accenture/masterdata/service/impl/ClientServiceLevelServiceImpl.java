@@ -5,6 +5,7 @@ import com.accenture.masterdata.core.entity.ClientServiceLevel;
 import com.accenture.masterdata.core.entity.Process;
 import com.accenture.masterdata.service.ClientServiceLevelService;
 import com.accenture.smsf.framework.boot.stereotype.Service;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,23 @@ public class ClientServiceLevelServiceImpl extends AbstractMapperServiceImpl<Cli
     @Cacheable(cacheNames = "clientservicelevel", key="#root.methodName")
     public Map<String, String> getIdNameMapping() {
         return this.list().parallelStream().collect(Collectors.toMap(ClientServiceLevel::getId, ClientServiceLevel::getName));
+    }
+
+    @Override
+    @Cacheable(cacheNames = "clientservicelevel", key="#root.methodName")
+    public Map<String, String> getIdLayeredNameMapping() {
+        List<ClientServiceLevel> list = this.list();
+        Map<String, ClientServiceLevel> idDtoMapping = list.stream().collect(Collectors.toMap(ClientServiceLevel::getId, dto -> dto));
+        return list.stream().collect(Collectors.toMap(ClientServiceLevel::getId, dto -> {
+            ClientServiceLevel node = dto;
+            String layeredName = dto.getName();
+            while (!StringUtils.equals("ROOT", node.getParentId())) {
+                ClientServiceLevel parent = idDtoMapping.get(node.getParentId());
+                layeredName = parent.getName() + "/" + layeredName;
+                node = parent;
+            }
+            return layeredName;
+        }));
     }
 
     @Override

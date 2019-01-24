@@ -12,4 +12,7 @@ import java.util.Map;
  */
 public interface ClientServiceLevelService extends MapperService<ClientServiceLevel> {
     Map<String, String> getIdNameMapping();
+
+    @Cacheable(cacheNames = "clientservicelevel", key="#root.methodName")
+    Map<String, String> getIdLayeredNameMapping();
 }

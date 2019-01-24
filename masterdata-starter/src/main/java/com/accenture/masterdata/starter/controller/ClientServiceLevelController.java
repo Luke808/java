@@ -142,6 +142,12 @@ public class ClientServiceLevelController {
     public Map<String, String> clientServiceLevelIdNameMapping(){
         return clientServiceLevelService.getIdNameMapping();
     }
+
+    @GetMapping("/id-layered-name-map")
+    @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
+    public Map<String, String> clientServiceLevelIdLayeredNameMapping(){
+        return clientServiceLevelService.getIdLayeredNameMapping();
+    }
     
     private Page<ClientServiceLevelDto> transformList(List<ClientServiceLevel> list){
         Page<ClientServiceLevelDto> pagedClientServiceLevel = new Page<>();

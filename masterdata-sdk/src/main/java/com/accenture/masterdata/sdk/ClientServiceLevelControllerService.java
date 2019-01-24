@@ -22,4 +22,7 @@ public interface ClientServiceLevelControllerService {
 
     @GetMapping("/id-name-map")
     Map<String, String> clientServiceLevelIdNameMapping();
+
+    @GetMapping("/id-layered-name-map")
+    Map<String, String> clientServiceLevelIdLayeredNameMapping();
 }
