@@ -1,3 +1,4 @@
+CREATE SCHEMA `smsf_master_data` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 -- DROP TABLE IF EXISTS `t_employee`;
 -- CREATE TABLE `t_employee` (
 --  `avatar` varchar(255) DEFAULT NULL,
