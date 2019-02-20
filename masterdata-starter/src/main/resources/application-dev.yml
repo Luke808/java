@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: smsf-masterdata-service
+    name: smsf-masterdata-service-dev
   main:
     allow-bean-definition-overriding: true
 

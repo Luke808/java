@@ -2,6 +2,6 @@ spring:
   cloud:
     config:
       label: master
-      profile: test
+      profile: ${spring.profiles.active}
       name: bootstrap
       uri: https://dlhpvva0002.dir.svc.accenture.com/smsf-config/
