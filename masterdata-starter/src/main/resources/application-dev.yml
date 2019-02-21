@@ -1,22 +1,20 @@
 server:
   port: 10045
+  session-timeout: 3000
+  tomcat.max-threads: 0
+  tomcat.uri-encoding: UTF-8
 
 spring:
   application:
-    name: smsf-masterdata-service-dev
+    name: smsf-masterdata-service
   main:
     allow-bean-definition-overriding: true
 
 smsf:
-  data:
-    mybatis:
-      mapper-locations: classpath*:/mapper/*.xml
-    jdbc:
-      connections:
-        default:
-          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
-          username: ${smsf.data.database1.username}
-          password: ${smsf.data.database1.password}
+  application:
+    name: masterdata
+    url: http://localhost:4200
+    icon: icon.ico
   cache:
     redis-cache:
       process:
@@ -27,6 +25,33 @@ smsf:
         duration: 10
       clientservicelevel:
         duration: 10
+  authority:
+    permission:
+      autoload:
+        enabled: true
+  swagger:
+    security:
+      enabled: true
+      schemes:
+        Authorization:
+          key-name: Authorization
+        tenantId:
+          key-name: tenantId
+        USER_ID:
+          key-name: USER_ID
+  data:
+    mybatis:
+      mapper-locations: classpath*:/mapper/*.xml
+    jdbc:
+      connections:
+        default:
+          # 正式环境下的配置
+          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
+          username: ${smsf.data.database1.username}
+          password: ${smsf.data.database1.password}
+#          url: jdbc:mysql://127.0.0.1:3306/masterdata?useUnicode=true&useSSL=false&characterEncoding=utf-8
+#          username: root
+#          password: wanfj
 logging:
   level:
     com.accenture.smsf.masterdata.core.mapper: debug
