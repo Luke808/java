@@ -66,7 +66,7 @@ public class CompanyServiceLevelController {
     public PageInfo<CompanyServiceLevelDto> companyServiceLevelListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                                             @PathVariable(value="page-size") int pageSize) {
-        List<CompanyServiceLevel> list = companyServiceLevelService.list(pageNumber, pageSize);
+        List<CompanyServiceLevel> list = companyServiceLevelService.listByTenantId(pageNumber, pageSize);
         Page<CompanyServiceLevelDto> pagedCompany = transformList(list);
         return new PageInfo<>(pagedCompany);
     }
@@ -74,7 +74,7 @@ public class CompanyServiceLevelController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_COMPANY_SERVICE_LEVEL_VIEW})
     public List<CompanyServiceLevelDto> companyServiceLevelList() {
-        List<CompanyServiceLevel> list = companyServiceLevelService.list();
+        List<CompanyServiceLevel> list = companyServiceLevelService.listByTenantId();
         Page<CompanyServiceLevelDto> pagedCompany = transformList(list);
         return pagedCompany;
     }

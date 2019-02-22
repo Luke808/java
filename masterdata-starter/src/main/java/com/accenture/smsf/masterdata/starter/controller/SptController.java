@@ -75,7 +75,7 @@ public class SptController {
     public PageInfo<SptDto> sptListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                             @PathVariable(value="page-size") int pageSize) {
-        List<Spt> list = sptService.list(pageNumber, pageSize);
+        List<Spt> list = sptService.listByTenantId(pageNumber, pageSize);
         Page<SptDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
@@ -85,7 +85,7 @@ public class SptController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_SPT_VIEW})
     public List<SptDto> sptList() {
-        List<Spt> list = sptService.list();
+        List<Spt> list = sptService.listByTenantId();
         Page<SptDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));

@@ -26,7 +26,7 @@ public class MasterdataApplication {
     }
 
     @Bean
-    @Profile("dev")
+    @Profile("local")
     public WebMvcConfigurer corsConfigurer(){
         return new WebMvcConfigurer() {
             @Override

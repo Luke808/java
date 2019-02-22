@@ -1,0 +1,32 @@
+server:
+  port: 10045
+
+spring:
+  application:
+    name: smsf-masterdata-service-local
+  main:
+    allow-bean-definition-overriding: true
+
+smsf:
+  data:
+    mybatis:
+      mapper-locations: classpath*:/mapper/*.xml
+    jdbc:
+      connections:
+        default:
+          url: jdbc:mysql://${smsf.data.database1.url}/smsf_master_data?useUnicode=true&useSSL=false&characterEncoding=utf-8
+          username: ${smsf.data.database1.username}
+          password: ${smsf.data.database1.password}
+  cache:
+    redis-cache:
+      process:
+        duration: 10
+      step:
+        duration: 10
+      companyservicelevel:
+        duration: 10
+      clientservicelevel:
+        duration: 10
+logging:
+  level:
+    com.accenture.smsf.masterdata.core.mapper: debug

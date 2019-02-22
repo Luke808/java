@@ -74,7 +74,7 @@ public class StepController {
     public PageInfo<Step> stepListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                               @PathVariable(value="page-size") int pageSize) {
-        List<Step> list = stepService.list(pageNumber, pageSize);
+        List<Step> list = stepService.listByTenantId(pageNumber, pageSize);
         Page<StepDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
@@ -84,7 +84,7 @@ public class StepController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_STEP_VIEW})
     public List<StepDto> stepList() {
-        List<Step> list = stepService.list();
+        List<Step> list = stepService.listByTenantId();
         Page<StepDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));

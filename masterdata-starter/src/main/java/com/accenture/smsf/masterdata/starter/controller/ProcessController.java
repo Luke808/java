@@ -71,7 +71,7 @@ public class ProcessController {
     public PageInfo<ProcessDto> processListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                     @PathVariable(value="page-size") int pageSize) {
-        List<Process> list = processService.list(pageNumber , pageSize);
+        List<Process> list = processService.listByTenantId(pageNumber , pageSize);
         Page<ProcessDto> pagedProcess = transformList(list);
         return new PageInfo<>(pagedProcess);
     }
@@ -79,7 +79,7 @@ public class ProcessController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_PROCESS_VIEW})
     public List<ProcessDto> processList() {
-        List<Process> list = processService.list();
+        List<Process> list = processService.listByTenantId();
         Page<ProcessDto> pagedProcess = transformList(list);
         return pagedProcess;
     }

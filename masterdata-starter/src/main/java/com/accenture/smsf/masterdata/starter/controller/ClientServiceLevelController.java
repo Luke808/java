@@ -70,7 +70,7 @@ public class ClientServiceLevelController {
     public PageInfo<ClientServiceLevelDto> clientServiceLevelListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                                           @PathVariable(value="page-size") int pageSize) {
-        List<ClientServiceLevel> list = clientServiceLevelService.list(pageNumber, pageSize);
+        List<ClientServiceLevel> list = clientServiceLevelService.listByTenantId(pageNumber, pageSize);
         Page<ClientServiceLevelDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
@@ -80,7 +80,7 @@ public class ClientServiceLevelController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_CLIENT_SERVICE_LEVEL_VIEW})
     public List<ClientServiceLevelDto> clientServiceLevelList() {
-        List<ClientServiceLevel> list = clientServiceLevelService.list();
+        List<ClientServiceLevel> list = clientServiceLevelService.listByTenantId();
         Page<ClientServiceLevelDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));

@@ -71,7 +71,7 @@ public class NcTypeController {
     public PageInfo<NcTypeDto> ncTypeListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                             @PathVariable(value="page-size") int pageSize) {
-        List<NcType> list = ncTypeService.list(pageNumber, pageSize);
+        List<NcType> list = ncTypeService.listByTenantId(pageNumber, pageSize);
         Page<NcTypeDto> pagedNcType = transformList(list);
         return new PageInfo<>(pagedNcType);
     }
@@ -79,7 +79,7 @@ public class NcTypeController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_NC_TYPE_VIEW})
     public List<NcTypeDto> ncTypeList() {
-        List<NcType> list = ncTypeService.list();
+        List<NcType> list = ncTypeService.listByTenantId();
         return transformList(list);
     }
 

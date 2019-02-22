@@ -64,7 +64,7 @@
 		<dependency>
 			<groupId>com.accenture.smsf.codegen</groupId>
 			<artifactId>code-generator-core</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
 		</dependency>
   	</dependencies>
   </dependencyManagement>

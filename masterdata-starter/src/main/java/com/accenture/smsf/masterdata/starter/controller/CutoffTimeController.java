@@ -71,7 +71,7 @@ public class CutoffTimeController {
     public PageInfo<CutoffTimeDto> cutoffTimeListPaged(@PathVariable(value="page-no") int
     pageNumber,
                                                           @PathVariable(value="page-size") int pageSize) {
-        List<CutoffTime> list = cutoffTimeService.list(pageNumber, pageSize);
+        List<CutoffTime> list = cutoffTimeService.listByTenantId(pageNumber, pageSize);
         Page<CutoffTimeDto> page = transformList(list);
         return new PageInfo<>(page);
     }
@@ -79,7 +79,7 @@ public class CutoffTimeController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_CUTOFF_TIME_VIEW})
     public List<CutoffTimeDto> cutoffTimeList() {
-        List<CutoffTime> list = cutoffTimeService.list();
+        List<CutoffTime> list = cutoffTimeService.listByTenantId();
         Page<CutoffTimeDto> page = transformList(list);
         return page;
     }

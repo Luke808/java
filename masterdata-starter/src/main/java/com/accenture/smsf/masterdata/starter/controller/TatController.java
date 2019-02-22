@@ -68,7 +68,7 @@ public class TatController {
     @GetMapping("/list")
     @Permission(values= {Permissions.MASTERDATA_TAT_VIEW})
     public List<TatDto> tatList() {
-        List<Tat> list = tatService.list();
+        List<Tat> list = tatService.listByTenantId();
         Page<TatDto> page = transformList(list);
         Map<String, String> idNameMapping = processService.getIdNameMapping();
         page.forEach(dto -> dto.setProcessName(idNameMapping.get(dto.getProcessId())));
